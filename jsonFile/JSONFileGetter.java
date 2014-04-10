@@ -1,10 +1,17 @@
 package jsonFile;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 
 // Referenced classes of package mapGUI:
 //            JSONFileParser
 
-public class JSONFileGetter extends Thread 
+public class JSONFileGetter
 {
 
     public JSONFileGetter()

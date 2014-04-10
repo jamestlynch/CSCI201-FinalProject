@@ -1,7 +1,8 @@
 package jsonFile;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
+
+import src.Automobile;
 
 // Referenced classes of package mapGUI:
 //            Automobile

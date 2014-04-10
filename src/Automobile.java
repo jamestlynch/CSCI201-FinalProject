@@ -1,6 +1,5 @@
-package mapGUI;
+package src;
 
-import java.io.PrintStream;
 
 public class Automobile
 {
