@@ -1,4 +1,4 @@
-package mapGUI;
+package JSONFile;
 
 import java.io.*;
 import java.net.*;
@@ -6,7 +6,7 @@ import java.net.*;
 // Referenced classes of package mapGUI:
 //            JSONFileParser
 
-public class JSONFileGetter
+public class JSONFileGetter extends Thread 
 {
 
     public JSONFileGetter()

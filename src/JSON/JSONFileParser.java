@@ -1,4 +1,4 @@
-package mapGUI;
+package JSONFile;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
