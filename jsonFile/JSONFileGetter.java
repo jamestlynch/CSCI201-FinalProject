@@ -1,7 +1,5 @@
-package JSONFile;
+package jsonFile;
 
-import java.io.*;
-import java.net.*;
 
 // Referenced classes of package mapGUI:
 //            JSONFileParser

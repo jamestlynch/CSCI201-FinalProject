@@ -1,4 +1,4 @@
-package JSONFile;
+package jsonFile;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
