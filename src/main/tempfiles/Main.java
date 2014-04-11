@@ -1,10 +1,11 @@
-package main.tempfiles;
+/*package src.main.tempfiles;
 
 import main.jsonfile.JSONFileGetter;
 
+
 public class Main {
 
-    public static void main(String args[])
+    public static void main1(String args[])
     {
         while (true)
         {
@@ -21,4 +22,4 @@ public class Main {
         	}
         }
     }
-}
+}*/
