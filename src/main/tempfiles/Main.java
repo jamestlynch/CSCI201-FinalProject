@@ -1,4 +1,4 @@
-/*package src.main.tempfiles;
+package src.main.tempfiles;
 
 import main.jsonfile.JSONFileGetter;
 
@@ -22,4 +22,4 @@ public class Main {
         	}
         }
     }
-}*/
+}
