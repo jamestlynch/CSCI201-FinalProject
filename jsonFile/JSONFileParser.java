@@ -2,17 +2,21 @@ package jsonFile;
 
 import java.util.ArrayList;
 
-import src.Automobile;
+import objects.Automobile;
 
-// Referenced classes of package mapGUI:
+// Referenced classes of package objects:
 //            Automobile
 
 public class JSONFileParser
 {
+	ArrayList<Automobile> updated_cars;
+    public ArrayList<Automobile> getUpdated_cars() {
+		return updated_cars;
+	}
 
-    public JSONFileParser(String filetoparse)
+	public JSONFileParser(String filetoparse)
     {
-        updated_cars = new ArrayList();
+        updated_cars = new ArrayList<Automobile>();
         for(int i = 0; i < filetoparse.length(); i++)
         {
             String one_car = "";
@@ -25,6 +29,7 @@ public class JSONFileParser
                 Automobile a = parse(one_car);
                 updated_cars.add(a);
                 a.print();
+              
             }
         }
 
@@ -97,7 +102,6 @@ public class JSONFileParser
                 if(ramp.equals("on\\/off ramp"))
                 {
                     String rampval = "";
-                    System.out.println(car.substring(i));
                     i++;
                     i++;
                     for(i++; car.charAt(i) != '"'; i++)
@@ -130,5 +134,5 @@ public class JSONFileParser
         return one_car;
     }
 
-    ArrayList updated_cars;
+    
 }

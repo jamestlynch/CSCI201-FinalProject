@@ -8,22 +8,22 @@ import java.net.URL;
 import java.net.URLConnection;
 
 
-// Referenced classes of package mapGUI:
+// Referenced classes of package jsonFile:
 //            JSONFileParser
 
-public class JSONFileGetter
+public class JSONFileGetter extends Thread
 {
-
+	URL url;
+	String JSONfile;
     public JSONFileGetter()
     {
         try
         {
-            URL url = new URL("http://www-scf.usc.edu/~csci201/mahdi_project/test.json");
+        	url = new URL("http://www-scf.usc.edu/~csci201/mahdi_project/test.json");
             URLConnection connection = url.openConnection();
             java.io.InputStream is = connection.getInputStream();
             BufferedReader in = new BufferedReader(new InputStreamReader(is));
-            String JSONfile = in.readLine();
-            new JSONFileParser(JSONfile);
+            JSONfile = in.readLine();
         }
         catch(MalformedURLException mue)
         {
@@ -34,10 +34,8 @@ public class JSONFileGetter
             System.out.println((new StringBuilder("IOE:")).append(ioe.getMessage()).toString());
         }
     }
-
-    public static void main(String args[])
+    public void run()
     {
-        new JSONFileGetter();
-        System.out.println("HELLO WORLD");
+    	new JSONFileParser(JSONfile);
     }
 }

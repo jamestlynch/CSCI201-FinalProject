@@ -1,4 +1,4 @@
-package src;
+package objects;
 
 
 public class Automobile
@@ -19,7 +19,7 @@ public class Automobile
 
     public void print()
     {
-        System.out.print((new StringBuilder("ID: ")).append(id).append(", SPEED: ").append(speed).append(", DIRECTION: ").append(direction).append(", RAMP: ").append(ramp).append(", FREEWAY: ").append(freeway).toString());
+        System.out.println((new StringBuilder("ID: ")).append(id).append(", SPEED: ").append(speed).append(", DIRECTION: ").append(direction).append(", RAMP: ").append(ramp).append(", FREEWAY: ").append(freeway).toString());
     }
 
     public void setId(int id)
