@@ -1,8 +1,8 @@
-package jsonFile;
+package main.jsonfile;
 
 import java.util.ArrayList;
 
-import objects.Automobile;
+import main.automobile.Automobile;
 
 // Referenced classes of package objects:
 //            Automobile

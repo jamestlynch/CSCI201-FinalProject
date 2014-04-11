@@ -14,7 +14,7 @@
  * ==========================================================================================================================
  */
 
-package map.sql;
+package main.map.sql;
 
 import java.io.File;
 import java.io.FileInputStream;

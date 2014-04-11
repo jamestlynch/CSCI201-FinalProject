@@ -1,6 +1,6 @@
-package tempfiles;
+package main.tempfiles;
 
-import jsonFile.JSONFileGetter;
+import main.jsonfile.JSONFileGetter;
 
 public class Main {
 
