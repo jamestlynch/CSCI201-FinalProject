@@ -16,9 +16,11 @@
 
 package map.sql;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.PreparedStatement;
 import java.util.PriorityQueue;
 import java.util.Properties;
 
@@ -32,9 +34,10 @@ public class MapSQLController implements Runnable {
 	 *  Queue for holding MapSQLController's many statements (MapSQLStatementModels) and is in charge of executing the SQL 
 	 *    commands and using the returned data to update the Map's Model.
 	 */
-	private PriorityQueue<MapSQLStatementModel> statementQueue = new PriorityQueue<MapSQLStatementModel>();
+	private PriorityQueue<PreparedStatement> statementQueue = new PriorityQueue<PreparedStatement>();
 	
-	private final String sqlStatementsFileName = "map-sql-statements.properties";
+	private final String filePath = new File("").getAbsolutePath();
+	private final String sqlStatementsFileName = filePath + "/src/map/sql/map-sql-statements.properties";
 	
 	// =========================================================================
 	//   CONSTRUCTORS
@@ -58,9 +61,20 @@ public class MapSQLController implements Runnable {
 			sqlStatements.load(input);
 
 			// 
-			System.out.println(sqlStatements.getProperty("database"));
-			System.out.println(sqlStatements.getProperty("dbuser"));
-			System.out.println(sqlStatements.getProperty("dbpassword"));
+			String tableName = "xyz";
+			String createTable = sqlStatements.getProperty("createTable");
+			System.out.println(createTable);
+			
+			
+			/*
+			 * Backup what they give us
+			 * 
+			 * Time stamp
+			 * 
+			 */
+			
+			//System.out.println(sqlStatements.getProperty("dbuser"));
+			//System.out.println(sqlStatements.getProperty("dbpassword"));
 
 		} catch (IOException ioe) 
 		{
@@ -98,5 +112,7 @@ public class MapSQLController implements Runnable {
 	//   MAP MODEL UPDATES
 	// =========================================================================
 
-	
+	public static void main(String[] args) {
+		new MapSQLController();
+	}
 }
