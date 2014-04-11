@@ -2,7 +2,7 @@
  * MapAboutBox.java
  */
 
-package mapapp;
+package external.MapApp.src.mapapp;
 
 import org.jdesktop.application.Action;
 

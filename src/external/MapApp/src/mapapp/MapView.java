@@ -2,7 +2,7 @@
  * MapView.java
  */
 
-package mapapp;
+package external.MapApp.src.mapapp;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
