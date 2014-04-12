@@ -1,0 +1,669 @@
+	<segment>
+		<number begin = I-5 south (Santa Ana Freeway) Santa Ana end = Euclid Avenue></number>
+		<points>
+			<point x=34.024671947017836 y=-118.20374965667725 num=0></point>
+			<point x=34.025205466778296 y=-118.20516586303711 num=1></point>
+			<point x=34.02570341552858 y=-118.20611000061035 num=2></point>
+			<point x=34.02609465892551 y=-118.20718288421631 num=3></point>
+			<point x=34.026308063654476 y=-118.20808410644531 num=4></point>
+			<point x=34.02691270747215 y=-118.20919990539551 num=5></point>
+			<point x=34.02723281127853 y=-118.20971488952637 num=6></point>
+        <distance d=0.38467734721082514> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = null end = SR 60 east (Pomona Freeway) / Soto Street Pomona></number>
+		<points>
+			<point x=34.027659614475326 y=-118.21065902709961 num=0></point>
+			<point x=34.02819311545256 y=-118.21168899536133 num=1></point>
+			<point x=34.0290111437696 y=-118.21357727050781 num=2></point>
+			<point x=34.02965133434282 y=-118.21520805358887 num=3></point>
+			<point x=34.030184822797445 y=-118.21619510650635 num=4></point>
+			<point x=34.030753873451836 y=-118.2172679901123 num=5></point>
+        <distance d=0.43463097558579755> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 60 east (Pomona Freeway) / Soto Street Pomona end = Seventh Street></number>
+		<points>
+			<point x=34.031500746643836 y=-118.21834087371826 num=0></point>
+			<point x=34.03178526803522 y=-118.21881294250488 num=1></point>
+			<point x=34.031891963311 y=-118.21898460388184 num=2></point>
+			<point x=34.032105353460054 y=-118.21919918060303 num=3></point>
+			<point x=34.03224761326125 y=-118.21941375732422 num=4></point>
+			<point x=34.032532132148006 y=-118.21979999542236 num=5></point>
+			<point x=34.03270995596771 y=-118.2200574874878 num=6></point>
+			<point x=34.032923344059355 y=-118.22035789489746 num=7></point>
+			<point x=34.03317229615459 y=-118.22065830230713 num=8></point>
+			<point x=34.033385683083374 y=-118.22087287902832 num=9></point>
+			<point x=34.033741326771946 y=-118.22108745574951 num=10></point>
+        <distance d=0.22066696092440322> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Seventh Street end = Fourth Street></number>
+		<points>
+			<point x=34.03441704567287 y=-118.22143077850342 num=0></point>
+			<point x=34.0350571954564 y=-118.22155952453613 num=1></point>
+			<point x=34.03576846732817 y=-118.22173118591309 num=2></point>
+			<point x=34.03726211884693 y=-118.2218599319458 num=3></point>
+			<point x=34.03847124605127 y=-118.22181701660156 num=4></point>
+			<point x=34.03989372657805 y=-118.22181701660156 num=5></point>
+			<point x=34.041138377469416 y=-118.22160243988037 num=6></point>
+			<point x=34.042418570759274 y=-118.22117328643799 num=7></point>
+			<point x=34.043165341254344 y=-118.22104454040527 num=8></point>
+        <distance d=0.604824112084389> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Fourth Street end = First Street></number>
+		<points>
+			<point x=34.04323646191093 y=-118.22100162506104 num=0></point>
+			<point x=34.04412546508576 y=-118.22117328643799 num=1></point>
+			<point x=34.04647238868914 y=-118.2213020324707 num=2></point>
+			<point x=34.0472546821227 y=-118.22143077850342 num=3></point>
+        <distance d=0.27870379018041613> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = First Street end = Cesar Chavez Avenue></number>
+		<points>
+			<point x=34.048001410031155 y=-118.22168827056885 num=0></point>
+			<point x=34.049068152778524 y=-118.22246074676514 num=1></point>
+			<point x=34.049885979795945 y=-118.2227611541748 num=2></point>
+			<point x=34.05088158464805 y=-118.22288990020752 num=3></point>
+        <distance d=0.21054498518741518> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Cesar Chavez Avenue end = I-10 east (San Bernardino Freeway) San Bernardino></number>
+		<points>
+			<point x=34.051557166996446 y=-118.22323322296143 num=0></point>
+			<point x=34.05201940444876 y=-118.22349071502686 num=1></point>
+			<point x=34.05237497000485 y=-118.22349071502686 num=2></point>
+			<point x=34.05273053406963 y=-118.22336196899414 num=3></point>
+        <distance d=0.08140223705118485> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = I-10 east (San Bernardino Freeway) San Bernardino end = Mission Road></number>
+		<points>
+			<point x=34.052339413516336 y=-118.22456359863281 num=0></point>
+			<point x=34.05273053406963 y=-118.2249927520752 num=1></point>
+			<point x=34.0527660903941 y=-118.22559356689453 num=2></point>
+			<point x=34.052872759277996 y=-118.22619438171387 num=3></point>
+			<point x=34.05297942802767 y=-118.22653770446777 num=4></point>
+        <distance d=0.12134653530059125> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Mission Road end = Vignes Street></number>
+		<points>
+			<point x=34.052872759277996 y=-118.22694540023804 num=0></point>
+			<point x=34.052872759277996 y=-118.22694540023804 num=1></point>
+			<point x=34.05322832125499 y=-118.22786808013916 num=2></point>
+			<point x=34.05329943347142 y=-118.22868347167969 num=3></point>
+			<point x=34.053494991759074 y=-118.22949886322021 num=4></point>
+			<point x=34.053619437707226 y=-118.23061466217041 num=5></point>
+			<point x=34.053743883472706 y=-118.23117256164551 num=6></point>
+			<point x=34.05390388490276 y=-118.23175191879272 num=7></point>
+			<point x=34.054028330250674 y=-118.23224544525146 num=8></point>
+			<point x=34.05406388603078 y=-118.23246002197266 num=9></point>
+        <distance d=0.32621951966812346> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Vignes Street end = Alameda Street Union Station></number>
+		<points>
+			<point x=34.05409944179601 y=-118.23269605636597 num=0></point>
+			<point x=34.05409944179601 y=-118.23263168334961 num=1></point>
+			<point x=34.05409944179601 y=-118.23331832885742 num=2></point>
+			<point x=34.05409944179601 y=-118.2338547706604 num=3></point>
+			<point x=34.05406388603078 y=-118.23432683944702 num=4></point>
+			<point x=34.05413499754633 y=-118.23516368865967 num=5></point>
+			<point x=34.05413499754633 y=-118.23593616485596 num=6></point>
+			<point x=34.05417055328173 y=-118.2364296913147 num=7></point>
+			<point x=34.054294998238156 y=-118.23724508285522 num=8></point>
+        <distance d=0.2607440024138331> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Alameda Street Union Station end = Los Angeles Street></number>
+		<points>
+			<point x=34.05445499862801 y=-118.23776006698608 num=0></point>
+			<point x=34.05461499871587 y=-118.23829650878906 num=1></point>
+			<point x=34.05473944301985 y=-118.23866128921509 num=2></point>
+			<point x=34.055023886457235 y=-118.23898315429688 num=3></point>
+			<point x=34.05511277483569 y=-118.23915481567383 num=4></point>
+        <distance d=0.09186558554197233> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Los Angeles Street end = Spring Street></number>
+		<points>
+			<point x=34.05536166179949 y=-118.23958396911621 num=0></point>
+			<point x=34.05559277046868 y=-118.24009895324707 num=1></point>
+			<point x=34.05575276840899 y=-118.24042081832886 num=2></point>
+			<point x=34.05601943097178 y=-118.2409143447876 num=3></point>
+			<point x=34.05644608932734 y=-118.24127912521362 num=4></point>
+        <distance d=0.12259117083116992> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Spring Street end = Broadway></number>
+		<points>
+			<point x=34.05664164035593 y=-118.24162244796753 num=0></point>
+			<point x=34.05680163631649 y=-118.24190139770508 num=1></point>
+			<point x=34.0569794092518 y=-118.2422661781311 num=2></point>
+        <distance d=0.043615336452519984> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Broadway end = Grand Avenue, Temple Street></number>
+		<points>
+			<point x=34.05733495400388 y=-118.2424807548523 num=0></point>
+			<point x=34.05735273120233 y=-118.2428240776062 num=1></point>
+			<point x=34.057512725820644 y=-118.24321031570435 num=2></point>
+			<point x=34.05774382862505 y=-118.24389696121216 num=3></point>
+			<point x=34.05833047137554 y=-118.24430465698242 num=4></point>
+			<point x=34.05863267969268 y=-118.24492692947388 num=5></point>
+			<point x=34.05914820904089 y=-118.2452917098999 num=6></point>
+        <distance d=0.2039167505982766> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Grand Avenue, Temple Street end = SR 110 north (Pasadena Freeway) / I-110 south (Harbor Freeway) Pasadena, San Pedro></number>
+		<points>
+			<point x=34.05984150218582 y=-118.24576377868652 num=0></point>
+			<point x=34.06016148172457 y=-118.24625730514526 num=1></point>
+			<point x=34.060499236593756 y=-118.24664354324341 num=2></point>
+			<point x=34.061103636684386 y=-118.24737310409546 num=3></point>
+			<point x=34.06163692730247 y=-118.2477593421936 num=4></point>
+			<point x=34.062223543106434 y=-118.24799537658691 num=5></point>
+			<point x=34.06245463306585 y=-118.24803829193115 num=6></point>
+			<point x=34.06288125902764 y=-118.24799537658691 num=7></point>
+        <distance d=0.24580863346563894> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 110 north (Pasadena Freeway) / I-110 south (Harbor Freeway) Pasadena, San Pedro end = Glendale Boulevard, Echo Park Avenue, Union Avenue, Belmont Avenue></number>
+		<points>
+			<point x=34.06332565878736 y=-118.24906826019287 num=0></point>
+			<point x=34.06353896984421 y=-118.2494330406189 num=1></point>
+			<point x=34.064232227070775 y=-118.25007677078247 num=2></point>
+			<point x=34.0644810872559 y=-118.25059175491333 num=3></point>
+			<point x=34.06480104927714 y=-118.25102090835571 num=4></point>
+			<point x=34.06535209214834 y=-118.251793384552 num=5></point>
+			<point x=34.06707629991894 y=-118.25421810150146 num=6></point>
+			<point x=34.06712962537314 y=-118.25434684753418 num=7></point>
+			<point x=34.06938703881733 y=-118.25945377349854 num=8></point>
+        <distance d=0.7271085645046105> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Glendale Boulevard, Echo Park Avenue, Union Avenue, Belmont Avenue end = SR 2 east (Alvarado Street)></number>
+		<points>
+			<point x=34.069475912131814 y=-118.26001167297363 num=0></point>
+			<point x=34.06949368678351 y=-118.26033353805542 num=1></point>
+			<point x=34.06999137551726 y=-118.26172828674316 num=2></point>
+			<point x=34.070595707906314 y=-118.2633376121521 num=3></point>
+			<point x=34.071822133914885 y=-118.26612710952759 num=4></point>
+			<point x=34.07215984230689 y=-118.26685667037964 num=5></point>
+        <distance d=0.4334133116248083> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 2 east (Alvarado Street) end = Rampart Boulevard, Benton Way></number>
+		<points>
+			<point x=34.07226648678257 y=-118.26709270477295 num=0></point>
+			<point x=34.075252477594326 y=-118.27408790588379 num=1></point>
+        <distance d=0.4503555555311149> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Rampart Boulevard, Benton Way end = Silver Lake Boulevard></number>
+		<points>
+			<point x=34.07527025103403 y=-118.27428102493286 num=0></point>
+			<point x=34.07676320665506 y=-118.27919483184814 num=1></point>
+			<point x=34.077243079658956 y=-118.28140497207642 num=2></point>
+        <distance d=0.4298623195951473> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Silver Lake Boulevard end = Vermont Avenue></number>
+		<points>
+			<point x=34.077403036722764 y=-118.28168392181396 num=0></point>
+			<point x=34.07790067898932 y=-118.28402280807495 num=1></point>
+			<point x=34.07822059033095 y=-118.28563213348389 num=2></point>
+			<point x=34.078522727710734 y=-118.28696250915527 num=3></point>
+			<point x=34.07877154592007 y=-118.28824996948242 num=4></point>
+			<point x=34.079340270510684 y=-118.28970909118652 num=5></point>
+			<point x=34.07999785355778 y=-118.29101800918579 num=6></point>
+			<point x=34.08056656991341 y=-118.29206943511963 num=7></point>
+        <distance d=0.6332269879962981> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Vermont Avenue end = Melrose Avenue, Normandie Avenue></number>
+		<points>
+			<point x=34.08049548057781 y=-118.29211235046387 num=0></point>
+			<point x=34.08351672471427 y=-118.29816341400146 num=1></point>
+        <distance d=0.4043102994676216> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Melrose Avenue, Normandie Avenue end = SR 2 west (Santa Monica Boulevard) / Western Avenue></number>
+		<points>
+			<point x=34.083676669928906 y=-118.29852819442749 num=0></point>
+			<point x=34.084814049409125 y=-118.30024480819702 num=1></point>
+			<point x=34.08636015014022 y=-118.30256223678589 num=2></point>
+			<point x=34.08769297293852 y=-118.30430030822754 num=3></point>
+			<point x=34.08931010309413 y=-118.3053731918335 num=4></point>
+			<point x=34.090785041026145 y=-118.30614566802979 num=5></point>
+        <distance d=0.6566399318132194> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 2 west (Santa Monica Boulevard) / Western Avenue end = Sunset Boulevard></number>
+		<points>
+			<point x=34.09099828293832 y=-118.3063817024231 num=0></point>
+			<point x=34.09330836922324 y=-118.30816268920898 num=1></point>
+			<point x=34.094552235726 y=-118.31017971038818 num=2></point>
+			<point x=34.095476239009564 y=-118.31170320510864 num=3></point>
+			<point x=34.096506846156466 y=-118.31305503845215 num=4></point>
+			<point x=34.09787504660015 y=-118.31417083740234 num=5></point>
+			<point x=34.09817711384728 y=-118.3143424987793 num=6></point>
+        <distance d=0.6733914733748118> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Sunset Boulevard end = Hollywood Boulevard></number>
+		<points>
+			<point x=34.09840810572055 y=-118.31449270248413 num=0></point>
+			<point x=34.099722970528795 y=-118.3152437210083 num=1></point>
+			<point x=34.10130433492697 y=-118.31618785858154 num=2></point>
+			<point x=34.10158862202206 y=-118.31631660461426 num=3></point>
+        <distance d=0.2432585515724664> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Hollywood Boulevard end = Gower Street></number>
+		<points>
+			<point x=34.10201505087388 y=-118.31644535064697 num=0></point>
+			<point x=34.102441477576804 y=-118.31700325012207 num=1></point>
+			<point x=34.10311664879486 y=-118.31773281097412 num=2></point>
+			<point x=34.10370297732407 y=-118.31859111785889 num=3></point>
+			<point x=34.10405832597048 y=-118.31957817077637 num=4></point>
+			<point x=34.104200465011175 y=-118.32043647766113 num=5></point>
+			<point x=34.10444920775785 y=-118.32138061523438 num=6></point>
+			<point x=34.10443144044304 y=-118.32213163375854 num=7></point>
+        <distance d=0.36564231978638645> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Gower Street end = Vine Street></number>
+		<points>
+			<point x=34.10439590580224 y=-118.32260370254517 num=0></point>
+			<point x=34.10439590580224 y=-118.32260370254517 num=1></point>
+			<point x=34.10466241524439 y=-118.32393407821655 num=2></point>
+			<point x=34.10492892384708 y=-118.32502841949463 num=3></point>
+			<point x=34.10535533586527 y=-118.32590818405151 num=4></point>
+        <distance d=0.20032568383158308> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Vine Street end = Cahuenga Boulevard Hollywood Bowl></number>
+		<points>
+			<point x=34.105746211660765 y=-118.3265733718872 num=0></point>
+			<point x=34.10606601778666 y=-118.32717418670654 num=1></point>
+			<point x=34.10674116008264 y=-118.3282470703125 num=2></point>
+			<point x=34.107007662137455 y=-118.32895517349243 num=3></point>
+			<point x=34.10762949700066 y=-118.32979202270508 num=4></point>
+			<point x=34.10802036228958 y=-118.33050012588501 num=5></point>
+			<point x=34.108198027733 y=-118.3308219909668 num=6></point>
+        <distance d=0.2962541914863156> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Cahuenga Boulevard Hollywood Bowl end = Highland Avenue (SR 170 south) Hollywood Bowl></number>
+		<points>
+			<point x=34.10844675872702 y=-118.3312726020813 num=0></point>
+			<point x=34.10892645215024 y=-118.33223819732666 num=1></point>
+			<point x=34.10983253230622 y=-118.33350419998169 num=2></point>
+			<point x=34.11082743267139 y=-118.33459854125977 num=3></point>
+			<point x=34.11150253696949 y=-118.33507061004639 num=4></point>
+        <distance d=0.30294485579371844> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Highland Avenue (SR 170 south) Hollywood Bowl end = Barham Boulevard Burbank></number>
+		<points>
+			<point x=34.11121828318488 y=-118.3347487449646 num=0></point>
+			<point x=34.112497417693284 y=-118.3356499671936 num=1></point>
+			<point x=34.116334705157875 y=-118.33691596984863 num=2></point>
+			<point x=34.118555278098185 y=-118.33740949630737 num=3></point>
+			<point x=34.11917702807294 y=-118.33794593811035 num=4></point>
+			<point x=34.120065234392776 y=-118.3383321762085 num=5></point>
+			<point x=34.120953431383306 y=-118.33908319473267 num=6></point>
+			<point x=34.1221968914966 y=-118.3401346206665 num=7></point>
+			<point x=34.1230850660963 y=-118.34140062332153 num=8></point>
+			<point x=34.12422191597002 y=-118.34275245666504 num=9></point>
+			<point x=34.125607431086124 y=-118.3440613746643 num=10></point>
+			<point x=34.12558966821551 y=-118.3440613746643 num=11></point>
+			<point x=34.128378393201224 y=-118.34633588790894 num=12></point>
+			<point x=34.12878692480487 y=-118.34680795669556 num=13></point>
+        <distance d=1.3961058592684703> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Barham Boulevard Burbank end = Universal Studios Boulevard></number>
+		<points>
+			<point x=34.12931978914688 y=-118.34732294082642 num=0></point>
+			<point x=34.13271228001997 y=-118.3508849143982 num=1></point>
+			<point x=34.13344049329414 y=-118.35236549377441 num=2></point>
+			<point x=34.13345825451511 y=-118.35238695144653 num=3></point>
+        <distance d=0.4069727392713502> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Universal Studios Boulevard end = Lankershim Boulevard Universal City></number>
+		<points>
+			<point x=34.13361810533605 y=-118.35283756256104 num=0></point>
+			<point x=34.133777955854654 y=-118.35373878479004 num=1></point>
+			<point x=34.134186461362006 y=-118.35502624511719 num=2></point>
+			<point x=34.13443511592155 y=-118.35648536682129 num=3></point>
+			<point x=34.13486137917868 y=-118.35766553878784 num=4></point>
+			<point x=34.135358683594795 y=-118.35903882980347 num=5></point>
+			<point x=34.13610463473213 y=-118.36021900177002 num=6></point>
+			<point x=34.136637452941926 y=-118.36092710494995 num=7></point>
+			<point x=34.13724130951865 y=-118.36178541183472 num=8></point>
+			<point x=34.13795172349637 y=-118.36268663406372 num=9></point>
+        <distance d=0.6378702383714935> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Lankershim Boulevard Universal City end = Ventura Boulevard></number>
+		<points>
+			<point x=34.13816484652512 y=-118.36298704147339 num=0></point>
+			<point x=34.13846676989573 y=-118.36343765258789 num=1></point>
+			<point x=34.139194933586694 y=-118.36448907852173 num=2></point>
+			<point x=34.13979877188829 y=-118.36521863937378 num=3></point>
+        <distance d=0.17037783654574656> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Ventura Boulevard end = Vineland Avenue></number>
+		<points>
+			<point x=34.14015396887353 y=-118.36560487747192 num=0></point>
+			<point x=34.14100643554625 y=-118.36601257324219 num=1></point>
+			<point x=34.14196545027288 y=-118.3665919303894 num=2></point>
+			<point x=34.1433329154082 y=-118.36734294891357 num=3></point>
+			<point x=34.144487251866416 y=-118.36792230606079 num=4></point>
+			<point x=34.14548174447537 y=-118.36850166320801 num=5></point>
+			<point x=34.146121054970635 y=-118.36888790130615 num=6></point>
+			<point x=34.14709776999634 y=-118.36993932723999 num=7></point>
+			<point x=34.14731086995581 y=-118.37030410766602 num=8></point>
+        <distance d=0.5627649807714759> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Vineland Avenue end = SR 134 east (Ventura Freeway) Pasadena></number>
+		<points>
+			<point x=34.14739966144691 y=-118.3706259727478 num=0></point>
+			<point x=34.148553942338424 y=-118.37236404418945 num=1></point>
+			<point x=34.14974372305683 y=-118.3736515045166 num=2></point>
+			<point x=34.15088021436189 y=-118.37435960769653 num=3></point>
+			<point x=34.15205220500427 y=-118.37515354156494 num=4></point>
+			<point x=34.15343726388764 y=-118.3762264251709 num=5></point>
+			<point x=34.154218569134635 y=-118.37710618972778 num=6></point>
+        <distance d=0.5993611614912207> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 134 east (Ventura Freeway) Pasadena end = SR 170 north (Hollywood Freeway) Sacramento></number>
+		<points>
+			<point x=34.15302885145009 y=-118.37605476379395 num=0></point>
+			<point x=34.1534727779193 y=-118.37742805480957 num=1></point>
+			<point x=34.153845674350215 y=-118.37832927703857 num=2></point>
+			<point x=34.15420081227746 y=-118.37931632995605 num=3></point>
+			<point x=34.154484921544025 y=-118.3800458908081 num=4></point>
+        <distance d=0.24938124286866195> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 170 north (Hollywood Freeway) Sacramento end = Tujunga Avenue></number>
+		<points>
+			<point x=34.154378380681074 y=-118.38023900985718 num=0></point>
+			<point x=34.15436062385751 y=-118.38114023208618 num=1></point>
+			<point x=34.15439613750089 y=-118.38169813156128 num=2></point>
+        <distance d=0.08343266506086806> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Tujunga Avenue end = Laurel Canyon Boulevard Studio City></number>
+		<points>
+			<point x=34.154378380681074 y=-118.38191270828247 num=0></point>
+			<point x=34.15436062385751 y=-118.38257789611816 num=1></point>
+			<point x=34.154378380681074 y=-118.38440179824829 num=2></point>
+			<point x=34.15452043513515 y=-118.38738441467285 num=3></point>
+			<point x=34.15452043513515 y=-118.39101076126099 num=4></point>
+			<point x=34.15452043513515 y=-118.39101076126099 num=5></point>
+			<point x=34.15462697581889 y=-118.39646100997925 num=6></point>
+        <distance d=0.8319592367344232> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Laurel Canyon Boulevard Studio City end = Coldwater Canyon Avenue></number>
+		<points>
+			<point x=34.15452043513515 y=-118.39699745178223 num=0></point>
+			<point x=34.15484005678317 y=-118.39843511581421 num=1></point>
+			<point x=34.15533724360904 y=-118.4002161026001 num=2></point>
+			<point x=34.15610077482092 y=-118.40148210525513 num=3></point>
+			<point x=34.15666897961455 y=-118.40287685394287 num=4></point>
+			<point x=34.15688205542651 y=-118.40465784072876 num=5></point>
+			<point x=34.15698859313087 y=-118.40656757354736 num=6></point>
+			<point x=34.15695308057767 y=-118.409743309021 num=7></point>
+			<point x=34.1570951307008 y=-118.41309070587158 num=8></point>
+			<point x=34.1570951307008 y=-118.41394901275635 num=9></point>
+        <distance d=0.9853601872144884> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Coldwater Canyon Avenue end = Woodman Avenue></number>
+		<points>
+			<point x=34.15695308057767 y=-118.41459274291992 num=0></point>
+			<point x=34.15688205542651 y=-118.41639518737793 num=1></point>
+			<point x=34.15688205542651 y=-118.41862678527832 num=2></point>
+			<point x=34.157024105669095 y=-118.4196138381958 num=3></point>
+			<point x=34.15695308057767 y=-118.42193126678467 num=4></point>
+			<point x=34.15663346692696 y=-118.42326164245605 num=5></point>
+			<point x=34.156349364888555 y=-118.42467784881592 num=6></point>
+			<point x=34.15613628773252 y=-118.42617988586426 num=7></point>
+			<point x=34.15588769703763 y=-118.42751026153564 num=8></point>
+			<point x=34.15588769703763 y=-118.42931270599365 num=9></point>
+			<point x=34.156065261894355 y=-118.4306001663208 num=10></point>
+			<point x=34.156065261894355 y=-118.43137264251709 num=11></point>
+        <distance d=0.9613070804152444> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Woodman Avenue end = Van Nuys Boulevard></number>
+		<points>
+			<point x=34.15592321003884 y=-118.43180179595947 num=0></point>
+			<point x=34.15592321003884 y=-118.43364715576172 num=1></point>
+			<point x=34.15610077482092 y=-118.43579292297363 num=2></point>
+			<point x=34.155994235996474 y=-118.43690872192383 num=3></point>
+			<point x=34.15592321003884 y=-118.43991279602051 num=4></point>
+			<point x=34.155710131807524 y=-118.44145774841309 num=5></point>
+			<point x=34.15553256620408 y=-118.44368934631348 num=6></point>
+			<point x=34.15595872302512 y=-118.44600677490234 num=7></point>
+			<point x=34.15681103021557 y=-118.44738006591797 num=8></point>
+			<point x=34.15737923023018 y=-118.4487533569336 num=9></point>
+        <distance d=0.9743676172542134> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Van Nuys Boulevard end = Sepulveda Boulevard></number>
+		<points>
+			<point x=34.15737923023018 y=-118.44982624053955 num=0></point>
+			<point x=34.15776986552243 y=-118.45210075378418 num=1></point>
+			<point x=34.15791191427159 y=-118.45386028289795 num=2></point>
+			<point x=34.15837357105599 y=-118.455491065979 num=3></point>
+			<point x=34.158586642566746 y=-118.45746517181396 num=4></point>
+			<point x=34.15908380733427 y=-118.45883846282959 num=5></point>
+			<point x=34.159580969174534 y=-118.46051216125488 num=6></point>
+			<point x=34.15965199205562 y=-118.46197128295898 num=7></point>
+			<point x=34.15975852626521 y=-118.46347332000732 num=8></point>
+			<point x=34.16007812808752 y=-118.46506118774414 num=9></point>
+			<point x=34.16004261683367 y=-118.46596240997314 num=10></point>
+        <distance d=0.9406938056277829> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Sepulveda Boulevard end = I-405 (San Diego Freeway) Santa Monica, Sacramento></number>
+		<points>
+			<point x=34.159971594281174 y=-118.46686363220215 num=0></point>
+			<point x=34.16039772870009 y=-118.46780776977539 num=1></point>
+			<point x=34.16103692629593 y=-118.46896648406982 num=2></point>
+			<point x=34.16171162961954 y=-118.46930980682373 num=3></point>
+        <distance d=0.18441718656143813> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = I-405 (San Diego Freeway) Santa Monica, Sacramento end = Haskell Avenue></number>
+		<points>
+			<point x=34.16231530697037 y=-118.47042560577393 num=0></point>
+			<point x=34.16316754999967 y=-118.47158432006836 num=1></point>
+			<point x=34.16433937011778 y=-118.47291469573975 num=2></point>
+			<point x=34.16519159271471 y=-118.47411632537842 num=3></point>
+        <distance d=0.28983995262821266> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Haskell Avenue end = Hayvenhurst Avenue></number>
+		<points>
+			<point x=34.16529811993441 y=-118.47501754760742 num=0></point>
+			<point x=34.165582191863066 y=-118.48196983337402 num=1></point>
+			<point x=34.16547566500183 y=-118.48905086517334 num=2></point>
+			<point x=34.1658307540165 y=-118.4921407699585 num=3></point>
+        <distance d=0.9795631996198118> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Hayvenhurst Avenue end = Balboa Boulevard Encino></number>
+		<points>
+			<point x=34.1658307540165 y=-118.49291324615479 num=0></point>
+			<point x=34.16646991047888 y=-118.49432945251465 num=1></point>
+			<point x=34.16746414424569 y=-118.49638938903809 num=2></point>
+			<point x=34.16860039706848 y=-118.49759101867676 num=3></point>
+			<point x=34.170056198644474 y=-118.49986553192139 num=4></point>
+			<point x=34.170837350114255 y=-118.5011100769043 num=5></point>
+        <distance d=0.5824140385160828> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Balboa Boulevard Encino end = White Oak Avenue></number>
+		<points>
+			<point x=34.171085896793045 y=-118.50192546844482 num=0></point>
+			<point x=34.171511975110946 y=-118.5051441192627 num=1></point>
+			<point x=34.171511975110946 y=-118.50793361663818 num=2></point>
+			<point x=34.17161849435432 y=-118.51201057434082 num=3></point>
+			<point x=34.1716540007389 y=-118.51570129394531 num=4></point>
+			<point x=34.17161849435432 y=-118.51831912994385 num=5></point>
+        <distance d=0.9378233256752437> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = White Oak Avenue end = Reseda Boulevard></number>
+		<points>
+			<point x=34.17161849435432 y=-118.51909160614014 num=0></point>
+			<point x=34.171511975110946 y=-118.52720260620117 num=1></point>
+			<point x=34.17186703873271 y=-118.5311508178711 num=2></point>
+			<point x=34.17350031215313 y=-118.53492736816406 num=3></point>
+			<point x=34.173713345486334 y=-118.53595733642578 num=4></point>
+        <distance d=0.9748743962056222> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Reseda Boulevard end = Tampa Avenue></number>
+		<points>
+			<point x=34.17328727828213 y=-118.53703022003174 num=0></point>
+			<point x=34.17385536740973 y=-118.55295181274414 num=1></point>
+        <distance d=0.9109385821543902> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Tampa Avenue end = Winnetka Avenue Woodland Hills></number>
+		<points>
+			<point x=34.17367783996815 y=-118.55441093444824 num=0></point>
+			<point x=34.17385536740973 y=-118.55981826782227 num=1></point>
+			<point x=34.17367783996815 y=-118.56239318847656 num=2></point>
+			<point x=34.17321626687231 y=-118.56732845306396 num=3></point>
+			<point x=34.172967726467355 y=-118.57046127319336 num=4></point>
+        <distance d=0.9187654448584225> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Winnetka Avenue Woodland Hills end = De Soto Avenue, Serrania Avenue></number>
+		<points>
+			<point x=34.17254165549877 y=-118.57157707214355 num=0></point>
+			<point x=34.170837350114255 y=-118.57621192932129 num=1></point>
+			<point x=34.16899098044372 y=-118.58076095581055 num=2></point>
+			<point x=34.168316335296716 y=-118.58595371246338 num=3></point>
+			<point x=34.16845836630208 y=-118.58818531036377 num=4></point>
+        <distance d=0.9904060848784068> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = De Soto Avenue, Serrania Avenue end = Canoga Avenue></number>
+		<points>
+			<point x=34.16863590472273 y=-118.58921527862549 num=0></point>
+			<point x=34.16870691998642 y=-118.58964443206787 num=1></point>
+			<point x=34.16952359122454 y=-118.59608173370361 num=2></point>
+			<point x=34.16977214177208 y=-118.59736919403076 num=3></point>
+        <distance d=0.47267381298495376> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Canoga Avenue end = SR 27 (Topanga Canyon Boulevard) / Ventura Boulevard></number>
+		<points>
+			<point x=34.16980764893342 y=-118.59784126281738 num=0></point>
+			<point x=34.17019822672218 y=-118.60084533691406 num=1></point>
+			<point x=34.17065981632414 y=-118.60363483428955 num=2></point>
+			<point x=34.17129893622086 y=-118.60560894012451 num=3></point>
+        <distance d=0.45582072079532204> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 27 (Topanga Canyon Boulevard) / Ventura Boulevard end = Shoup Avenue></number>
+		<points>
+			<point x=34.171440962207335 y=-118.60655307769775 num=0></point>
+			<point x=34.16934605467103 y=-118.61286163330078 num=1></point>
+        <distance d=0.38857813973193217> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Shoup Avenue end = Fallbrook Avenue></number>
+		<points>
+			<point x=34.16824531970441 y=-118.61397743225098 num=0></point>
+			<point x=34.164907519471654 y=-118.62333297729492 num=1></point>
+        <distance d=0.5824158307910088> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Fallbrook Avenue end = Woodlake Avenue></number>
+		<points>
+			<point x=34.164516917201624 y=-118.62419128417969 num=0></point>
+			<point x=34.1625638787426 y=-118.63024234771729 num=1></point>
+        <distance d=0.3713110967631858> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Woodlake Avenue end = Mulholland Drive, Valley Circle Boulevard></number>
+		<points>
+			<point x=34.162279796657465 y=-118.63110065460205 num=0></point>
+			<point x=34.160184661759466 y=-118.63689422607422 num=1></point>
+        <distance d=0.3614640176480703> </distance>
+		</points>
+	</segment>
+

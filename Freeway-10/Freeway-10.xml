@@ -1,0 +1,98 @@
+	<segment>
+		<number begin = Fairfax Avenue, Washington Boulevard end = La Brea Avenue></number>
+		<points>
+			<point x=34.0350571954564 y=-118.36948871612549 num=0></point>
+			<point x=34.03479046696695 y=-118.3671498298645 num=1></point>
+			<point x=34.034239225431264 y=-118.36272954940796 num=2></point>
+			<point x=34.03395471226948 y=-118.35946798324585 num=3></point>
+			<point x=34.033972494370055 y=-118.35757970809937 num=4></point>
+			<point x=34.03415031517072 y=-118.35373878479004 num=5></point>
+			<point x=34.034381481654364 y=-118.35049867630005 num=6></point>
+        <distance d=1.088272444316325> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = null end = Crenshaw Boulevard></number>
+		<points>
+			<point x=34.03471933922815 y=-118.34942579269409 num=0></point>
+			<point x=34.03471933922815 y=-118.34311723709106 num=1></point>
+			<point x=34.03487937655663 y=-118.33816051483154 num=2></point>
+			<point x=34.0349149403664 y=-118.33816051483154 num=3></point>
+			<point x=34.03512832291194 y=-118.33517789840698 num=4></point>
+			<point x=34.03528835946885 y=-118.33348274230957 num=5></point>
+        <distance d=0.9136590448430356> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Crenshaw Boulevard end = Arlington Avenue></number>
+		<points>
+			<point x=34.03518166846445 y=-118.33354711532593 num=0></point>
+			<point x=34.035590649919314 y=-118.32500696182251 num=1></point>
+			<point x=34.0360707560678 y=-118.32178831100464 num=2></point>
+			<point x=34.03637304373019 y=-118.32101583480835 num=3></point>
+			<point x=34.03676423792959 y=-118.31764698028564 num=4></point>
+        <distance d=0.9168881186808739> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Arlington Avenue end = Western Avenue, Normandie Avenue></number>
+		<points>
+			<point x=34.03685314545058 y=-118.31751823425293 num=0></point>
+			<point x=34.037404370000836 y=-118.3091926574707 num=1></point>
+        <distance d=0.4781845433268022> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Western Avenue, Normandie Avenue end = Hoover Street, Vermont Avenue></number>
+		<points>
+			<point x=34.03720877460269 y=-118.30861330032349 num=0></point>
+			<point x=34.03701317875355 y=-118.30442905426025 num=1></point>
+			<point x=34.037119867454436 y=-118.29736948013306 num=2></point>
+			<point x=34.03708430456904 y=-118.29380750656128 num=3></point>
+			<point x=34.036906489918444 y=-118.29151153564453 num=4></point>
+        <distance d=0.9793535632902762> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Hoover Street, Vermont Avenue end = Hoover Street></number>
+		<points>
+			<point x=34.03701317875355 y=-118.29133987426758 num=0></point>
+			<point x=34.03708430456904 y=-118.28421592712402 num=1></point>
+        <distance d=0.407898456134512> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Hoover Street end = I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles></number>
+		<points>
+			<point x=34.037066523120764 y=-118.28359365463257 num=0></point>
+			<point x=34.03777777814487 y=-118.27945232391357 num=1></point>
+			<point x=34.03806227848465 y=-118.27548265457153 num=2></point>
+        <distance d=0.46944637513622695> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles end = Grand Avenue></number>
+		<points>
+			<point x=34.03799115348916 y=-118.2742166519165 num=0></point>
+			<point x=34.03745771412207 y=-118.27189922332764 num=1></point>
+        <distance d=0.13770284741875183> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Grand Avenue end = Los Angeles Street Convention Center></number>
+		<points>
+			<point x=34.03788446588411 y=-118.27179193496704 num=0></point>
+			<point x=34.03717321175457 y=-118.27022552490234 num=1></point>
+        <distance d=0.1022622378826228> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Los Angeles Street Convention Center end = Maple Avenue></number>
+		<points>
+			<point x=34.03695983435275 y=-118.27041864395142 num=0></point>
+			<point x=34.03308338477587 y=-118.26428174972534 num=1></point>
+			<point x=34.0316607900439 y=-118.26119184494019 num=2></point>
+			<point x=34.0316607900439 y=-118.26119184494019 num=3></point>
+        <distance d=0.6427425494423068> </distance>
+		</points>
+	</segment>

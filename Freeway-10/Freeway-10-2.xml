@@ -1,0 +1,161 @@
+	<segment>
+		<number begin = I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles end = Grand Avenue></number>
+		<points>
+			<point x=34.03832899668652 y=-118.27374458312988 num=0></point>
+			<point x=34.03623079084678 y=-118.2694959640503 num=1></point>
+			<point x=34.03477268503785 y=-118.26717853546143 num=2></point>
+        <distance d=0.4491038140196413> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = null end = Los Angeles Street Convention Center></number>
+		<points>
+			<point x=34.03477268503785 y=-118.26713562011719 num=0></point>
+			<point x=34.0323898728239 y=-118.26245784759521 num=1></point>
+        <distance d=0.3143797322261612> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Los Angeles Street Convention Center end = Maple Avenue></number>
+		<points>
+			<point x=34.031963093420316 y=-118.2623291015625 num=0></point>
+			<point x=34.031358485590346 y=-118.25988292694092 num=1></point>
+        <distance d=0.14615677697460772> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Maple Avenue end = San Pedro Street></number>
+		<points>
+			<point x=34.031216224298305 y=-118.25984001159668 num=0></point>
+			<point x=34.0294023719161 y=-118.2562780380249 num=1></point>
+        <distance d=0.23937569644543152> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = San Pedro Street end = Central Avenue></number>
+		<points>
+			<point x=34.029473504112545 y=-118.25619220733643 num=0></point>
+			<point x=34.0259879563598 y=-118.24928283691406 num=1></point>
+        <distance d=0.46315590049697963> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Central Avenue end = Alameda Street></number>
+		<points>
+			<point x=34.02584568606346 y=-118.24958324432373 num=0></point>
+			<point x=34.02392501371833 y=-118.24533462524414 num=1></point>
+			<point x=34.02367603449098 y=-118.2427167892456 num=2></point>
+			<point x=34.023960582119784 y=-118.24031352996826 num=3></point>
+			<point x=34.02488535532449 y=-118.23915481567383 num=4></point>
+        <distance d=0.6008180190444273> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Alameda Street end = Mateo Street, Santa Fe Avenue></number>
+		<points>
+			<point x=34.025205466778296 y=-118.23894023895264 num=0></point>
+			<point x=34.02851321442884 y=-118.22997093200684 num=1></point>
+        <distance d=0.562134164952506> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Mateo Street, Santa Fe Avenue end = I-5 south (Santa Ana Freeway) / SR 60 east (Pomona Freeway) Santa Ana, Pomona></number>
+		<points>
+			<point x=34.028797745838496 y=-118.22988510131836 num=0></point>
+			<point x=34.02979359825871 y=-118.22404861450195 num=1></point>
+        <distance d=0.3411973542186194> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = I-5 south (Santa Ana Freeway) / SR 60 east (Pomona Freeway) Santa Ana, Pomona end = Boyle Avenue></number>
+		<points>
+			<point x=34.029971427818126 y=-118.22359800338745 num=0></point>
+			<point x=34.032532132148006 y=-118.22170972824097 num=1></point>
+			<point x=34.03464821142969 y=-118.21967124938965 num=2></point>
+        <distance d=0.39364353426008897> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Boyle Avenue end = Fourth Street></number>
+		<points>
+			<point x=34.03418587928613 y=-118.22072267532349 num=0></point>
+			<point x=34.035626213430895 y=-118.21997165679932 num=1></point>
+			<point x=34.0379378097034 y=-118.21982145309448 num=2></point>
+			<point x=34.039680356019865 y=-118.21919918060303 num=3></point>
+			<point x=34.0417073546506 y=-118.21795463562012 num=4></point>
+			<point x=34.04300531955895 y=-118.217031955719 num=5></point>
+        <distance d=0.6449323268824406> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Fourth Street end = Cesar Chavez Avenue></number>
+		<points>
+			<point x=34.043147561080886 y=-118.21683883666992 num=0></point>
+			<point x=34.04476554160109 y=-118.21557283401489 num=1></point>
+			<point x=34.04741469579954 y=-118.21452140808105 num=2></point>
+			<point x=34.04942373071191 y=-118.21404933929443 num=3></point>
+        <distance d=0.46209066234271895> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Cesar Chavez Avenue end = I-5 north (Golden State Freeway) Sacramento></number>
+		<points>
+			<point x=34.049583740295425 y=-118.21419954299927 num=0></point>
+			<point x=34.05146827488974 y=-118.21407079696655 num=1></point>
+			<point x=34.053210543191554 y=-118.21392059326172 num=2></point>
+        <distance d=0.2510840804577981> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = I-5 north (Golden State Freeway) Sacramento end = US 101 north (Santa Ana Freeway via San Bernardino Freeway) Los Angeles, Hollywood></number>
+		<points>
+			<point x=34.053619437707226 y=-118.21409225463867 num=0></point>
+			<point x=34.055183885471344 y=-118.21374893188477 num=1></point>
+        <distance d=0.10985973662063202> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = US 101 north (Santa Ana Freeway via San Bernardino Freeway) Los Angeles, Hollywood end = State Street></number>
+		<points>
+			<point x=34.052841647534045 y=-118.21384012699127 num=0></point>
+			<point x=34.05348610275577 y=-118.21332514286041 num=1></point>
+			<point x=34.054094997326175 y=-118.21282088756561 num=2></point>
+			<point x=34.05460610983001 y=-118.21230053901672 num=3></point>
+        <distance d=0.15042594967454906> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = State Street end = Soto Street></number>
+		<points>
+			<point x=34.05436610955981 y=-118.2122254371643 num=0></point>
+			<point x=34.05415277541587 y=-118.21091651916504 num=1></point>
+			<point x=34.054010552354995 y=-118.20898532867432 num=2></point>
+			<point x=34.05369054959558 y=-118.2073974609375 num=3></point>
+			<point x=34.05376166142429 y=-118.20611000061035 num=4></point>
+			<point x=34.05411721967304 y=-118.20398569107056 num=5></point>
+			<point x=34.05466833201137 y=-118.202805519104 num=6></point>
+			<point x=34.055077219495494 y=-118.20126056671143 num=7></point>
+        <distance d=0.6295632151137147> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Soto Street end = City Terrace Drive></number>
+		<points>
+			<point x=34.055219440766784 y=-118.20091724395752 num=0></point>
+			<point x=34.05571721333726 y=-118.19735527038574 num=1></point>
+			<point x=34.0558594335348 y=-118.19310665130615 num=2></point>
+			<point x=34.0558594335348 y=-118.19314956665039 num=3></point>
+			<point x=34.05555721532982 y=-118.18759202957153 num=4></point>
+			<point x=34.055966098526355 y=-118.18418025970459 num=5></point>
+			<point x=34.05658830830197 y=-118.18214178085327 num=6></point>
+        <distance d=1.0788698421097727> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = City Terrace Drive end = Eastern Avenue></number>
+		<points>
+			<point x=34.05635720234703 y=-118.18244218826294 num=0></point>
+			<point x=34.06016148172457 y=-118.17383766174316 num=1></point>
+        <distance d=0.5582591196223714> </distance>
+		</points>
+	</segment>
