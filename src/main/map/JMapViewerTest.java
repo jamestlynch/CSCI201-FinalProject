@@ -25,7 +25,7 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
 
 public class JMapViewerTest extends JFrame {
 	int count = 0;
-	final double markersize = .005;
+	final double markersize = .001;
 	final double maplat = 34.05;
 	final double maplon = -118.25;
 	static String segbegin;
@@ -127,6 +127,7 @@ public class JMapViewerTest extends JFrame {
 				br.println("	</segment>");
 				System.out.println("What is the next segment?");
 				String segend = fin.nextLine();
+				br.println("	<segment>");
 				br.println("		<number begin = "+segbegin+" end = " + segend + "</number>");
 				br.println("		<points>");
 				segbegin = segend;
