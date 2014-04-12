@@ -66,7 +66,7 @@ public class JMapViewerTest extends JFrame {
 		String y;
 		try
 		{
-			
+
 			y = fin.nextLine();
 			FileWriter out = new FileWriter(y+".xml");
 			br = new PrintWriter(out);
@@ -118,11 +118,14 @@ public class JMapViewerTest extends JFrame {
 			{
 				for (int i = 0 ; i < count; i++)
 					br.println("			<point x="+ latpt.get(i)+ " y=" + lonpt.get(i)+ " num=" +i +"></point>");
+				double x = distance(latpt.get(0), lonpt.get(0), latpt.get(count-1), lonpt.get(count-1));
+				br.println("        <distance d=" + x + "> </distance>");
 				latpt.clear();
 				lonpt.clear();
 				count = 0;
 				mmc.clear();
 				map.removeAllMapMarkers();
+				
 				br.println("		</points>");
 				br.println("	</segment>");
 				System.out.println("What is the next segment?");
@@ -132,7 +135,7 @@ public class JMapViewerTest extends JFrame {
 				br.println("		<points>");
 				segbegin = segend;
 				br.flush();
-				
+
 			}
 		}
 	}
@@ -173,10 +176,21 @@ public class JMapViewerTest extends JFrame {
 			for (int i = 0 ; i < count; i++)
 				br.println("			<point x="+ latpt.get(i)+ " y=" + lonpt.get(i)+ " num=" +i +"></point>");
 			br.flush();
+			double x = distance(latpt.get(0), lonpt.get(0), latpt.get(count-1), lonpt.get(count-1));
+			br.println("        <distance d=" + x + "> </distance>");
 			br.println("		</points>");
 			br.println("	</segment>");
 			br.flush();
 			br.close();
 		}
 	}
+	private double distance(double lat1, double lon1, double lat2, double lon2) {
+		double theta = lon1 - lon2;
+		double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+		dist = Math.acos(dist);
+		dist = Math.toDegrees(dist);
+		dist = dist * 60 * 1.1515;
+		return (dist);
+	}
+
 }

@@ -1,0 +1,13 @@
+	<segment>
+		<number begin = Imperial Highway west end = SR 1 (Sepulveda Boulevard) / Imperial Highway east LAX Airport</number>
+		<points>
+			<point x=33.93139678750913 y=-118.40068817138672 num=0></point>
+			<point x=33.93139678750913 y=-118.3993148803711 num=1></point>
+			<point x=33.93139678750913 y=-118.39862823486328 num=2></point>
+			<point x=33.93139678750913 y=-118.39759826660156 num=3></point>
+			<point x=33.93168164416314 y=-118.39691162109375 num=4></point>
+			<point x=33.93168164416314 y=-118.39622497558594 num=5></point>
+			<point x=33.93168164416314 y=-118.39553833007812 num=6></point>
+			<point x=33.93225135461279 y=-118.3938217163086 num=7></point>
+		</points>
+	</segment>
