@@ -10,16 +10,16 @@ import java.net.URLConnection;
 
 // Referenced classes of package jsonFile:
 //            JSONFileParser
-
+//THIS Runs every 3 minutes which can be written as Thread.sleep(180000)
 public class JSONFileGetter extends Thread
 {
 	URL url;
 	String JSONfile;
-    public JSONFileGetter()
+    public JSONFileGetter(String urllink)
     {
         try
         {
-        	url = new URL("http://www-scf.usc.edu/~csci201/mahdi_project/test.json");
+        	url = new URL(urllink);
             URLConnection connection = url.openConnection();
             java.io.InputStream is = connection.getInputStream();
             BufferedReader in = new BufferedReader(new InputStreamReader(is));

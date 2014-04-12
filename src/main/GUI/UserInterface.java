@@ -14,15 +14,16 @@ public class UserInterface extends JPanel {
 	{
 		
 		JTabbedPane ThreeOpts = new JTabbedPane();
-		SetRoutePanel SetRoute = new SetRoutePanel(300, 400);
+		SetRoutePanel SetRoute = new SetRoutePanel(300, 450);
 		
 		ThreeOpts.addTab("Set Route", SetRoute); //Add the name of the JPanel of the chart
-		JPanel DisplayChart = new JPanel();
 		
+		SetChartPanel DisplayChart = new SetChartPanel(300, 450);
 		ThreeOpts.addTab("Chart", DisplayChart);//Add the name of the JPanel
-		JPanel DisplayGraph = new JPanel();
 		
+		SetGraphPanel DisplayGraph = new SetGraphPanel();
 		ThreeOpts.addTab("Graph", DisplayGraph);//Add the name of the JPanel
+		
 		add(ThreeOpts, BorderLayout.NORTH);
 		
 	}
