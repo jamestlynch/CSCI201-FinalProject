@@ -28,10 +28,12 @@ public class JMapViewerTest extends JFrame {
 	final double markersize = .005;
 	final double maplat = 34.05;
 	final double maplon = -118.25;
+	static String segbegin;
 	static PrintWriter br;
 	ArrayList<Double> latpt = new ArrayList<Double>();
 	ArrayList<Double> lonpt = new ArrayList<Double>();
 	ArrayList<MapMarkerCircle> mmc = new ArrayList<MapMarkerCircle>();
+	static Scanner fin = new Scanner(System.in);
 	public JMapViewerTest() {
 		//latpt.
 		super("JMapViewerTest");
@@ -64,7 +66,7 @@ public class JMapViewerTest extends JFrame {
 		String y;
 		try
 		{
-			Scanner fin = new Scanner(System.in);
+			
 			y = fin.nextLine();
 			FileWriter out = new FileWriter(y+".xml");
 			br = new PrintWriter(out);
@@ -78,6 +80,7 @@ public class JMapViewerTest extends JFrame {
 			//br.println("	<name>"+fwy+"</name>");
 			br.println("	<segment>");
 			br.println("		<number begin = "+segbegin+" end = " + segend + "</number>");
+			segbegin = segend;
 			br.println("		<points>");
 			br.flush();
 			JMapViewerTest a = new JMapViewerTest();
@@ -110,6 +113,18 @@ public class JMapViewerTest extends JFrame {
 					lonpt.remove(count-1);
 					count--;
 				}
+			}
+			if (e.getKeyChar() == '.')
+			{
+				br.println("		</points>");
+				br.println("	</segment>");
+				System.out.println("What is the next segment?");
+				String segend = fin.nextLine();
+				br.println("		<number begin = "+segbegin+" end = " + segend + "</number>");
+				br.println("		<points>");
+				segbegin = segend;
+				br.flush();
+				
 			}
 		}
 	}
@@ -145,6 +160,8 @@ public class JMapViewerTest extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			jf.dispose();
+			if (count <= 1)
+				return;
 			for (int i = 0 ; i < count; i++)
 				br.println("			<point x="+ latpt.get(i)+ " y=" + lonpt.get(i)+ " num=" +i +"></point>");
 			br.flush();
