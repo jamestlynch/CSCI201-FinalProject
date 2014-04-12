@@ -4,8 +4,12 @@ package main.map;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
@@ -28,6 +31,7 @@ public class JMapViewerTest extends JFrame {
 	static PrintWriter br;
 	ArrayList<Double> latpt = new ArrayList<Double>();
 	ArrayList<Double> lonpt = new ArrayList<Double>();
+	ArrayList<MapMarkerCircle> mmc = new ArrayList<MapMarkerCircle>();
 	public JMapViewerTest() {
 		//latpt.
 		super("JMapViewerTest");
@@ -39,16 +43,19 @@ public class JMapViewerTest extends JFrame {
 		System.out.println(JMapViewer.MAX_ZOOM);
 		map.setDisplayPositionByLatLon(maplat, maplon, 12);
 		map.addMouseListener(new PointListener(map));
+		map.addKeyListener(new UndoPoint(map));
+		map.setFocusable(true);
 		//map.setDisplayPosition(1500,3000, 5);
 		MapMarkerCircle circle = new MapMarkerCircle(34.05, -118.25, .0005);
 		circle.setColor(Color.RED);
 		circle.setBackColor(Color.GREEN);
-		
+
 		map.addMapMarker(circle);
-		
+
 		add(map);
 
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		addWindowListener(new SaveBeforeClosing(this));
 		this.setVisible(true);
 	}
 
@@ -74,45 +81,44 @@ public class JMapViewerTest extends JFrame {
 			br.println("		<points>");
 			br.flush();
 			JMapViewerTest a = new JMapViewerTest();
-			br.println("		</points>");
-			br.println("	</segment>");
+
 		}
 		catch (IOException ioe)
 		{
 			System.out.println("IOE: " + ioe.getMessage());
-			
+
 		}
 		br.flush();
 		//br.close();
 	}
-	class PointListener implements MouseListener
+	class UndoPoint extends KeyAdapter
+	{
+		JMapViewer map;
+		public UndoPoint(JMapViewer map)
+		{
+			this.map = map;
+		}
+		public void keyReleased(KeyEvent e)
+		{
+			if (e.getKeyChar() == ' ')
+			{
+				if (!(count == 0))
+				{	
+					System.out.println("DELETING LAST ADDITION");
+					map.removeMapMarker(mmc.get(count-1));
+					latpt.remove(count-1);
+					lonpt.remove(count-1);
+					count--;
+				}
+			}
+		}
+	}
+	class PointListener extends MouseAdapter
 	{
 		JMapViewer map;
 		PointListener(JMapViewer map)
 		{
 			this.map = map;
-		}
-		@Override
-		public void mouseClicked(MouseEvent e) {
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -120,14 +126,32 @@ public class JMapViewerTest extends JFrame {
 
 			Coordinate co = map.getPosition(e.getPoint());
 			MapMarkerCircle mm = new MapMarkerCircle(co, markersize);
+			mmc.add(mm);
 			map.addMapMarker(mm);
-			System.out.println(co.toString());
+			System.out.println(count + "pt have been added in total.");
 			latpt.add(co.getLat());
 			lonpt.add(co.getLon());
-			br.println("			<point x="+co.getLat() + " y=" + co.getLon() + " num=" +count +"></point>");
-			br.flush();
 			count++;
-			
+
+		}
+	}
+	class SaveBeforeClosing extends WindowAdapter
+	{
+		JFrame jf;
+		SaveBeforeClosing(JFrame frame)
+		{
+			jf = frame;
+		}
+		@Override
+		public void windowClosing(WindowEvent e) {
+			jf.dispose();
+			for (int i = 0 ; i < count; i++)
+				br.println("			<point x="+ latpt.get(i)+ " y=" + lonpt.get(i)+ " num=" +i +"></point>");
+			br.flush();
+			br.println("		</points>");
+			br.println("	</segment>");
+			br.flush();
+			br.close();
 		}
 	}
 }
