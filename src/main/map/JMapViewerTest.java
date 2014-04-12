@@ -6,20 +6,30 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 
 public class JMapViewerTest extends JFrame {
-	final double markersize = .01;
+	int count = 0;
+	final double markersize = .005;
 	final double maplat = 34.05;
 	final double maplon = -118.25;
+	static PrintWriter br;
+	ArrayList<Double> latpt = new ArrayList<Double>();
+	ArrayList<Double> lonpt = new ArrayList<Double>();
 	public JMapViewerTest() {
+		//latpt.
 		super("JMapViewerTest");
 		this.setSize(new Dimension(600, 600));
 
@@ -43,7 +53,37 @@ public class JMapViewerTest extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new JMapViewerTest();
+		System.out.println("WHAT DO YOU WANT TO NAME THE FILE?");
+		String y;
+		try
+		{
+			Scanner fin = new Scanner(System.in);
+			y = fin.nextLine();
+			FileWriter out = new FileWriter(y+".xml");
+			br = new PrintWriter(out);
+			//System.out.println("WHAT FREEWAY WILL YOU BE GOING OVER?");
+			//String fwy = fin.nextLine();
+			System.out.println("What ramp will you be starting with?");
+			String segbegin = fin.nextLine();
+			System.out.println("What ramp are you ending with?");
+			String segend = fin.nextLine();
+			//br.println("<freeway>");	
+			//br.println("	<name>"+fwy+"</name>");
+			br.println("	<segment>");
+			br.println("		<number begin = "+segbegin+" end = " + segend + "</number>");
+			br.println("		<points>");
+			br.flush();
+			JMapViewerTest a = new JMapViewerTest();
+			br.println("		</points>");
+			br.println("	</segment>");
+		}
+		catch (IOException ioe)
+		{
+			System.out.println("IOE: " + ioe.getMessage());
+			
+		}
+		br.flush();
+		//br.close();
 	}
 	class PointListener implements MouseListener
 	{
@@ -79,9 +119,15 @@ public class JMapViewerTest extends JFrame {
 		public void mouseReleased(MouseEvent e) {
 
 			Coordinate co = map.getPosition(e.getPoint());
-			MapMarker mm = new MapMarkerCircle(co, markersize);
+			MapMarkerCircle mm = new MapMarkerCircle(co, markersize);
 			map.addMapMarker(mm);
 			System.out.println(co.toString());
+			latpt.add(co.getLat());
+			lonpt.add(co.getLon());
+			br.println("			<point x="+co.getLat() + " y=" + co.getLon() + " num=" +count +"></point>");
+			br.flush();
+			count++;
+			
 		}
 	}
 }
