@@ -1,0 +1,14 @@
+<freeway>
+	<name>10</name>
+	<segment>
+		<number>1</number>
+		<distance units=""></distance>
+		<points count="">
+			<point x="" y=""></point>
+			<point x="" y=""></point>
+			<point x="" y=""></point>
+			<point x="" y=""></point>
+			<point x="" y=""></point>
+		</points>
+	</segment>
+</freeway>
