@@ -116,6 +116,13 @@ public class JMapViewerTest extends JFrame {
 			}
 			if (e.getKeyChar() == '.')
 			{
+				for (int i = 0 ; i < count; i++)
+					br.println("			<point x="+ latpt.get(i)+ " y=" + lonpt.get(i)+ " num=" +i +"></point>");
+				latpt.clear();
+				lonpt.clear();
+				count = 0;
+				mmc.clear();
+				map.removeAllMapMarkers();
 				br.println("		</points>");
 				br.println("	</segment>");
 				System.out.println("What is the next segment?");
