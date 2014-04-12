@@ -79,7 +79,7 @@ public class JMapViewerTest extends JFrame {
 			//br.println("<freeway>");	
 			//br.println("	<name>"+fwy+"</name>");
 			br.println("	<segment>");
-			br.println("		<number begin = "+segbegin+" end = " + segend + "</number>");
+			br.println("		<number begin = "+segbegin+" end = " + segend + "></number>");
 			segbegin = segend;
 			br.println("		<points>");
 			br.flush();
@@ -131,7 +131,7 @@ public class JMapViewerTest extends JFrame {
 				System.out.println("What is the next segment?");
 				String segend = fin.nextLine();
 				br.println("	<segment>");
-				br.println("		<number begin = "+segbegin+" end = " + segend + "</number>");
+				br.println("		<number begin = "+segbegin+" end = " + segend + "></number>");
 				br.println("		<points>");
 				segbegin = segend;
 				br.flush();

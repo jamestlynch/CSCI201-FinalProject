@@ -1,5 +1,5 @@
 	<segment>
-		<number begin = SR 1 (Sepulveda Boulevard) / Imperial Highway east LAX Airport end = Nash Street LAX Airport</number>
+		<number begin = SR 1 (Sepulveda Boulevard) / Imperial Highway east LAX Airport end = Nash Street LAX Airport></number>
 		<points>
 			<point x=33.931610430088966 y=-118.3930492401123 num=0></point>
 			<point x=33.93132557319674 y=-118.39210510253906 num=1></point>

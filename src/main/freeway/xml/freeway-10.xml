@@ -1,14 +1,15 @@
 <freeway>
 	<name>10</name>
 	<segment>
-		<number>1</number>
-		<distance units=""></distance>
+		<number begin =  end = ></number>
+		
 		<points count="">
 			<point x="" y=""></point>
 			<point x="" y=""></point>
 			<point x="" y=""></point>
 			<point x="" y=""></point>
 			<point x="" y=""></point>
+		<distance units=""></distance>
 		</points>
 	</segment>
 </freeway>
