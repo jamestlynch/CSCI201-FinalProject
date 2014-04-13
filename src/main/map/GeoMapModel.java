@@ -58,8 +58,11 @@ public class GeoMapModel {
 	}
 	public ArrayList<FreewaySegment> returnAllSegment()
 	{
+		System.out.println(", " + defaultDirectionFreewayNetwork.size());
 		ArrayList<FreewaySegment> allSegments = new ArrayList<FreewaySegment>();
-		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) {
+		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) 
+		{
+			System.out.println(defaultDirectionFreewayNetwork.get(key).size());
 			for (int i = 0; i < defaultDirectionFreewayNetwork.get(key).size(); i++)
 			{
 				FreewaySegment tempfs = defaultDirectionFreewayNetwork.get(key).get(i);
@@ -212,7 +215,7 @@ public class GeoMapModel {
 						startRamp,
 						endRamp
 					);
-					
+					//System.out.println(defaultFreewaySegment.toString());
 					// =========================================================================
 					//   Store the opposite lane's data
 					// =========================================================================
@@ -247,6 +250,7 @@ public class GeoMapModel {
 					
 					defaultDirectionFreewayNetwork.put(startRamp, defaultFreewaySegment);
 					oppositeDirectionFreewayNetwork.put(endRamp, oppositeFreewaySegment);
+					System.out.println("ffffffff" + defaultDirectionFreewayNetwork.get(startRamp).size());
 				} // [Close] Segment List loop
 			} catch (ParserConfigurationException pce) 
 			{
