@@ -27,9 +27,7 @@ public class JSONFileParser
             if(!one_car.equals(""))
             {
                 Automobile a = parse(one_car);
-                updated_cars.add(a);
-                a.print();
-              
+                updated_cars.add(a);              
             }
         }
 
@@ -106,8 +104,7 @@ public class JSONFileParser
                     i++;
                     for(i++; car.charAt(i) != '"'; i++)
                         rampval = (new StringBuilder(String.valueOf(rampval))).append(car.charAt(i)).toString();
-
-                    one_car.setRamp(rampval);
+                    
                 }
             }
             i++;
@@ -126,7 +123,7 @@ public class JSONFileParser
                     for(i++; car.charAt(i) != '"'; i++)
                         freewayval = (new StringBuilder(String.valueOf(freewayval))).append(car.charAt(i)).toString();
 
-                    one_car.setFreeway(freewayval);
+                    //one_car.setFreeway(freewayval);
                 }
             }
         }
