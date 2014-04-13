@@ -6,11 +6,13 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import main.freeway.FreewayRamp;
+import main.freeway.FreewaySegment;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.w3c.dom.Document;
@@ -20,22 +22,24 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import main.freeway.FreewayRamp;
-import main.freeway.FreewaySegment;
-
 public class GeoMapModel {
 	// HashMap that allows you to look-up a freeway section via its start ramp
 	private static FreewayNetwork defaultDirectionFreewayNetwork;
 	private static FreewayNetwork oppositeDirectionFreewayNetwork;
 	
 	private final File[] freewayXMLFiles = {
-			new File("./Freeway-10/Freeway-10.xml"),
-			new File("./Freeway-10/Freeway-10-1.xml"),
-			new File("./Freeway-10/Freeway-10-2.xml"),
-			new File("./Freeway-10/Freeway10-J.xml"),
-			new File("./Freeway-10/Freeway10-J2.xml"),
-			new File("./Freeway-101/Freeway101-1.xml"),
-			new File("./Freeway-101/Freeway101-J.xml")
+		new File("./Freeway-10/Freeway10.xml"),
+		new File("./Freeway-10/Freeway10-1.xml"),
+		new File("./Freeway-10/Freeway10-2.xml"),
+		new File("./Freeway-10/Freeway10-J.xml"),
+		new File("./Freeway-10/Freeway10-J2.xml"),
+		new File("./Freeway-101/Freeway101-1.xml"),
+		new File("./Freeway-101/Freeway101-J.xml"),
+		new File("./Freeway-105/Freeway105-1.xml"),
+		new File("./Freeway-105/Freeway105-2.xml"),
+		new File("./Freeway-105/Freeway105-3.xml"),
+		new File("./Freeway-105/Freeway105-4.xml"),
+		new File("./Freeway-405/Freeway405.xml")
 	};
 
 	public GeoMapModel() {
@@ -46,8 +50,28 @@ public class GeoMapModel {
 			new FreewayLoader(freewayXMLFiles[i]);
 		}
 		
+		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) {
+			System.out.println("\n\t" + defaultDirectionFreewayNetwork.get(key).get(0).getStartRamp().getRampName() 
+					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getFreewayName() 
+					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getSegmentName());
+		}
 	}
-	
+	public ArrayList<FreewaySegment> returnAllSegment()
+	{
+		System.out.println(", " + defaultDirectionFreewayNetwork.size());
+		ArrayList<FreewaySegment> allSegments = new ArrayList<FreewaySegment>();
+		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) 
+		{
+			System.out.println(defaultDirectionFreewayNetwork.get(key).size());
+			for (int i = 0; i < defaultDirectionFreewayNetwork.get(key).size(); i++)
+			{
+				FreewaySegment tempfs = defaultDirectionFreewayNetwork.get(key).get(i);
+				System.out.println(tempfs.getSegmentName());
+				allSegments.add(tempfs);
+			}
+		}
+		return allSegments;
+	}
 	
 	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
 			throws FreewaySegmentNotFoundException 
@@ -80,6 +104,7 @@ public class GeoMapModel {
 	}
 	
 	
+	
 	/* =========================================================================
 	 *   FREEWAY NETWORK: Custom version of Java's HashMap that overrides the 
 	 *     put() method so that if multiple FreewaySegment's derive from the 
@@ -91,6 +116,7 @@ public class GeoMapModel {
 			ArrayList<FreewaySegment> freewaySegmentsStartingAtRamp = new ArrayList<FreewaySegment>();
 			
 			if (defaultDirectionFreewayNetwork.get(ramp) == null) {
+				freewaySegmentsStartingAtRamp.add(segment);
 				this.put(ramp, freewaySegmentsStartingAtRamp);
 			} else {
 				for (int i = 0; i < this.get(ramp).size(); i++) {
@@ -98,6 +124,7 @@ public class GeoMapModel {
 				}
 				freewaySegmentsStartingAtRamp.add(segment);
 				this.put(ramp, freewaySegmentsStartingAtRamp);
+				System.out.println(defaultDirectionFreewayNetwork.get(ramp));
 			}
 		}
 	}
@@ -188,7 +215,7 @@ public class GeoMapModel {
 						startRamp,
 						endRamp
 					);
-					
+					//System.out.println(defaultFreewaySegment.toString());
 					// =========================================================================
 					//   Store the opposite lane's data
 					// =========================================================================
@@ -223,6 +250,7 @@ public class GeoMapModel {
 					
 					defaultDirectionFreewayNetwork.put(startRamp, defaultFreewaySegment);
 					oppositeDirectionFreewayNetwork.put(endRamp, oppositeFreewaySegment);
+					System.out.println("ffffffff" + defaultDirectionFreewayNetwork.get(startRamp).size());
 				} // [Close] Segment List loop
 			} catch (ParserConfigurationException pce) 
 			{
