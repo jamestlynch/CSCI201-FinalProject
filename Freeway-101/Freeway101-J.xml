@@ -1,12 +1,15 @@
+<freeway>
+	<name>101</name>
 	<segment>
-		<number begin = I-405 (San Diego Freeway) Santa Monica, Sacramento end = US 101 (Ventura Freeway)   Ventura, Los Angeles></number>
+		<ramps begin="I-405 (San Diego Freeway) Santa Monica, Sacramento" end="US 101 (Ventura Freeway)   Ventura, Los Angeles"></ramps>
+		<distance d="0.18660744250439418"> </distance>
 		<points>
-			<point x=34.159971594281174 y=-118.46660614013672 num=0></point>
-			<point x=34.160113639326454 y=-118.46712112426758 num=1></point>
-			<point x=34.16036221758065 y=-118.46776485443115 num=2></point>
-			<point x=34.16075283907298 y=-118.46836566925049 num=3></point>
-			<point x=34.16121448032488 y=-118.46883773803711 num=4></point>
-			<point x=34.161676119052714 y=-118.46913814544678 num=5></point>
-        <distance d=0.18660744250439418> </distance>
+			<point x="34.159971594281174" y="-118.46660614013672" num="0"></point>
+			<point x="34.160113639326454" y="-118.46712112426758" num="1"></point>
+			<point x="34.16036221758065" y="-118.46776485443115" num="2"></point>
+			<point x="34.16075283907298" y="-118.46836566925049" num="3"></point>
+			<point x="34.16121448032488" y="-118.46883773803711" num="4"></point>
+			<point x="34.161676119052714" y="-118.46913814544678" num="5"></point>
 		</points>
 	</segment>
+</freeway>
