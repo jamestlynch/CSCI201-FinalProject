@@ -1,4 +1,4 @@
-package main.freeway.ramp;
+package src.main.freeway.ramp;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 

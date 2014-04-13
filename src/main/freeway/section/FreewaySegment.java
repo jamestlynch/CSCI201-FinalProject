@@ -1,8 +1,8 @@
-package main.freeway.section;
+package src.main.freeway.section;
 
 import java.util.ArrayList;
 
-import main.freeway.ramp.FreewayRamp;
+import src.main.freeway.ramp.FreewayRamp;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
@@ -36,5 +36,9 @@ public class FreewaySegment {
 		this.distance = distance;
 		this.startRamp = start;
 		this.endRamp = end;
+	}
+	public ArrayList<Coordinate> getSegmentPath()
+	{
+		return segmentPath;
 	}
 }
