@@ -30,6 +30,7 @@ public class GeoMapModel {
 	
 	private final File[] freewayXMLFiles = {
 			new File("./Freeway-10/Freeway-10.xml"),
+			new File("./Freeway-10/Freeway-10-1.xml"),
 			new File("./Freeway-10/Freeway-10-2.xml")
 	};
 
