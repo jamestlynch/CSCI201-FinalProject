@@ -20,7 +20,6 @@ import org.xml.sax.SAXParseException;
 
 import main.freeway.FreewayRamp;
 import main.freeway.FreewaySegment;
-import main.freeway.FreewaySegment.Direction;
 
 public class GeoMapModel {
 	// HashMap that allows you to look-up a freeway section via its start ramp
@@ -42,6 +41,11 @@ public class GeoMapModel {
 	public ArrayList<FreewaySegment> searchForSegmentWithRamp(FreewayRamp ramp) {
 		return freewayNetwork.get(ramp);
 	}
+	
+	/* =========================================================================
+	 *   FREEWAY XML LOADER: Private, internal class for loading in the Segment
+	 *     path data.
+	 * ========================================================================= */
 	
 	private class FreewayNetwork extends HashMap<FreewayRamp, ArrayList<FreewaySegment>> {
 		public void put(FreewayRamp ramp, FreewaySegment segment) {
