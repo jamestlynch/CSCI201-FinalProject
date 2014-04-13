@@ -29,7 +29,8 @@ public class GeoMapModel {
 	private static FreewayNetwork oppositeDirectionFreewayNetwork;
 	
 	private final File[] freewayXMLFiles = {
-			new File("./Freeway-10/Freeway-10.xml")
+			new File("./Freeway-10/Freeway-10.xml"),
+			new File("./Freeway-10/Freeway-10-2.xml")
 	};
 
 	public GeoMapModel() {
