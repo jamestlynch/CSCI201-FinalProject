@@ -1,0 +1,295 @@
+	<segment>
+		<number begin = Manchester Boulevard, La Cienega Boulevard, Florence Avenue end = La Tijera Boulevard</number>
+		<points>
+			<point x=33.968900647962045 y=-118.37255716323853 num=0></point>
+			<point x=33.96961247404953 y=-118.37358713150024 num=1></point>
+			<point x=33.97044886208893 y=-118.37519645690918 num=2></point>
+			<point x=33.972032638179634 y=-118.37837219238281 num=3></point>
+			<point x=33.973402847626744 y=-118.38083982467651 num=4></point>
+			<point x=33.97409684139046 y=-118.38204145431519 num=5></point>
+        <distance d=0.6513031079231099> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = La Tijera Boulevard end = Howard Hughes Parkway, Sepulveda Boulevard</number>
+		<points>
+			<point x=33.97411463602787 y=-118.38208436965942 num=0></point>
+			<point x=33.97409684139046 y=-118.3820629119873 num=1></point>
+			<point x=33.97518230745731 y=-118.3842945098877 num=2></point>
+			<point x=33.976303348029006 y=-118.38659048080444 num=3></point>
+			<point x=33.97769128254313 y=-118.38959455490112 num=4></point>
+			<point x=33.97884787732969 y=-118.39193344116211 num=5></point>
+			<point x=33.97948844613298 y=-118.3925986289978 num=6></point>
+        <distance d=0.7076262007478362> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Howard Hughes Parkway, Sepulveda Boulevard end = Sepulveda Boulevard, Slauson Avenue (SR 90 east)</number>
+		<points>
+			<point x=33.979559620146496 y=-118.39266300201416 num=0></point>
+			<point x=33.979897695896966 y=-118.39289903640747 num=1></point>
+        <distance d=0.026989731827315344> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Sepulveda Boulevard, Slauson Avenue (SR 90 east) end = Jefferson Boulevard</number>
+		<points>
+			<point x=33.979951076155714 y=-118.39294195175171 num=0></point>
+			<point x=33.982228602636695 y=-118.39474439620972 num=1></point>
+			<point x=33.98747735706336 y=-118.39886426925659 num=2></point>
+			<point x=33.990217256022376 y=-118.40103149414062 num=3></point>
+        <distance d=0.8472694868954554> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Jefferson Boulevard end = SR 90 west (Marina Freeway) Marina del Rey</number>
+		<points>
+			<point x=33.9902706298002 y=-118.40103149414062 num=0></point>
+			<point x=33.9935085762786 y=-118.40367078781128 num=1></point>
+        <distance d=0.27000737991388635> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 90 west (Marina Freeway) Marina del Rey end = Culver Boulevard, Washington Boulevard Culver City</number>
+		<points>
+			<point x=33.993579738551745 y=-118.40373516082764 num=0></point>
+			<point x=33.999539367400885 y=-118.40847730636597 num=1></point>
+			<point x=34.005712034673806 y=-118.41330528259277 num=2></point>
+        <distance d=1.001546090176386> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Culver Boulevard, Washington Boulevard Culver City end = Venice Boulevard (SR 187), Washington Boulevard</number>
+		<points>
+			<point x=34.005694246651856 y=-118.41328382492065 num=0></point>
+			<point x=34.008344620842834 y=-118.41530084609985 num=1></point>
+        <distance d=0.21650902579671286> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Venice Boulevard (SR 187), Washington Boulevard end = National Boulevard</number>
+		<points>
+			<point x=34.008415770687726 y=-118.41536521911621 num=0></point>
+			<point x=34.01503244568028 y=-118.4206223487854 num=1></point>
+			<point x=34.023266995603166 y=-118.42716693878174 num=2></point>
+        <distance d=1.2286587250594172> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = National Boulevard end = I-10 (Santa Monica Freeway) Santa Monica, Los Angeles</number>
+		<points>
+			<point x=34.02332034861339 y=-118.42720985412598 num=0></point>
+			<point x=34.02474308317967 y=-118.42834711074829 num=1></point>
+        <distance d=0.11791127971463705> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = I-10 (Santa Monica Freeway) Santa Monica, Los Angeles end = Olympic Boulevard, Pico Boulevard</number>
+		<points>
+			<point x=34.02479643526194 y=-118.42836856842041 num=0></point>
+			<point x=34.02908227629405 y=-118.43175888061523 num=1></point>
+			<point x=34.03132292028969 y=-118.43349695205688 num=2></point>
+			<point x=34.03263882648456 y=-118.43510627746582 num=3></point>
+			<point x=34.034683775336376 y=-118.43750953674316 num=4></point>
+			<point x=34.038862430574305 y=-118.43976259231567 num=5></point>
+        <distance d=1.1704866632671382> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Olympic Boulevard, Pico Boulevard end = SR 2 (Santa Monica Boulevard)</number>
+		<points>
+			<point x=34.038897992714205 y=-118.43971967697144 num=0></point>
+			<point x=34.0394492039761 y=-118.44017028808594 num=1></point>
+			<point x=34.04330758250787 y=-118.4434962272644 num=2></point>
+        <distance d=0.3735817150973702> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 2 (Santa Monica Boulevard) end = Wilshire Boulevard</number>
+		<points>
+			<point x=34.04334314278396 y=-118.44358205795288 num=0></point>
+			<point x=34.046987991990264 y=-118.44675779342651 num=1></point>
+			<point x=34.04890814222199 y=-118.44841003417969 num=2></point>
+			<point x=34.05166383740143 y=-118.44935417175293 num=3></point>
+        <distance d=0.6630747903966354> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Wilshire Boulevard end = Montana Avenue</number>
+		<points>
+			<point x=34.05178828603763 y=-118.44941854476929 num=0></point>
+			<point x=34.0535305477629 y=-118.45014810562134 num=1></point>
+			<point x=34.05978817214525 y=-118.45544815063477 num=2></point>
+			<point x=34.06361007341053 y=-118.4585165977478 num=3></point>
+        <distance d=0.9686619311888507> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Montana Avenue end = Sunset Boulevard</number>
+		<points>
+			<point x=34.063627849292764 y=-118.45853805541992 num=0></point>
+			<point x=34.06887157175502 y=-118.46319437026978 num=1></point>
+        <distance d=0.4497487173316593> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Sunset Boulevard end = Moraga Drive</number>
+		<points>
+			<point x=34.068907121308285 y=-118.46330165863037 num=0></point>
+			<point x=34.0718043597517 y=-118.46576929092407 num=1></point>
+			<point x=34.07580345249094 y=-118.46890211105347 num=2></point>
+        <distance d=0.5742370574076257> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Moraga Drive end = Getty Center Drive</number>
+		<points>
+			<point x=34.07589231907412 y=-118.46890211105347 num=0></point>
+			<point x=34.077740722865386 y=-118.47046852111816 num=1></point>
+			<point x=34.08044216353696 y=-118.47300052642822 num=2></point>
+			<point x=34.0833745509365 y=-118.47448110580444 num=3></point>
+			<point x=34.08763966042945 y=-118.47518920898438 num=4></point>
+			<point x=34.092117794164494 y=-118.47579002380371 num=5></point>
+        <distance d=1.18828668908371> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Getty Center Drive end = Mulholland Drive, Skirball Center Drive</number>
+		<points>
+			<point x=34.09213556406459 y=-118.47579002380371 num=0></point>
+			<point x=34.09487208415798 y=-118.47624063491821 num=1></point>
+			<point x=34.096524615135166 y=-118.47703456878662 num=2></point>
+			<point x=34.099456445529306 y=-118.47815036773682 num=3></point>
+			<point x=34.10292120504892 y=-118.47731351852417 num=4></point>
+			<point x=34.10484008773946 y=-118.47776412963867 num=5></point>
+			<point x=34.11029445178808 y=-118.48164796829224 num=6></point>
+			<point x=34.11196444733216 y=-118.4821629524231 num=7></point>
+			<point x=34.11754270406923 y=-118.48175525665283 num=8></point>
+			<point x=34.119816537563615 y=-118.48096132278442 num=9></point>
+			<point x=34.121397526380036 y=-118.47965240478516 num=10></point>
+        <distance d=2.0337470060825624> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Mulholland Drive, Skirball Center Drive end = Ventura Boulevard, Sepulveda Boulevard, Valley Vista Boulevard</number>
+		<points>
+			<point x=34.12136199886612 y=-118.47971677780151 num=0></point>
+			<point x=34.127987621993796 y=-118.4744381904602 num=1></point>
+			<point x=34.13672625565029 y=-118.47154140472412 num=2></point>
+			<point x=34.1394613333693 y=-118.47115516662598 num=3></point>
+			<point x=34.14264030596289 y=-118.4714126586914 num=4></point>
+			<point x=34.14532191609561 y=-118.47094058990479 num=5></point>
+			<point x=34.1487315226141 y=-118.46920251846313 num=6></point>
+        <distance d=1.9842548684610626> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Ventura Boulevard, Sepulveda Boulevard, Valley Vista Boulevard end = US 101 (Ventura Freeway) Ventura, Los Angeles</number>
+		<points>
+			<point x=34.14876703862443 y=-118.46920251846313 num=0></point>
+			<point x=34.149761480851076 y=-118.46868753433228 num=1></point>
+        <distance d=0.07474991382225887> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = US 101 (Ventura Freeway) Ventura, Los Angeles end = Burbank Boulevard</number>
+		<points>
+			<point x=34.149832511990695 y=-118.46866607666016 num=0></point>
+			<point x=34.15203444769161 y=-118.46780776977539 num=1></point>
+			<point x=34.154964353764065 y=-118.46827983856201 num=2></point>
+			<point x=34.159332388620314 y=-118.46954584121704 num=3></point>
+			<point x=34.165795245182245 y=-118.46958875656128 num=4></point>
+			<point x=34.16764168475749 y=-118.46892356872559 num=5></point>
+			<point x=34.16936380834317 y=-118.46795797348022 num=6></point>
+        <distance d=1.3500243670754604> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Burbank Boulevard end = Victory Boulevard Van Nuys</number>
+		<points>
+			<point x=34.16939931567629 y=-118.46797943115234 num=0></point>
+			<point x=34.17110365009924 y=-118.46765756607056 num=1></point>
+			<point x=34.17626970353858 y=-118.46802234649658 num=2></point>
+			<point x=34.17820467306932 y=-118.46890211105347 num=3></point>
+			<point x=34.18447082947882 y=-118.47347259521484 num=4></point>
+			<point x=34.18544710089404 y=-118.47388029098511 num=5></point>
+        <distance d=1.158907913863655> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Victory Boulevard Van Nuys end = Sherman Way</number>
+		<points>
+			<point x=34.185429350605524 y=-118.47390174865723 num=0></point>
+			<point x=34.18697361173359 y=-118.47415924072266 num=1></point>
+			<point x=34.19609660053215 y=-118.47426652908325 num=2></point>
+			<point x=34.19790688173187 y=-118.47411632537842 num=3></point>
+        <distance d=0.8621598382058175> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Sherman Way end = Roscoe Boulevard Panorama City</number>
+		<points>
+			<point x=34.19790688173187 y=-118.47413778305054 num=0></point>
+			<point x=34.201527327529874 y=-118.47347259521484 num=1></point>
+			<point x=34.20834186254688 y=-118.47330093383789 num=2></point>
+			<point x=34.21806581775103 y=-118.47321510314941 num=3></point>
+        <distance d=1.3937783077610264> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Roscoe Boulevard Panorama City end = Nordhoff Street</number>
+		<points>
+			<point x=34.218119047994115 y=-118.47321510314941 num=0></point>
+			<point x=34.22832089026034 y=-118.47315073013306 num=1></point>
+			<point x=34.23199325099737 y=-118.47306489944458 num=2></point>
+        <distance d=0.9586070893470935> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Nordhoff Street end = Devonshire Street Granada Hills</number>
+		<points>
+			<point x=34.23197551050921 y=-118.47310781478882 num=0></point>
+			<point x=34.2428852050361 y=-118.4729790687561 num=1></point>
+			<point x=34.24637955618435 y=-118.47293615341187 num=2></point>
+			<point x=34.24967865812585 y=-118.47222805023193 num=3></point>
+			<point x=34.25281800600377 y=-118.47229242324829 num=4></point>
+        <distance d=1.4407608720987657> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Devonshire Street Granada Hills end = SR 118 (Ronald Reagan Freeway) Simi Valley</number>
+		<points>
+			<point x=34.25288895036518 y=-118.47227096557617 num=0></point>
+			<point x=34.25753567575971 y=-118.4721851348877 num=1></point>
+        <distance d=0.32107967480398764> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = SR 118 (Ronald Reagan Freeway) Simi Valley end = San Fernando Mission Boulevard San Fernando</number>
+		<points>
+			<point x=34.25760661614314 y=-118.4721851348877 num=0></point>
+			<point x=34.26736034922727 y=-118.47214221954346 num=1></point>
+        <distance d=0.6738898743510204> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = San Fernando Mission Boulevard San Fernando end = Rinaldi Street Mission Hills</number>
+		<points>
+			<point x=34.26737808225728 y=-118.4721851348877 num=0></point>
+			<point x=34.27189988285619 y=-118.4720778465271 num=1></point>
+			<point x=34.27360214478417 y=-118.4716272354126 num=2></point>
+        <distance d=0.4311986208086965> </distance>
+		</points>
+	</segment>
+	<segment>
+		<number begin = Rinaldi Street Mission Hills end = I-5 north (Golden State Freeway) Sacramento</number>
+		<points>
+			<point x=34.27360214478417 y=-118.47164869308472 num=0></point>
+			<point x=34.27916971911456 y=-118.46973896026611 num=1></point>
+			<point x=34.28305261796891 y=-118.46873044967651 num=2></point>
+			<point x=34.28844228069441 y=-118.46750736236572 num=3></point>
+			<point x=34.28913369267159 y=-118.46353769302368 num=4></point>
+			<point x=34.291544725823904 y=-118.46795797348022 num=5></point>
+        <distance d=1.257430114389051> </distance>
+		</points>
+	</segment>
