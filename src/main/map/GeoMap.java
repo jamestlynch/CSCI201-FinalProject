@@ -14,6 +14,8 @@ public class GeoMap extends JPanel {
 	public GeoMap(GeoMapView view, GeoMapModel model) {
 		this.view = view;
 		this.model = model;
+		
+//		this.view.drawPath(this.model.);
 	}
 	
 	public GeoMapView getViewInstance() {
