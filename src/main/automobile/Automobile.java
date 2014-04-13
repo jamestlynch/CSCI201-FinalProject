@@ -101,8 +101,11 @@ public class Automobile implements Runnable
     	ArrayList<Coordinate> SegmentList = freeway.getSegmentPath();
     	Coordinate dest = SegmentList.get(FuturePoint);
     	double DistanceToCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), dest.getLat(), dest.getLon());
+    	
+    	//This is saying if the distance to the checkpoint is within the miles capacity.
     	if (DistanceToCheckpoint - miles > 0)
     	{
+    		//Create a latinc and loninc according to the remaining distance and setting a proportion of distance to go.
     		double latinc = (dest.getLat() - currentLocation.getLat()) * (miles/DistanceToCheckpoint);
     		double loninc = (dest.getLon() - currentLocation.getLon()) * (miles/DistanceToCheckpoint);
     		currentLocation.setLat(currentLocation.getLat() + latinc);
@@ -111,6 +114,8 @@ public class Automobile implements Runnable
     	}
     	else if (DistanceToCheckpoint - miles <= 0 && (ArrayListSize > FuturePoint))
     	{
+    		//keep moving the base location until the miles remaining are within the distance to the next checkpoint.
+    		//Otherwise, move to the next checkpoint.
     		Coordinate NewDest;
     		do
     		{

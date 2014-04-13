@@ -34,7 +34,7 @@ public class GeoMapModel {
 
 	public GeoMapModel() {
 		defaultDirectionFreewayNetwork = new FreewayNetwork();
-		
+		oppositeDirectionFreewayNetwork = new FreewayNetwork();
 		// Load in the Freeways from the XML parser
 		for(int i = 0; i < freewayXMLFiles.length; i++) {
 			new FreewayLoader(freewayXMLFiles[i]);
