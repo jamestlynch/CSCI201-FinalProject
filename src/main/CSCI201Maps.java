@@ -34,8 +34,8 @@ public class CSCI201Maps {
 		geoMapModel = new GeoMapModel();
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		ArrayList<FreewaySegment> temp = geoMapModel.returnAllSegment();
-		geoMapView = geoMap.getViewInstance();
-		geoMapView.drawPath(temp);
+		//geoMapView = geoMap.getViewInstance();
+		//geoMapView.drawPath(temp);
 		// Instantiate the GUI
 //		new UICSCI201Maps();
 	}
