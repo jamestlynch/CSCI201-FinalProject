@@ -10,6 +10,7 @@ public class FreewayRamp {
 		this.rampName = name;
 		this.rampLocation = rampLocation;
 	}
+
 	public String getRampName()
 	{
 		return rampName;
