@@ -6,6 +6,10 @@ public class FreewayRamp {
 	private String rampName;
 	private Coordinate rampLocation;
 	
+	public Coordinate getRampLocation() {
+		return rampLocation;
+	}
+
 	public FreewayRamp(String name, Coordinate rampLocation) {
 		this.rampName = name;
 		this.rampLocation = rampLocation;
