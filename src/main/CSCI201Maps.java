@@ -18,6 +18,8 @@ package main;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 import main.freeway.FreewaySegment;
 import main.map.GeoMap;
 import main.map.GeoMapModel;
@@ -32,11 +34,28 @@ public class CSCI201Maps {
 	// Instantiate all objects
 	public CSCI201Maps() {
 		geoMapModel = new GeoMapModel();
+		geoMapView = new GeoMapView(500, 500);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
-		ArrayList<FreewaySegment> temp = geoMapModel.returnAllSegment();
-		//geoMapView = geoMap.getViewInstance();
-		//geoMapView.drawPath(temp);
+		ArrayList<FreewaySegment> temp = new ArrayList<FreewaySegment>();
+		temp = geoMapModel.returnAllSegment();
+		System.out.println();
+		try
+		{
+			System.out.println("HH");
+			geoMapView.getMapViewer();
+			geoMapView.drawPath(temp);
+		}
+		catch(NullPointerException npe)
+		{
+			System.out.println("NPE: " + npe.getMessage());
+		}
+		JFrame a = new JFrame();
+		a.setSize(600,  600);
+		a.add(geoMapView);
+		a.setVisible(true);
+
 		// Instantiate the GUI
+//		new UICSCI201Maps();
 //		new UICSCI201Maps();
 	}
 	

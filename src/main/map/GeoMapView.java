@@ -24,7 +24,7 @@ public class GeoMapView extends JPanel {
 		this.panelWidth = width;
 		this.panelHeight = height;
 		
-		setLayout(null);
+		//setLayout(null);
 		setPreferredSize(new Dimension(panelWidth, panelHeight));
 		
 		mapViewer.setDisplayPositionByLatLon(startLocation.getLat(), startLocation.getLon(), startZoom);
