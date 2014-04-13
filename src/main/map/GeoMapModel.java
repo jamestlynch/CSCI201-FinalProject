@@ -25,8 +25,8 @@ import main.freeway.FreewaySegment;
 
 public class GeoMapModel {
 	// HashMap that allows you to look-up a freeway section via its start ramp
-	private FreewayNetwork defaultDirectionFreewayNetwork;
-	private FreewayNetwork oppositeDirectionFreewayNetwork;
+	private static FreewayNetwork defaultDirectionFreewayNetwork;
+	private static FreewayNetwork oppositeDirectionFreewayNetwork;
 	
 	private final File[] freewayXMLFiles = {
 			new File("./Freeway-10/Freeway-10.xml"),
@@ -45,7 +45,7 @@ public class GeoMapModel {
 	}
 	
 	
-	public FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
+	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
 			throws FreewaySegmentNotFoundException 
 	{
 		while (defaultDirectionFreewayNetwork.keySet().iterator().hasNext()) 
@@ -296,11 +296,5 @@ public class GeoMapModel {
 	 *   FREEWAY SEGMENT NOT FOUND EXCEPTION: Gets thrown if there is no segment
 	 *     in our HashMap that begins at the ramp passed in.
 	 * ========================================================================= */
-	private class FreewaySegmentNotFoundException extends Exception {
-		private String message;
-		
-		public FreewaySegmentNotFoundException(String rampName, String freewayName, String directionName) {
-			message = "[LOOKUP ERROR] (GeoMapModel) Could not find segment starting at " + rampName + " on the " + freewayName + " freeway heading in the " + directionName + " direction.";
-		}
-	}
+	
 }

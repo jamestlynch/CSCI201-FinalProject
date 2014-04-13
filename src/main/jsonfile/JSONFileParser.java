@@ -3,6 +3,9 @@ package main.jsonfile;
 import java.util.ArrayList;
 
 import main.automobile.Automobile;
+import main.freeway.FreewaySegment;
+import main.map.FreewaySegmentNotFoundException;
+import main.map.GeoMapModel;
 
 // Referenced classes of package objects:
 //            Automobile
@@ -35,6 +38,7 @@ public class JSONFileParser
 
     private Automobile parse(String car)
     {
+    	String rampname = "";
         Automobile one_car = new Automobile();
         for(int i = 0; i < car.length(); i++)
         {
@@ -85,9 +89,17 @@ public class JSONFileParser
                     i++;
                     for(i++; car.charAt(i) != '"'; i++)
                         directionval = (new StringBuilder(String.valueOf(directionval))).append(car.charAt(i)).toString();
-
                     i++;
-                    one_car.setDirection(directionval);
+                    FreewaySegment.Direction CarDirection = FreewaySegment.Direction.NORTH;
+                    if (directionval.equals("N"))
+                    	CarDirection = FreewaySegment.Direction.NORTH;
+                    if (directionval.equals("S"))
+                    	CarDirection = FreewaySegment.Direction.SOUTH;
+                    if (directionval.equals("E"))
+                    	CarDirection = FreewaySegment.Direction.EAST;
+                    if (directionval.equals("W"))
+                    	CarDirection = FreewaySegment.Direction.WEST;
+                    one_car.setDirection(CarDirection);
                 }
             }
             i++;
@@ -99,12 +111,11 @@ public class JSONFileParser
 
                 if(ramp.equals("on\\/off ramp"))
                 {
-                    String rampval = "";
+                	rampname = "";
                     i++;
                     i++;
                     for(i++; car.charAt(i) != '"'; i++)
-                        rampval = (new StringBuilder(String.valueOf(rampval))).append(car.charAt(i)).toString();
-                    
+                        rampname = (new StringBuilder(String.valueOf(rampname))).append(car.charAt(i)).toString();
                 }
             }
             i++;
@@ -122,7 +133,14 @@ public class JSONFileParser
                     i++;
                     for(i++; car.charAt(i) != '"'; i++)
                         freewayval = (new StringBuilder(String.valueOf(freewayval))).append(car.charAt(i)).toString();
-
+                    try
+                    {
+                    	one_car.setFreeway(GeoMapModel.searchForSegment(rampname, one_car.getDirection(), freewayval));
+                    }
+                    catch(FreewaySegmentNotFoundException fsnfe)
+                    {
+                    	System.out.println("Freeway Segment Not Found Exception: " + fsnfe.getMessage());
+                    }
                     //one_car.setFreeway(freewayval);
                 }
             }
