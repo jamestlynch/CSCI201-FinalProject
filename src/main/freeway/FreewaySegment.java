@@ -20,7 +20,6 @@ public class FreewaySegment {
 	private FreewayRamp endRamp = null;
 	
 	//private ArrayList<Automobile> carsOnSection;
-	
 	public FreewaySegment(
 		String name, double distance, 
 		/* ArrayList<FreewaySegment> adjacentSections ,*/ 
