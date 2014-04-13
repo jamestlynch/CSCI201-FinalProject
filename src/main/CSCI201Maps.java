@@ -32,19 +32,16 @@ public class CSCI201Maps {
 	// Instantiate all objects
 	public CSCI201Maps() {
 		geoMapModel = new GeoMapModel();
-		
 		geoMap = new GeoMap(geoMapView, geoMapModel);
-		geoMapView = geoMap.getViewInstance();
-		ArrayList<FreewaySegment> temp = new ArrayList<FreewaySegment>();
-		temp = geoMapModel.returnAllSegment();
-		System.out.println(temp.toString());
-		System.out.println (temp.size());
-		geoMapView.drawPath(temp);
+		ArrayList<FreewaySegment> temp = geoMapModel.returnAllSegment();
+		//geoMapView = geoMap.getViewInstance();
+		//geoMapView.drawPath(temp);
 		// Instantiate the GUI
 //		new UICSCI201Maps();
 	}
 	
 	public static void main(String [] args) {
 		new CSCI201Maps();
+		
 	}
 }
