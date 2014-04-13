@@ -250,7 +250,6 @@ public class GeoMapModel {
 					
 					defaultDirectionFreewayNetwork.put(startRamp, defaultFreewaySegment);
 					oppositeDirectionFreewayNetwork.put(endRamp, oppositeFreewaySegment);
-					System.out.println("ffffffff" + defaultDirectionFreewayNetwork.get(startRamp).size());
 				} // [Close] Segment List loop
 			} catch (ParserConfigurationException pce) 
 			{
