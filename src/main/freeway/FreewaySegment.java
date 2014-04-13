@@ -2,7 +2,6 @@ package main.freeway;
 
 import java.util.ArrayList;
 
-import main.freeway.FreewayRamp;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class FreewaySegment {
