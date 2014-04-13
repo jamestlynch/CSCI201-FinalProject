@@ -73,12 +73,12 @@ public class JMapViewerTest extends JFrame {
 		path2.add(new Coordinate(34.033972494370055, -118.46));
 		path2.add(new Coordinate(34.03415031517072, -118.45));
 		path2.add(new Coordinate(34.034381481654364, -118.45));
-		
+
 		ArrayList<Coordinate> testPath = new ArrayList<Coordinate>();
 		testPath.add(new Coordinate(33.988918483762156, -118.23760986328125));
 		testPath.add(new Coordinate(34.01424985509564, -118.23932647705078));
 		testPath.add(new Coordinate(34.01424985509564, -118.21941375732422));
-		
+
 		ArrayList<Coordinate> path3 = new ArrayList<Coordinate>();
 		path3.add(new Coordinate(34.02970468333924, -118.39298486709595));
 		path3.add(new Coordinate(34.03231874307238, -118.38987350463867));
@@ -86,26 +86,26 @@ public class JMapViewerTest extends JFrame {
 		path3.add(new Coordinate(34.03534170492073, -118.38292121887207));
 		path3.add(new Coordinate(34.03704874166876, -118.37893009185791));
 		path3.add(new Coordinate(34.036977615823425, -118.37721347808838));
-		
+
 		final double pointOffsetX = 0.05;
 		final double pointOffsetY = 0.05;
-		
-		
-//		for(int pointNum = path.size() - 1; pointNum >= 0; pointNum--) {
-//			path.add(new Coordinate(path.get(pointNum).getLat() + pointOffsetY, path.get(pointNum).getLon() + pointOffsetX));
-//		}
-//		for(int pointNum = path2.size() - 1; pointNum >= 0; pointNum--) {
-//			path2.add(new Coordinate(path2.get(pointNum).getLat() + pointOffsetY, path2.get(pointNum).getLon() + pointOffsetX));
-//		}
-		
+
+
+		//		for(int pointNum = path.size() - 1; pointNum >= 0; pointNum--) {
+		//			path.add(new Coordinate(path.get(pointNum).getLat() + pointOffsetY, path.get(pointNum).getLon() + pointOffsetX));
+		//		}
+		//		for(int pointNum = path2.size() - 1; pointNum >= 0; pointNum--) {
+		//			path2.add(new Coordinate(path2.get(pointNum).getLat() + pointOffsetY, path2.get(pointNum).getLon() + pointOffsetX));
+		//		}
+
 		for(int pointNum = testPath.size() - 1; pointNum >= 0; pointNum--) {
 			testPath.add(new Coordinate(testPath.get(pointNum).getLat() + pointOffsetY, testPath.get(pointNum).getLon() + pointOffsetX));
 		}
-		
+
 		for(int pointNum = path3.size() - 1; pointNum >= 0; pointNum--) {
 			path3.add(new Coordinate(path3.get(pointNum).getLat() + pointOffsetY, path3.get(pointNum).getLon() + pointOffsetX));
 		}
-		
+
 		ArrayList<MapPolygon> polygon = new ArrayList<MapPolygon>();
 		MapPolygonImpl poly = new MapPolygonImpl(path);
 		MapPolygonImpl poly2 = new MapPolygonImpl(path2);
@@ -124,42 +124,42 @@ public class JMapViewerTest extends JFrame {
 		add(map);
 
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-//		addWindowListener(new SaveBeforeClosing(this));
+		//		addWindowListener(new SaveBeforeClosing(this));
 		this.setVisible(true);
 	}
 
 	public static void main(String[] args) {
-//		System.out.println("WHAT DO YOU WANT TO NAME THE FILE?");
-//		String y;
-//		try
-//		{
-//
-//			y = fin.nextLine();
-//			FileWriter out = new FileWriter(y+".xml");
-//			br = new PrintWriter(out);
-//			//System.out.println("WHAT FREEWAY WILL YOU BE GOING OVER?");
-//			//String fwy = fin.nextLine();
-//			System.out.println("What ramp will you be starting with?");
-//			String segbegin = fin.nextLine();
-//			System.out.println("What ramp are you ending with?");
-//			String segend = fin.nextLine();
-//			//br.println("<freeway>");	
-//			//br.println("	<name>"+fwy+"</name>");
-//			br.println("	<segment>");
-//			br.println("		<number begin = "+segbegin+" end = " + segend + "></number>");
-//			segbegin = segend;
-//			br.println("		<points>");
-//			br.flush();
-			JMapViewerTest a = new JMapViewerTest();
-//
-//		}
-//		catch (IOException ioe)
-//		{
-//			System.out.println("IOE: " + ioe.getMessage());
-//
-//		}
-//		br.flush();
-//		//br.close();
+		//		System.out.println("WHAT DO YOU WANT TO NAME THE FILE?");
+		//		String y;
+		//		try
+		//		{
+		//
+		//			y = fin.nextLine();
+		//			FileWriter out = new FileWriter(y+".xml");
+		//			br = new PrintWriter(out);
+		//			//System.out.println("WHAT FREEWAY WILL YOU BE GOING OVER?");
+		//			//String fwy = fin.nextLine();
+		//			System.out.println("What ramp will you be starting with?");
+		//			String segbegin = fin.nextLine();
+		//			System.out.println("What ramp are you ending with?");
+		//			String segend = fin.nextLine();
+		//			//br.println("<freeway>");	
+		//			//br.println("	<name>"+fwy+"</name>");
+		//			br.println("	<segment>");
+		//			br.println("		<number begin = "+segbegin+" end = " + segend + "></number>");
+		//			segbegin = segend;
+		//			br.println("		<points>");
+		//			br.flush();
+		JMapViewerTest a = new JMapViewerTest();
+		//
+		//		}
+		//		catch (IOException ioe)
+		//		{
+		//			System.out.println("IOE: " + ioe.getMessage());
+		//
+		//		}
+		//		br.flush();
+		//		//br.close();
 	}
 	class UndoPoint extends KeyAdapter
 	{
@@ -192,7 +192,7 @@ public class JMapViewerTest extends JFrame {
 				count = 0;
 				mmc.clear();
 				map.removeAllMapMarkers();
-				
+
 				br.println("		</points>");
 				br.println("	</segment>");
 				System.out.println("What is the next segment?");
