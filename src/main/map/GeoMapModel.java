@@ -60,7 +60,6 @@ public class GeoMapModel {
 				}
 			}
 		}
-		
 		throw new FreewaySegmentNotFoundException(rampName, freewayName, direction.toString());
 	}
 	
@@ -297,5 +296,4 @@ public class GeoMapModel {
 			message = "[LOOKUP ERROR] (GeoMapModel) Could not find segment starting at " + rampName + " on the " + freewayName + " freeway heading in the " + directionName + " direction.";
 		}
 	}
-}
 }
