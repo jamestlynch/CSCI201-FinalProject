@@ -1,8 +1,13 @@
 package main.automobile;
 
 
-public class Automobile
+public class Automobile 
 {
+	int id;
+    double speed;
+    String direction;
+    String ramp;
+    String freeway;
 
     public Automobile(int id, double speed, String direction, String ramp, String freeway)
     {
@@ -46,10 +51,4 @@ public class Automobile
     {
         this.freeway = freeway;
     }
-
-    int id;
-    double speed;
-    String direction;
-    String ramp;
-    String freeway;
 }
