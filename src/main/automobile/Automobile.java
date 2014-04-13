@@ -1,31 +1,35 @@
 package main.automobile;
 
+import main.freeway.FreewaySegment;
+
+import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
+
 
 public class Automobile 
 {
-	int id;
+
+    int id;
     double speed;
     String direction;
     String ramp;
-    String freeway;
-
-    public Automobile(int id, double speed, String direction, String ramp, String freeway)
-    {
+    //String freeway;
+    MapMarkerCircle carsprite;
+    FreewaySegment freeway;
+    JMapViewer map;
+    public Automobile(int id, double speed, String direction, String ramp, FreewaySegment freeway, JMapViewer map)
+    {	
+    	this.freeway = freeway;
         this.id = id;
         this.speed = speed;
         this.direction = direction;
         this.ramp = ramp;
-        this.freeway = freeway;
+        this.map = map;
     }
-
     public Automobile()
     {
     }
 
-    public void print()
-    {
-        System.out.println((new StringBuilder("ID: ")).append(id).append(", SPEED: ").append(speed).append(", DIRECTION: ").append(direction).append(", RAMP: ").append(ramp).append(", FREEWAY: ").append(freeway).toString());
-    }
 
     public void setId(int id)
     {
@@ -47,8 +51,16 @@ public class Automobile
         this.ramp = ramp;
     }
 
-    public void setFreeway(String freeway)
+    public void setFreeway(FreewaySegment freeway)
     {
         this.freeway = freeway;
+    }
+    //time_elapse is in milliseconds
+    public void updateLocation(double time_elapse_milliseconds)
+    {
+    	double hour_travelled = time_elapse_milliseconds/3600000;//3.6 million milliseoncds per hour
+    	double miles = hour_travelled*speed; //mph * h = m
+    	//map.get
+    	
     }
 }

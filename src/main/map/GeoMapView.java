@@ -25,4 +25,8 @@ public class GeoMapView extends JPanel {
 		mapViewer.setDisplayPositionByLatLon(startLocation.getLat(), startLocation.getLon(), startZoom);
 		add(mapViewer);
 	}
+
+	public JMapViewer getMapViewer() {
+		return mapViewer;
+	}
 }

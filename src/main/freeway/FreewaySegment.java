@@ -47,4 +47,28 @@ public class FreewaySegment {
 	{
 		return segmentPath;
 	}
+
+	public Direction getDirectionEW() {
+		return directionEW;
+	}
+
+	public Direction getDirectionNS() {
+		return directionNS;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public ArrayList<FreewaySegment> getAdjacentSections() {
+		return adjacentSections;
+	}
+
+	public FreewayRamp getStartRamp() {
+		return startRamp;
+	}
+
+	public FreewayRamp getEndRamp() {
+		return endRamp;
+	}
 }
