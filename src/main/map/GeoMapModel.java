@@ -49,16 +49,19 @@ public class GeoMapModel {
 		for(int i = 0; i < freewayXMLFiles.length; i++) {
 			new FreewayLoader(freewayXMLFiles[i]);
 		}
-		
+		System.out.println(defaultDirectionFreewayNetwork.size());
 	}
 	public ArrayList<FreewaySegment> returnAllSegment()
 	{
+		System.out.println(", " + defaultDirectionFreewayNetwork.size());
 		ArrayList<FreewaySegment> allSegments = new ArrayList<FreewaySegment>();
-		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) {
+		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) 
+		{
+			System.out.println(defaultDirectionFreewayNetwork.get(key).size());
 			for (int i = 0; i < defaultDirectionFreewayNetwork.get(key).size(); i++)
 			{
 				FreewaySegment tempfs = defaultDirectionFreewayNetwork.get(key).get(i);
-				System.out.println(tempfs.toString());
+				System.out.println("!!!!!!!!!!!!");
 				allSegments.add(tempfs);
 			}
 		}
@@ -108,6 +111,7 @@ public class GeoMapModel {
 			ArrayList<FreewaySegment> freewaySegmentsStartingAtRamp = new ArrayList<FreewaySegment>();
 			
 			if (defaultDirectionFreewayNetwork.get(ramp) == null) {
+				freewaySegmentsStartingAtRamp.add(segment);
 				this.put(ramp, freewaySegmentsStartingAtRamp);
 			} else {
 				for (int i = 0; i < this.get(ramp).size(); i++) {
@@ -205,7 +209,7 @@ public class GeoMapModel {
 						startRamp,
 						endRamp
 					);
-					
+					//System.out.println(defaultFreewaySegment.toString());
 					// =========================================================================
 					//   Store the opposite lane's data
 					// =========================================================================
@@ -240,6 +244,7 @@ public class GeoMapModel {
 					
 					defaultDirectionFreewayNetwork.put(startRamp, defaultFreewaySegment);
 					oppositeDirectionFreewayNetwork.put(endRamp, oppositeFreewaySegment);
+					System.out.println("ffffffff" + defaultDirectionFreewayNetwork.get(startRamp).size());
 				} // [Close] Segment List loop
 			} catch (ParserConfigurationException pce) 
 			{
