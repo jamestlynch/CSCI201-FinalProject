@@ -16,6 +16,9 @@
 
 package main;
 
+import java.util.ArrayList;
+
+import main.freeway.FreewaySegment;
 import main.map.GeoMap;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
@@ -30,12 +33,15 @@ public class CSCI201Maps {
 	public CSCI201Maps() {
 		geoMapModel = new GeoMapModel();
 		geoMap = new GeoMap(geoMapView, geoMapModel);
-		
+		ArrayList<FreewaySegment> temp = geoMapModel.returnAllSegment();
+		geoMapView = geoMap.getViewInstance();
+		geoMapView.drawPath(temp);
 		// Instantiate the GUI
 //		new UICSCI201Maps();
 	}
 	
 	public static void main(String [] args) {
 		new CSCI201Maps();
+		
 	}
 }

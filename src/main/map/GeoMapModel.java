@@ -6,11 +6,13 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import main.freeway.FreewayRamp;
+import main.freeway.FreewaySegment;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.w3c.dom.Document;
@@ -19,9 +21,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import main.freeway.FreewayRamp;
-import main.freeway.FreewaySegment;
 
 public class GeoMapModel {
 	// HashMap that allows you to look-up a freeway section via its start ramp
@@ -47,7 +46,19 @@ public class GeoMapModel {
 		}
 		
 	}
-	
+	public ArrayList<FreewaySegment> returnAllSegment()
+	{
+		ArrayList<FreewaySegment> allSegments = new ArrayList<FreewaySegment>();
+		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) {
+			for (int i = 0; i < defaultDirectionFreewayNetwork.get(key).size(); i++)
+			{
+				FreewaySegment tempfs = defaultDirectionFreewayNetwork.get(key).get(i);
+				System.out.println(tempfs.toString());
+				allSegments.add(tempfs);
+			}
+		}
+		return allSegments;
+	}
 	
 	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
 			throws FreewaySegmentNotFoundException 
@@ -78,6 +89,7 @@ public class GeoMapModel {
 	public ArrayList<FreewaySegment> searchForSegmentWithRamp(FreewayRamp ramp) {
 		return defaultDirectionFreewayNetwork.get(ramp);
 	}
+	
 	
 	
 	/* =========================================================================
