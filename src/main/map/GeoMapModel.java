@@ -44,7 +44,8 @@ public class GeoMapModel {
 	
 	
 	public FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
-			throws FreewaySegmentNotFoundException {
+			throws FreewaySegmentNotFoundException 
+	{
 		while (defaultDirectionFreewayNetwork.keySet().iterator().hasNext()) 
 		{
 			FreewayRamp currentRamp = defaultDirectionFreewayNetwork.keySet().iterator().next();
