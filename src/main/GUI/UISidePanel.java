@@ -14,14 +14,14 @@ public class UISidePanel extends JPanel {
 	{
 		
 		JTabbedPane ThreeOpts = new JTabbedPane();
-		SetRoutePanel SetRoute = new SetRoutePanel(300, 450);
+		SetRoutePanel SetRoute = new SetRoutePanel(400, 550);
 		
 		ThreeOpts.addTab("Set Route", SetRoute); //Add the name of the JPanel of the chart
 		
-		SetChartPanel DisplayChart = new SetChartPanel(300, 450);
+		SetChartPanel DisplayChart = new SetChartPanel(400, 550);
 		ThreeOpts.addTab("Chart", DisplayChart);//Add the name of the JPanel
 		
-		SetGraphPanel DisplayGraph = new SetGraphPanel();
+		SetGraphPanel DisplayGraph = new SetGraphPanel(400, 550);
 		ThreeOpts.addTab("Graph", DisplayGraph);//Add the name of the JPanel
 		
 		//add(new Map(600, 800), BorderLayout.EAST);
