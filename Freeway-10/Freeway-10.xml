@@ -14,7 +14,7 @@
         </points>
     </segment>
     <segment>
-        <ramps begin="null" end="Crenshaw Boulevard"></ramps>
+        <ramps begin="La Brea Avenue" end="Crenshaw Boulevard"></ramps>
         <distance d="0.9136590448430356"> </distance>
         <points>
             <point x="34.03471933922815" y="-118.45" num="0"></point>
