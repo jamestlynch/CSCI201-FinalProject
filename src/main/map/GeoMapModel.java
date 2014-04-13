@@ -20,28 +20,43 @@ import org.xml.sax.SAXParseException;
 
 import main.freeway.FreewayRamp;
 import main.freeway.FreewaySegment;
+import main.freeway.FreewaySegment.Direction;
 
 public class GeoMapModel {
 	// HashMap that allows you to look-up a freeway section via its start ramp
-	private HashMap<FreewayRamp, FreewaySegment> freewayNetwork;
+	private FreewayNetwork freewayNetwork;
 	
 	private final File[] freewayXMLFiles = {
 			new File("./Freeway-10/Freeway-10.xml")
 	};
 
 	public GeoMapModel() {
-		freewayNetwork = new HashMap<FreewayRamp, FreewaySegment>();
+		freewayNetwork = new FreewayNetwork();
 		
 		// Load in the Freeways from the XML parser
 		for(int i = 0; i < freewayXMLFiles.length; i++) {
 			new FreewayLoader(freewayXMLFiles[i]);
 		}
-		
-		System.out.println("\nFREEWAY SEGMENT HASH: " + freewayNetwork.toString());
 	}
 	
-	public FreewaySegment searchForSegmentWithRamp(FreewayRamp ramp) {
+	public ArrayList<FreewaySegment> searchForSegmentWithRamp(FreewayRamp ramp) {
 		return freewayNetwork.get(ramp);
+	}
+	
+	private class FreewayNetwork extends HashMap<FreewayRamp, ArrayList<FreewaySegment>> {
+		public void put(FreewayRamp ramp, FreewaySegment segment) {
+			ArrayList<FreewaySegment> freewaySegmentsStartingAtRamp = new ArrayList<FreewaySegment>();
+			
+			if (freewayNetwork.get(ramp) == null) {
+				this.put(ramp, freewaySegmentsStartingAtRamp);
+			} else {
+				for (int i = 0; i < this.get(ramp).size(); i++) {
+					freewaySegmentsStartingAtRamp.add(this.get(ramp).get(i));
+				}
+				freewaySegmentsStartingAtRamp.add(segment);
+				this.put(ramp, freewaySegmentsStartingAtRamp);
+			}
+		}
 	}
 	
 	/* =========================================================================
@@ -129,7 +144,6 @@ public class GeoMapModel {
 						endRamp
 					);
 					
-					// Add this segment to the freeway network hash
 					freewayNetwork.put(startRamp, freewaySegment);
 				} // [Close] Segment List loop
 			} catch (ParserConfigurationException pce) 
