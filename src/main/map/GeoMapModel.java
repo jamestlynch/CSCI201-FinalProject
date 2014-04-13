@@ -45,12 +45,16 @@ public class GeoMapModel {
 	
 	public FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
 			throws FreewaySegmentNotFoundException {
-		while (defaultDirectionFreewayNetwork.keySet().iterator().hasNext()) {
+		while (defaultDirectionFreewayNetwork.keySet().iterator().hasNext()) 
+		{
 			FreewayRamp currentRamp = defaultDirectionFreewayNetwork.keySet().iterator().next();
-			if (rampName == currentRamp.getRampName()) {
+			if (rampName == currentRamp.getRampName()) 
+			{
 				ArrayList<FreewaySegment> currentSegment = defaultDirectionFreewayNetwork.get(currentRamp);
-				for(int i = 0; i < currentSegment.size(); i++) {
-					if (direction == FreewaySegment.Direction.EAST || direction == FreewaySegment.Direction.WEST) {
+				for(int i = 0; i < currentSegment.size(); i++) 
+				{
+					if (direction == FreewaySegment.Direction.EAST || direction == FreewaySegment.Direction.WEST) 
+					{
 						if (currentSegment.get(i).getDirectionEW() == direction 
 						   && freewayName.equals(currentSegment.get(i).getFreewayName())) 
 						{
