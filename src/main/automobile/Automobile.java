@@ -1,18 +1,26 @@
 package main.automobile;
 
+import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
+
 
 public class Automobile
 {
-
+    int id;
+    double speed;
+    String direction;
+    String ramp;
+    String freeway;
+    MapMarkerCircle carsprite;
+    //FreewaySegment freeway;
     public Automobile(int id, double speed, String direction, String ramp, String freeway)
-    {
+    {	
+    	this.freeway = freeway;
         this.id = id;
         this.speed = speed;
         this.direction = direction;
         this.ramp = ramp;
-        this.freeway = freeway;
+        
     }
-
     public Automobile()
     {
     }
@@ -46,10 +54,10 @@ public class Automobile
     {
         this.freeway = freeway;
     }
+    
+    public void updateLocation(double time_elapse)
+    {
+    	
+    }
 
-    int id;
-    double speed;
-    String direction;
-    String ramp;
-    String freeway;
 }
