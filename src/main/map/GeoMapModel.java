@@ -35,7 +35,12 @@ public class GeoMapModel {
 			new File("./Freeway-10/Freeway10-J.xml"),
 			new File("./Freeway-10/Freeway10-J2.xml"),
 			new File("./Freeway-101/Freeway101-1.xml"),
-			new File("./Freeway-101/Freeway101-J.xml")
+			new File("./Freeway-101/Freeway101-J.xml"),
+			new File("./Freeway-105/Freeway105-1.xml"),
+			new File("./Freeway-105/Freeway105-2.xml"),
+			new File("./Freeway-105/Freeway105-3.xml"),
+			new File("./Freeway-105/Freeway105-4.xml")
+			
 	};
 
 	public GeoMapModel() {
