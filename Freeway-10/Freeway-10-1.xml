@@ -1,120 +1,120 @@
-	<segment>
-		<number begin = SR 1 north (Pacific Coast Highway) Oxnard end = 4th Street, 5th Street></number>
-		<points>
-			<point x=34.01272467203419 y=-118.49017202854156 num=0></point>
-			<point x=34.01287141095433 y=-118.48926544189453 num=1></point>
-			<point x=34.013271606720274 y=-118.48835349082947 num=2></point>
-			<point x=34.01372515964127 y=-118.48778486251831 num=3></point>
-        <distance d=0.15319289117864907> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = null end = SR 1 south (Lincoln Boulevard) to SR 2 east></number>
-		<points>
-			<point x=34.01373405281156 y=-118.48776340484619 num=0></point>
-			<point x=34.014098671992194 y=-118.48735570907593 num=1></point>
-			<point x=34.01445439651296 y=-118.4865403175354 num=2></point>
-			<point x=34.014792333427124 y=-118.48613262176514 num=3></point>
-        <distance d=0.11860954423835642> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = SR 1 south (Lincoln Boulevard) to SR 2 east end = 20th Street></number>
-		<points>
-			<point x=34.01491683616169 y=-118.48540306091309 num=0></point>
-			<point x=34.01939881300138 y=-118.4796416759491 num=1></point>
-			<point x=34.01939881300138 y=-118.47965240478516 num=2></point>
-			<point x=34.02272457142884 y=-118.47481369972229 num=3></point>
-			<point x=34.023213642559426 y=-118.47365498542786 num=4></point>
-        <distance d=0.8838502500703201> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = 20th Street end = Cloverfield Boulevard></number>
-		<points>
-			<point x=34.02335591726823 y=-118.4734296798706 num=0></point>
-			<point x=34.02442296998178 y=-118.46930980682373 num=1></point>
-        <distance d=0.24716343254795767> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = Cloverfield Boulevard end = Centinela Avenue></number>
-		<points>
-			<point x=34.024494106352336 y=-118.46875190734863 num=0></point>
-			<point x=34.02769518131151 y=-118.45579147338867 num=1></point>
-			<point x=34.02833538181333 y=-118.45463275909424 num=2></point>
-        <distance d=0.8509137368388365> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = Centinela Avenue end = Bundy Drive></number>
-		<points>
-			<point x=34.02808641552543 y=-118.4534740447998 num=0></point>
-			<point x=34.02826424866274 y=-118.44956874847412 num=1></point>
-        <distance d=0.22395143131924702> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = Bundy Drive end = I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach></number>
-		<points>
-			<point x=34.02829981524549 y=-118.4490966796875 num=0></point>
-			<point x=34.03071830789773 y=-118.4377670288086 num=1></point>
-        <distance d=0.6698906269872837> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach end = National Boulevard, Overland Avenue></number>
-		<points>
-			<point x=34.03139405087606 y=-118.43523502349854 num=0></point>
-			<point x=34.03192752837311 y=-118.41785430908203 num=1></point>
-        <distance d=0.9958472466934769> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = National Boulevard, Overland Avenue end = National Boulevard></number>
-		<points>
-			<point x=34.031891963311 y=-118.41678142547607 num=0></point>
-			<point x=34.031891963311 y=-118.41497898101807 num=1></point>
-			<point x=34.031358485590346 y=-118.41236114501953 num=2></point>
-			<point x=34.030469348601684 y=-118.40948581695557 num=3></point>
-			<point x=34.029971427818126 y=-118.40686798095703 num=4></point>
-			<point x=34.02986473012718 y=-118.40352058410645 num=5></point>
-			<point x=34.02986473012718 y=-118.40214729309082 num=6></point>
-        <distance d=0.849537402070271> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = National Boulevard end = Robertson Boulevard Culver City></number>
-		<points>
-			<point x=34.02959798531287 y=-118.40234041213989 num=0></point>
-			<point x=34.0294023719161 y=-118.39961528778076 num=1></point>
-			<point x=34.029171191865736 y=-118.39530229568481 num=2></point>
-			<point x=34.02920675806833 y=-118.39429378509521 num=3></point>
-        <distance d=0.46152896382201625> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = Robertson Boulevard Culver City end = La Cienega Boulevard, Venice Boulevard (SR 187 west)></number>
-		<points>
-			<point x=34.02970468333924 y=-118.39298486709595 num=0></point>
-			<point x=34.03231874307238 y=-118.38987350463867 num=1></point>
-			<point x=34.03331455416674 y=-118.38669776916504 num=2></point>
-			<point x=34.03534170492073 y=-118.38292121887207 num=3></point>
-			<point x=34.03704874166876 y=-118.37893009185791 num=4></point>
-			<point x=34.036977615823425 y=-118.37721347808838 num=5></point>
-        <distance d=1.0333953519955674> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = La Cienega Boulevard, Venice Boulevard (SR 187 west) end = Fairfax Avenue, Washington Boulevard></number>
-		<points>
-			<point x=34.03662198570218 y=-118.37691307067871 num=0></point>
-			<point x=34.0360885377248 y=-118.37416648864746 num=1></point>
-			<point x=34.03591072098687 y=-118.37034702301025 num=2></point>
-			<point x=34.03573290387622 y=-118.36768627166748 num=3></point>
-        <distance d=0.5318286298950538> </distance>
-		</points>
-	</segment>
-	<segment>
-		<number begin = Fairfax Avenue, Washington Boulevard end = La Brea Avenue></number>
-		<points>
+<freeway>
+    <name>10</name>
+    <segment>
+        <ramps begin="SR 1 north (Pacific Coast Highway) Oxnard" end="4th Street, 5th Street"></ramps>
+        <distance d="0.15319289117864907"> </distance>
+        <points>
+            <point x="34.01272467203419" y="-118.49017202854156" num="0"></point>
+            <point x="34.01287141095433" y="-118.48926544189453" num="1"></point>
+            <point x="34.013271606720274" y="-118.48835349082947" num="2"></point>
+            <point x="34.01372515964127" y="-118.48778486251831" num="3"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="null" end="SR 1 south (Lincoln Boulevard) to SR 2 east"></ramps>
+        <distance d="0.11860954423835642"> </distance>
+        <points>
+            <point x="34.01373405281156" y="-118.48776340484619" num="0"></point>
+            <point x="34.014098671992194" y="-118.48735570907593" num="1"></point>
+            <point x="34.01445439651296" y="-118.4865403175354" num="2"></point>
+            <point x="34.014792333427124" y="-118.48613262176514" num="3"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="SR 1 south (Lincoln Boulevard) to SR 2 east" end="20th Street"></ramps>
+        <distance d="0.8838502500703201"> </distance>
+        <points>
+            <point x="34.01491683616169" y="-118.48540306091309" num="0"></point>
+            <point x="34.01939881300138" y="-118.4796416759491" num="1"></point>
+            <point x="34.01939881300138" y="-118.47965240478516" num="2"></point>
+            <point x="34.02272457142884" y="-118.47481369972229" num="3"></point>
+            <point x="34.023213642559426" y="-118.47365498542786" num="4"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="20th Street" end="Cloverfield Boulevard"></ramps>
+        <distance d="0.24716343254795767"> </distance>
+        <points>
+            <point x="34.02335591726823" y="-118.4734296798706" num="0"></point>
+            <point x="34.02442296998178" y="-118.46930980682373" num="1"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="Cloverfield Boulevard" end="Centinela Avenue"></ramps>
+        <distance d="0.8509137368388365"> </distance>
+        <points>
+            <point x="34.024494106352336" y="-118.46875190734863" num="0"></point>
+            <point x="34.02769518131151" y="-118.45579147338867" num="1"></point>
+            <point x="34.02833538181333" y="-118.45463275909424" num="2"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="Centinela Avenue" end="Bundy Drive"></ramps>
+        <distance d="0.22395143131924702"> </distance>
+        <points>
+            <point x="34.02808641552543" y="-118.4534740447998" num="0"></point>
+            <point x="34.02826424866274" y="-118.44956874847412" num="1"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="Bundy Drive" end="I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach"></ramps>
+        <distance d="0.6698906269872837"> </distance>
+        <points>
+            <point x="34.02829981524549" y="-118.4490966796875" num="0"></point>
+            <point x="34.03071830789773" y="-118.4377670288086" num="1"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach" end="National Boulevard, Overland Avenue"></ramps>
+        <distance d="0.9958472466934769"> </distance>
+        <points>
+            <point x="34.03139405087606" y="-118.43523502349854" num="0"></point>
+            <point x="34.03192752837311" y="-118.41785430908203" num="1"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="National Boulevard, Overland Avenue" end="National Boulevard"></ramps>
+        <distance d="0.849537402070271"> </distance>
+        <points>
+            <point x="34.031891963311" y="-118.41678142547607" num="0"></point>
+            <point x="34.031891963311" y="-118.41497898101807" num="1"></point>
+            <point x="34.031358485590346" y="-118.41236114501953" num="2"></point>
+            <point x="34.030469348601684" y="-118.40948581695557" num="3"></point>
+            <point x="34.029971427818126" y="-118.40686798095703" num="4"></point>
+            <point x="34.02986473012718" y="-118.40352058410645" num="5"></point>
+            <point x="34.02986473012718" y="-118.40214729309082" num="6"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="National Boulevard" end="Robertson Boulevard Culver City"></ramps>
+        <distance d="0.46152896382201625"> </distance>
+        <points>
+            <point x="34.02959798531287" y="-118.40234041213989" num="0"></point>
+            <point x="34.0294023719161" y="-118.39961528778076" num="1"></point>
+            <point x="34.029171191865736" y="-118.39530229568481" num="2"></point>
+            <point x="34.02920675806833" y="-118.39429378509521" num="3"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="Robertson Boulevard Culver City" end="La Cienega Boulevard, Venice Boulevard (SR 187 west)"></ramps>
+        <distance d="1.0333953519955674"> </distance>
+        <points>
+            <point x="34.02970468333924" y="-118.39298486709595" num="0"></point>
+            <point x="34.03231874307238" y="-118.38987350463867" num="1"></point>
+            <point x="34.03331455416674" y="-118.38669776916504" num="2"></point>
+            <point x="34.03534170492073" y="-118.38292121887207" num="3"></point>
+            <point x="34.03704874166876" y="-118.37893009185791" num="4"></point>
+            <point x="34.036977615823425" y="-118.37721347808838" num="5"></point>
+        </points>
+    </segment>
+    <segment>
+        <ramps begin="La Cienega Boulevard, Venice Boulevard (SR 187 west)" end="Fairfax Avenue, Washington Boulevard"></ramps>
+        <distance d="0.5318286298950538"> </distance>
+        <points>
+            <point x="34.03662198570218" y="-118.37691307067871" num="0"></point>
+            <point x="34.0360885377248" y="-118.37416648864746" num="1"></point>
+            <point x="34.03591072098687" y="-118.37034702301025" num="2"></point>
+            <point x="34.03573290387622" y="-118.36768627166748" num="3"></point>
+        </points>
+    </segment>
+</freeway>

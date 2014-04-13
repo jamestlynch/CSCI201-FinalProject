@@ -32,7 +32,7 @@ public class CSCI201Maps {
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		
 		// Instantiate the GUI
-		//new UICSCI201Maps();
+//		new UICSCI201Maps();
 	}
 	
 	public static void main(String [] args) {
