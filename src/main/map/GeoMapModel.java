@@ -28,7 +28,7 @@ public class GeoMapModel {
 	private static FreewayNetwork oppositeDirectionFreewayNetwork;
 	
 	private final File[] freewayXMLFiles = {
-		new File("./Freeway-10/Freeway10.xml"),
+		/*new File("./Freeway-10/Freeway10.xml"),
 		new File("./Freeway-10/Freeway10-1.xml"),
 		new File("./Freeway-10/Freeway10-2.xml"),
 		new File("./Freeway-10/Freeway10-J.xml"),
@@ -38,7 +38,7 @@ public class GeoMapModel {
 		new File("./Freeway-105/Freeway105-1.xml"),
 		new File("./Freeway-105/Freeway105-2.xml"),
 		new File("./Freeway-105/Freeway105-3.xml"),
-		new File("./Freeway-105/Freeway105-4.xml"),
+		new File("./Freeway-105/Freeway105-4.xml"),*/
 		new File("./Freeway-405/Freeway405.xml")
 	};
 
@@ -58,18 +58,18 @@ public class GeoMapModel {
 	}
 	public ArrayList<FreewaySegment> returnAllSegment()
 	{
-		System.out.println(", " + defaultDirectionFreewayNetwork.size());
+		
 		ArrayList<FreewaySegment> allSegments = new ArrayList<FreewaySegment>();
 		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) 
 		{
-			System.out.println(defaultDirectionFreewayNetwork.get(key).size());
+			
 			for (int i = 0; i < defaultDirectionFreewayNetwork.get(key).size(); i++)
 			{
 				FreewaySegment tempfs = defaultDirectionFreewayNetwork.get(key).get(i);
-				System.out.println(tempfs.getSegmentName());
 				allSegments.add(tempfs);
 			}
 		}
+		System.out.println(allSegments.size());
 		return allSegments;
 	}
 	
@@ -124,7 +124,6 @@ public class GeoMapModel {
 				}
 				freewaySegmentsStartingAtRamp.add(segment);
 				this.put(ramp, freewaySegmentsStartingAtRamp);
-				System.out.println(defaultDirectionFreewayNetwork.get(ramp));
 			}
 		}
 	}
