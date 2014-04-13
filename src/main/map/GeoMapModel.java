@@ -40,12 +40,35 @@ public class GeoMapModel {
 			new FreewayLoader(freewayXMLFiles[i]);
 		}
 		
-		
 	}
+	
+	
+	public FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
+			throws FreewaySegmentNotFoundException {
+		while (defaultDirectionFreewayNetwork.keySet().iterator().hasNext()) {
+			FreewayRamp currentRamp = defaultDirectionFreewayNetwork.keySet().iterator().next();
+			if (rampName == currentRamp.getRampName()) {
+				ArrayList<FreewaySegment> currentSegment = defaultDirectionFreewayNetwork.get(currentRamp);
+				for(int i = 0; i < currentSegment.size(); i++) {
+					if (direction == FreewaySegment.Direction.EAST || direction == FreewaySegment.Direction.WEST) {
+						if (currentSegment.get(i).getDirectionEW() == direction 
+						   && freewayName.equals(currentSegment.get(i).getFreewayName())) 
+						{
+							return currentSegment.get(i);
+						}
+					}
+				}
+			}
+		}
+		
+		throw new FreewaySegmentNotFoundException(rampName, freewayName, direction.toString());
+	}
+	
 	
 	public ArrayList<FreewaySegment> searchForSegmentWithRamp(FreewayRamp ramp) {
 		return defaultDirectionFreewayNetwork.get(ramp);
 	}
+	
 	
 	/* =========================================================================
 	 *   FREEWAY NETWORK: Custom version of Java's HashMap that overrides the 
@@ -68,6 +91,7 @@ public class GeoMapModel {
 			}
 		}
 	}
+	
 	
 	
 	/* =========================================================================
@@ -145,7 +169,8 @@ public class GeoMapModel {
 					String segmentName = freewayName + "-0-" + segmentNumber;
 						
 					FreewaySegment defaultFreewaySegment = new FreewaySegment(
-						segmentName, 
+						segmentName,
+						freewayName,
 						Double.parseDouble(distanceElement.getAttribute("d")),
 						directionEW,
 						directionNS,
@@ -176,13 +201,14 @@ public class GeoMapModel {
 					Collections.reverse(segmentPoints);
 					
 					FreewaySegment oppositeFreewaySegment = new FreewaySegment(
-							segmentName, 
-							Double.parseDouble(distanceElement.getAttribute("d")),
-							directionEW,
-							directionNS,
-							segmentPoints,
-							endRamp,
-							startRamp
+						segmentName,
+						freewayName,
+						Double.parseDouble(distanceElement.getAttribute("d")),
+						directionEW,
+						directionNS,
+						segmentPoints,
+						endRamp,
+						startRamp
 					);
 					
 					defaultDirectionFreewayNetwork.put(startRamp, defaultFreewaySegment);
@@ -258,4 +284,18 @@ public class GeoMapModel {
 		    }
 		}
 	}
+	
+	
+	/* =========================================================================
+	 *   FREEWAY SEGMENT NOT FOUND EXCEPTION: Gets thrown if there is no segment
+	 *     in our HashMap that begins at the ramp passed in.
+	 * ========================================================================= */
+	private class FreewaySegmentNotFoundException extends Exception {
+		private String message;
+		
+		public FreewaySegmentNotFoundException(String rampName, String freewayName, String directionName) {
+			message = "[LOOKUP ERROR] (GeoMapModel) Could not find segment starting at " + rampName + " on the " + freewayName + " freeway heading in the " + directionName + " direction.";
+		}
+	}
+}
 }

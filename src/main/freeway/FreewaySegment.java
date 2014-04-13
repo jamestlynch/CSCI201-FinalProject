@@ -6,6 +6,7 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class FreewaySegment {
 	private String segmentName;
+	private String freewayName;
 	
 	public enum Direction {
 		NORTH, SOUTH, EAST, WEST
@@ -22,7 +23,8 @@ public class FreewaySegment {
 	//private ArrayList<Automobile> carsOnSection;
 	
 	public FreewaySegment(
-		String name, double distance, 
+		String name, String freewayName,
+		double distance, 
 		/* ArrayList<FreewaySegment> adjacentSections ,*/ 
 		Direction directionEW,
 		Direction directionNS,
@@ -30,6 +32,7 @@ public class FreewaySegment {
 		FreewayRamp start, FreewayRamp end
 	) {
 		this.segmentName = name;
+		this.freewayName = freewayName;
 		//this.adjacentSections = adjacentSections;
 		this.segmentPath = segmentPath;
 		this.directionEW = directionEW;
@@ -41,6 +44,10 @@ public class FreewaySegment {
 
 	public String getSegmentName() {
 		return segmentName;
+	}
+	
+	public String getFreewayName() {
+		return freewayName;
 	}
 	
 	public ArrayList<Coordinate> getSegmentPath()
