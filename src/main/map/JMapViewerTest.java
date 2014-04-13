@@ -1,4 +1,3 @@
-
 package main.map;
 
 
@@ -19,6 +18,8 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
+import main.freeway.FreewaySegment;
+
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
@@ -37,12 +38,13 @@ public class JMapViewerTest extends JFrame {
 	ArrayList<Double> lonpt = new ArrayList<Double>();
 	ArrayList<MapMarkerCircle> mmc = new ArrayList<MapMarkerCircle>();
 	static Scanner fin = new Scanner(System.in);
+	JMapViewer map;
 	public JMapViewerTest() {
 		//latpt.
 		super("JMapViewerTest");
 		this.setSize(new Dimension(600, 600));
 
-		JMapViewer map = new JMapViewer();
+		map = new JMapViewer();
 		//map.setCenter(new Point(300,300));
 		//0, 0 is london. +x is north, + y is east
 		System.out.println(JMapViewer.MAX_ZOOM);
@@ -127,6 +129,29 @@ public class JMapViewerTest extends JFrame {
 		//		addWindowListener(new SaveBeforeClosing(this));
 		this.setVisible(true);
 	}
+	//Draws fastest path on map
+		public void drawPath(ArrayList<FreewaySegment> freewaysegments)
+		{
+			ArrayList<Coordinate> pathToDraw = new ArrayList<Coordinate>();
+			for (int i=0; i< freewaysegments.size(); i++)
+			{
+				for (int j=0; j<freewaysegments.get(i).getSegmentPath().size(); j++)
+				{
+					pathToDraw.add(new Coordinate(freewaysegments.get(i).getSegmentPath().get(j).getLat(),freewaysegments.get(i).getSegmentPath().get(j).getLon() ));
+				}
+				
+			}
+			for (int i = pathToDraw.size()-1; i>=0; i--)
+			{
+				pathToDraw.add(new Coordinate(pathToDraw.get(i).getLat(), pathToDraw.get(i).getLon()));
+			}
+			
+			ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>();
+			MapPolygonImpl polygon = new MapPolygonImpl(pathToDraw);
+			polygonsToDraw.add(polygon);
+			map.setMapPolygonList(polygonsToDraw);
+			map.setMapPolygonsVisible(true);
+		}
 
 	public static void main(String[] args) {
 		//		System.out.println("WHAT DO YOU WANT TO NAME THE FILE?");

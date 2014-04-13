@@ -42,4 +42,8 @@ public class FreewaySegment {
 	public String getSegmentName() {
 		return segmentName;
 	}
+	
+	public ArrayList<Coordinate> getSegmentPath() {
+		return segmentPath;
+	}
 }
