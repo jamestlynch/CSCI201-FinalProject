@@ -2,6 +2,7 @@ package main.freeway;
 
 import java.util.ArrayList;
 
+import main.freeway.FreewayRamp;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class FreewaySegment {
@@ -38,12 +39,13 @@ public class FreewaySegment {
 		this.startRamp = start;
 		this.endRamp = end;
 	}
-	
+
 	public String getSegmentName() {
 		return segmentName;
 	}
 	
-	public ArrayList<Coordinate> getSegmentPath() {
+	public ArrayList<Coordinate> getSegmentPath()
+	{
 		return segmentPath;
 	}
 }
