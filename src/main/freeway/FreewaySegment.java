@@ -1,8 +1,6 @@
-package main.freeway.section;
+package main.freeway;
 
 import java.util.ArrayList;
-
-import main.freeway.ramp.FreewayRamp;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
@@ -13,7 +11,8 @@ public class FreewaySegment {
 		NORTH, SOUTH, EAST, WEST
 	}
 	
-	private Direction direction;
+	private Direction directionEW;
+	private Direction directionNS;
 	private double distance;
 	private ArrayList<Coordinate> segmentPath;
 	private ArrayList<FreewaySegment> adjacentSections;
@@ -24,17 +23,23 @@ public class FreewaySegment {
 	
 	public FreewaySegment(
 		String name, double distance, 
-		ArrayList<FreewaySegment> adjacentSections, 
-		Direction direction, 
+		/* ArrayList<FreewaySegment> adjacentSections ,*/ 
+		Direction directionEW,
+		Direction directionNS,
 		ArrayList<Coordinate> segmentPath, 
 		FreewayRamp start, FreewayRamp end
 	) {
 		this.segmentName = name;
-		this.adjacentSections = adjacentSections;
+		//this.adjacentSections = adjacentSections;
 		this.segmentPath = segmentPath;
-		this.direction = direction;
+		this.directionEW = directionEW;
+		this.directionNS = directionNS;
 		this.distance = distance;
 		this.startRamp = start;
 		this.endRamp = end;
+	}
+	
+	public String getSegmentName() {
+		return segmentName;
 	}
 }
