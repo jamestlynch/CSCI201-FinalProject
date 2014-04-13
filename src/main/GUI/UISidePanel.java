@@ -1,16 +1,16 @@
 package main.GUI;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class UserInterface extends JPanel {
-	public UserInterface()
+import main.map.GeoMap;
+
+public class UISidePanel extends JPanel {
+	
+	public UISidePanel()
 	{
 		
 		JTabbedPane ThreeOpts = new JTabbedPane();
@@ -24,7 +24,9 @@ public class UserInterface extends JPanel {
 		SetGraphPanel DisplayGraph = new SetGraphPanel();
 		ThreeOpts.addTab("Graph", DisplayGraph);//Add the name of the JPanel
 		
-		add(ThreeOpts, BorderLayout.NORTH);
+		//add(new Map(600, 800), BorderLayout.EAST);
+		
+		add(ThreeOpts, BorderLayout.WEST);
 		
 	}
 	public static void main(String[] args)
@@ -32,7 +34,7 @@ public class UserInterface extends JPanel {
 		JFrame a = new JFrame();
 		a.setSize(500, 500);
 		a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		a.add(new UserInterface(), BorderLayout.EAST);
+		a.add(new UISidePanel(), BorderLayout.EAST);
 		a.setVisible(true);
 	}
 }
