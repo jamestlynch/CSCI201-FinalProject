@@ -20,6 +20,9 @@ public class GeoMapView extends JPanel {
 	private Coordinate startLocation = new Coordinate(34.05, -118.25);
 	private int startZoom = 12;
 	
+	private ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>();//can move to inside of drawPath method if you want a new path to be drawn every time
+	
+	
 	public GeoMapView(int width, int height) {
 		this.panelWidth = width;
 		this.panelHeight = height;
@@ -51,8 +54,9 @@ public class GeoMapView extends JPanel {
 		{
 			pathToDraw.add(new Coordinate(pathToDraw.get(i).getLat(), pathToDraw.get(i).getLon()));
 		}
-
-		ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>();
+		System.out.println("# freeway segments: " + freewaysegments.size());
+		System.out.println("size of pathtodraw: " + pathToDraw.size());
+		//ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>(); 
 		MapPolygonImpl polygon = new MapPolygonImpl(pathToDraw);
 		polygonsToDraw.add(polygon);
 		mapViewer.setMapPolygonList(polygonsToDraw);
