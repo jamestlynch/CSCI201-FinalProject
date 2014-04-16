@@ -47,7 +47,7 @@ public class JMapViewerTest extends JFrame {
 		//map.setCenter(new Point(300,300));
 		//0, 0 is london. +x is north, + y is east
 		System.out.println(JMapViewer.MAX_ZOOM);
-		map.setDisplayPositionByLatLon(maplat, maplon, 12);
+		map.setDisplayPositionByLatLon(9999999,9999999, 12);
 		map.addMouseListener(new PointListener(map));
 		map.addKeyListener(new UndoPoint(map));
 		map.setFocusable(true);

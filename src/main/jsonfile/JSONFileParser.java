@@ -13,27 +13,27 @@ import main.map.GeoMapModel;
 public class JSONFileParser
 {
 	ArrayList<Automobile> updated_cars;
-    public ArrayList<Automobile> getUpdated_cars() {
-		return updated_cars;
-	}
-
-	public JSONFileParser(String filetoparse)
+	public JSONFileParser()
+	{}
+	
+	public ArrayList<Automobile> updateCars(String filetoparse)
     {
         updated_cars = new ArrayList<Automobile>();
         for(int i = 0; i < filetoparse.length(); i++)
         {
             String one_car = "";
             if(filetoparse.charAt(i) == '{')
+            {
                 for(i++; filetoparse.charAt(i) != '}'; i++)
                     one_car = (new StringBuilder(String.valueOf(one_car))).append(filetoparse.charAt(i)).toString();
-
+            }
             if(!one_car.equals(""))
             {
                 Automobile a = parse(one_car);
                 updated_cars.add(a);              
             }
         }
-
+        return updated_cars;
     }
 
     private Automobile parse(String car)
@@ -133,14 +133,15 @@ public class JSONFileParser
                     i++;
                     for(i++; car.charAt(i) != '"'; i++)
                         freewayval = (new StringBuilder(String.valueOf(freewayval))).append(car.charAt(i)).toString();
-                    try
-                    {
-                    	one_car.setFreeway(GeoMapModel.searchForSegment(rampname, one_car.getDirection(), freewayval));
-                    }
-                    catch(FreewaySegmentNotFoundException fsnfe)
-                    {
-                    	System.out.println("Freeway Segment Not Found Exception: " + fsnfe.getMessage());
-                    }
+//                    try
+//                    {
+//                    	FreewaySegment tempfs = GeoMapModel.searchForSegment(rampname, one_car.getDirection(), freewayval);
+//                    	one_car.setFreeway(tempfs);
+//                    }
+//                    catch(FreewaySegmentNotFoundException fsnfe)
+//                    {
+//                    	System.out.println("Freeway Segment Not Found Exception: " + fsnfe.getMessage());
+//                    }
                     //one_car.setFreeway(freewayval);
                 }
             }
@@ -149,5 +150,7 @@ public class JSONFileParser
         return one_car;
     }
 
-    
+    public ArrayList<Automobile> getUpdated_cars() {
+		return updated_cars;
+	}
 }

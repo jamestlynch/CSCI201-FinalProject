@@ -20,7 +20,9 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import main.automobile.Automobile;
 import main.freeway.FreewaySegment;
+import main.jsonfile.JSONFileGetter;
 import main.map.GeoMap;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
@@ -38,10 +40,9 @@ public class CSCI201Maps {
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		ArrayList<FreewaySegment> temp = new ArrayList<FreewaySegment>();
 		temp = geoMapModel.returnAllSegment();
-		System.out.println();
+		//System.out.println();
 		try
 		{
-			System.out.println("HH");
 			geoMapView.getMapViewer();
 			geoMapView.drawPath(temp);
 		}
@@ -53,8 +54,27 @@ public class CSCI201Maps {
 		a.setSize(600,  600);
 		a.add(geoMapView);
 		a.setVisible(true);
-
-		// Instantiate the GUI
+		/*while(true)
+    	{
+    		JSONFileGetter jfg = new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/test.json");    		
+    		try
+    		{
+    			jfg.start();
+    			ArrayList<Automobile> UpdatedCarsArrayList;
+    			UpdatedCarsArrayList = jfg.updatecar();
+    			System.out.println("SIZE: ");
+    			for (int i = 0; i < UpdatedCarsArrayList.size(); i++)
+    			{
+    				geoMapView.getMapViewer().addMapMarker(UpdatedCarsArrayList.get(i).getCarsprite());
+    			}
+    			Thread.sleep(180000);
+    		}
+    		catch( InterruptedException ie)
+    		{
+    			System.out.println("IE " + ie.getMessage());
+    		}
+    	}*/
+// 		Instantiate the GUI
 //		new UICSCI201Maps();
 //		new UICSCI201Maps();
 	}

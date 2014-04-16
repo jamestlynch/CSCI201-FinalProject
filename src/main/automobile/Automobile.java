@@ -20,6 +20,7 @@ public class Automobile implements Runnable
 	String ramp;
 	//String freeway;
 	MapMarkerCircle carsprite;
+
 	FreewaySegment freeway;
 	JMapViewer map;
 	Coordinate currentLocation;
@@ -42,8 +43,11 @@ public class Automobile implements Runnable
 	public Automobile()
 	{
 	}
-
-
+	
+	public MapMarkerCircle getCarsprite() {
+		return carsprite;
+	}
+	
 	public void setId(int id)
 	{
 		this.id = id;
