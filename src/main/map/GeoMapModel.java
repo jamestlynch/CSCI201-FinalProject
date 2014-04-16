@@ -98,6 +98,7 @@ public class GeoMapModel {
 	{
 		while (defaultDirectionFreewayNetwork.keySet().iterator().hasNext()) 
 		{
+			//System.out.println("asdfasdF");
 			FreewayRamp currentRamp = defaultDirectionFreewayNetwork.keySet().iterator().next();
 			if (rampName == currentRamp.getRampName()) 
 			{

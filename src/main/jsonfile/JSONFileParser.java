@@ -29,10 +29,10 @@ public class JSONFileParser
 			}
 			if(!one_car.equals(""))
 			{
-				System.out.println(one_car);
 				Automobile a = parse(one_car);
 				updated_cars.add(a);              
 			}
+			System.out.println(updated_cars.size());
 		}
 		System.out.println(updated_cars.size());
 		return updated_cars;
@@ -98,13 +98,13 @@ public class JSONFileParser
 					DirectionVal = (new StringBuilder(String.valueOf(DirectionVal))).append(oneCarData.charAt(i)).toString();
 				i++;
 
-				if (DirectionVal.equals("N"))
+				if (DirectionVal.equals("North"))
 					CarDirection = FreewaySegment.Direction.NORTH;
-				if (DirectionVal.equals("S"))
+				if (DirectionVal.equals("South"))
 					CarDirection = FreewaySegment.Direction.SOUTH;
-				if (DirectionVal.equals("E"))
+				if (DirectionVal.equals("East"))
 					CarDirection = FreewaySegment.Direction.EAST;
-				if (DirectionVal.equals("W"))
+				if (DirectionVal.equals("West"))
 					CarDirection = FreewaySegment.Direction.WEST;
 			}
 		}
@@ -143,9 +143,9 @@ public class JSONFileParser
 		FreewaySegment FreewaySegmentVal = null;
 		try
 		{
-			//        	System.out.println (RampVal);
-			//        	System.out.println (CarDirection);
-			//        	System.out.println (FreewayVal);
+//			System.out.println (RampVal);
+//			System.out.println (CarDirection);
+//			System.out.println (FreewayVal);
 			GeoMapModel a = new GeoMapModel();
 			FreewaySegmentVal = GeoMapModel.searchForSegment(RampVal, CarDirection, FreewayVal);
 		}
@@ -154,6 +154,7 @@ public class JSONFileParser
 			System.out.println ("INVALID DATA." + fsnfe.getMessage());
 			//throw fsnfe;
 		}
+		System.out.println("HELLO WORLD");
 		Automobile OneCar = new Automobile(IDNum, SpeedNum, CarDirection, RampVal, FreewaySegmentVal);
 		return OneCar;
 	}
