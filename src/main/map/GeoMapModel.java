@@ -26,6 +26,7 @@ public class GeoMapModel {
 	// HashMap that allows you to look-up a freeway section via its start ramp
 	private static FreewayNetwork defaultDirectionFreewayNetwork;
 	private static FreewayNetwork oppositeDirectionFreewayNetwork;
+	private static ArrayList<FreewaySegment> segments405 = new ArrayList<FreewaySegment>();
 	
 	private final File[] freewayXMLFiles = {
 		/*new File("./Freeway-10/Freeway10.xml"),
@@ -71,6 +72,10 @@ public class GeoMapModel {
 		}
 		System.out.println(allSegments.size());
 		return allSegments;
+	}
+	public ArrayList<FreewaySegment> getListOf405Segments()
+	{
+		return segments405;
 	}
 	
 	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
@@ -246,7 +251,7 @@ public class GeoMapModel {
 						endRamp,
 						startRamp
 					);
-					
+					segments405.add(defaultFreewaySegment);
 					defaultDirectionFreewayNetwork.put(startRamp, defaultFreewaySegment);
 					oppositeDirectionFreewayNetwork.put(endRamp, oppositeFreewaySegment);
 				} // [Close] Segment List loop

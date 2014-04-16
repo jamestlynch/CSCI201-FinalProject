@@ -37,7 +37,8 @@ public class CSCI201Maps {
 		geoMapView = new GeoMapView(500, 500);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		ArrayList<FreewaySegment> temp = new ArrayList<FreewaySegment>();
-		temp = geoMapModel.returnAllSegment();
+		//temp = geoMapModel.returnAllSegment();
+		temp = geoMapModel.getListOf405Segments();
 		System.out.println();
 		try
 		{
