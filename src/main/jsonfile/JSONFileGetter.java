@@ -30,6 +30,7 @@ public class JSONFileGetter extends Thread
             java.io.InputStream is = connection.getInputStream();
             BufferedReader in = new BufferedReader(new InputStreamReader(is));
             JSONfile = in.readLine();
+            jfp.updateCars(JSONfile);
         }
         catch(MalformedURLException mue)
         {
@@ -39,13 +40,13 @@ public class JSONFileGetter extends Thread
         {
             System.out.println((new StringBuilder("IOE:")).append(ioe.getMessage()).toString());
         }
-    	System.out.println("HELLO WORLD.......");
     	//String asdf = jfp.getUpdated_cars().toString();
     	//System.out.println();
     }
-    public ArrayList<Automobile> updatecar()
+    public ArrayList<Automobile> getUpdatedCar()
     {
-    	return jfp.getUpdated_cars();
+    	
+    	return jfp.getUpdatedCars();
     }
     
     public void run()

@@ -54,11 +54,11 @@ public class GeoMapModel {
 			new FreewayLoader(freewayXMLFiles[i]);
 		}
 		
-		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) {
-			System.out.println("\n\t" + defaultDirectionFreewayNetwork.get(key).get(0).getStartRamp().getRampName() 
-					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getFreewayName() 
-					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getSegmentName());
-		}
+//		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) {
+//			System.out.println("\n\t" + defaultDirectionFreewayNetwork.get(key).get(0).getStartRamp().getRampName() 
+//					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getFreewayName() 
+//					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getSegmentName());
+//		}
 	}
 	public ArrayList<FreewaySegment> returnAllSegment()
 	{
@@ -73,7 +73,7 @@ public class GeoMapModel {
 				allSegments.add(tempfs);
 			}
 		}
-		System.out.println(allSegments.size());
+		//System.out.println(allSegments.size());
 		return allSegments;
 	}
 	public ArrayList<FreewaySegment> getListOf405Segments()

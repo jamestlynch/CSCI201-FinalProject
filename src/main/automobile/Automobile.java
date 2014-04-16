@@ -1,5 +1,6 @@
 package main.automobile;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -22,14 +23,13 @@ public class Automobile implements Runnable
 	MapMarkerCircle carsprite;
 
 	FreewaySegment freeway;
-	JMapViewer map;
 	Coordinate currentLocation;
 	//FuturePoint holds the index of the array element that is upcoming. If futurepoint == Araylistsize, then we've reached the end.
 	int FuturePoint = 1;
 	int ArrayListSize;
-	final double carradius = .00075;
+	final double carradius = 0.5;
 
-	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway, JMapViewer map)
+	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway)
 	{	
 		this.freeway = freeway;
 		ArrayListSize = freeway.getSegmentPath().size();
@@ -39,9 +39,16 @@ public class Automobile implements Runnable
 		this.ramp = ramp;
 		currentLocation = freeway.getSegmentPath().get(0);
 		carsprite = new MapMarkerCircle(currentLocation, carradius);
+		carsprite.setColor(Color.BLACK);
+		carsprite.setBackColor(Color.GREEN);
+		carsprite.setVisible(true);
 	}
 	public Automobile()
 	{
+	}
+	public String toString()
+	{
+		return ("Car #" + id + " is moving at " + speed);
 	}
 	
 	public MapMarkerCircle getCarsprite() {

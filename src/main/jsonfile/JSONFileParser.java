@@ -15,142 +15,153 @@ public class JSONFileParser
 	ArrayList<Automobile> updated_cars;
 	public JSONFileParser()
 	{}
-	
+
 	public ArrayList<Automobile> updateCars(String filetoparse)
-    {
-        updated_cars = new ArrayList<Automobile>();
-        for(int i = 0; i < filetoparse.length(); i++)
-        {
-            String one_car = "";
-            if(filetoparse.charAt(i) == '{')
-            {
-                for(i++; filetoparse.charAt(i) != '}'; i++)
-                    one_car = (new StringBuilder(String.valueOf(one_car))).append(filetoparse.charAt(i)).toString();
-            }
-            if(!one_car.equals(""))
-            {
-                Automobile a = parse(one_car);
-                updated_cars.add(a);              
-            }
-        }
-        return updated_cars;
-    }
+	{
+		updated_cars = new ArrayList<Automobile>();
+		for(int i = 0; i < filetoparse.length(); i++)
+		{
+			String one_car = "";
+			if(filetoparse.charAt(i) == '{')
+			{
+				for(i++; filetoparse.charAt(i) != '}'; i++)
+					one_car = (new StringBuilder(String.valueOf(one_car))).append(filetoparse.charAt(i)).toString();
+			}
+			if(!one_car.equals(""))
+			{
+				System.out.println(one_car);
+				Automobile a = parse(one_car);
+				updated_cars.add(a);              
+			}
+		}
+		System.out.println(updated_cars.size());
+		return updated_cars;
+	}
 
-    private Automobile parse(String car)
-    {
-    	String rampname = "";
-        Automobile one_car = new Automobile();
-        for(int i = 0; i < car.length(); i++)
-        {
-            if(car.charAt(i) == '"')
-            {
-                String id = "";
-                for(i++; car.charAt(i) != '"'; i++)
-                    id = (new StringBuilder(String.valueOf(id))).append(car.charAt(i)).toString();
+	private Automobile parse(String oneCarData)
+	{
+		System.out.println(oneCarData);
+		String IDVal = "";
+		int IDNum = 0;
+		String SpeedVal = "";
+		double SpeedNum = 0;
+		String DirectionVal = "";
+		FreewaySegment.Direction CarDirection = null;
+		String RampVal = "";
+		String FreewayVal = "";    
 
-                if(id.equals("id") || id.equals("ID") || id.equals("Id"))
-                {
-                    String idnum = "";
-                    i++;
-                    for(i++; car.charAt(i) != ','; i++)
-                        idnum = (new StringBuilder(String.valueOf(idnum))).append(car.charAt(i)).toString();
+		int i = 0;
+		if(oneCarData.charAt(i) == '"')
+		{
+			String id = "";
+			for(i++; oneCarData.charAt(i) != '"'; i++)
+				id = (new StringBuilder(String.valueOf(id))).append(oneCarData.charAt(i)).toString();
 
-                    one_car.setId(Integer.parseInt(idnum));
-                }
-            }
-            i++;
-            if(car.charAt(i) == '"')
-            {
-                String speed = "";
-                for(i++; car.charAt(i) != '"'; i++)
-                    speed = (new StringBuilder(String.valueOf(speed))).append(car.charAt(i)).toString();
+			if(id.equals("id") || id.equals("ID") || id.equals("Id"))
+			{
 
-                if(speed.equals("speed"))
-                {
-                    String speedval = "";
-                    i++;
-                    for(i++; car.charAt(i) != ','; i++)
-                        speedval = (new StringBuilder(String.valueOf(speedval))).append(car.charAt(i)).toString();
+				i++;
+				for(i++; oneCarData.charAt(i) != ','; i++)
+					IDVal = (new StringBuilder(String.valueOf(IDVal))).append(oneCarData.charAt(i)).toString();
 
-                    one_car.setSpeed(Double.parseDouble(speedval));
-                }
-            }
-            i++;
-            if(car.charAt(i) == '"')
-            {
-                String direction = "";
-                for(i++; car.charAt(i) != '"'; i++)
-                    direction = (new StringBuilder(String.valueOf(direction))).append(car.charAt(i)).toString();
+				IDNum = (Integer.parseInt(IDVal));
+			}
+		}
+		i++;
+		if(oneCarData.charAt(i) == '"')
+		{
+			String speed = "";
+			for(i++; oneCarData.charAt(i) != '"'; i++)
+				speed = (new StringBuilder(String.valueOf(speed))).append(oneCarData.charAt(i)).toString();
 
-                if(direction.equals("direction"))
-                {
-                    String directionval = "";
-                    i++;
-                    i++;
-                    for(i++; car.charAt(i) != '"'; i++)
-                        directionval = (new StringBuilder(String.valueOf(directionval))).append(car.charAt(i)).toString();
-                    i++;
-                    FreewaySegment.Direction CarDirection = FreewaySegment.Direction.NORTH;
-                    if (directionval.equals("N"))
-                    	CarDirection = FreewaySegment.Direction.NORTH;
-                    if (directionval.equals("S"))
-                    	CarDirection = FreewaySegment.Direction.SOUTH;
-                    if (directionval.equals("E"))
-                    	CarDirection = FreewaySegment.Direction.EAST;
-                    if (directionval.equals("W"))
-                    	CarDirection = FreewaySegment.Direction.WEST;
-                    one_car.setDirection(CarDirection);
-                }
-            }
-            i++;
-            if(car.charAt(i) == '"')
-            {
-                String ramp = "";
-                for(i++; car.charAt(i) != '"'; i++)
-                    ramp = (new StringBuilder(String.valueOf(ramp))).append(car.charAt(i)).toString();
+			if(speed.equals("speed"))
+			{
+				i++;
+				for(i++; oneCarData.charAt(i) != ','; i++)
+					SpeedVal = (new StringBuilder(String.valueOf(SpeedVal))).append(oneCarData.charAt(i)).toString();
 
-                if(ramp.equals("on\\/off ramp"))
-                {
-                	rampname = "";
-                    i++;
-                    i++;
-                    for(i++; car.charAt(i) != '"'; i++)
-                        rampname = (new StringBuilder(String.valueOf(rampname))).append(car.charAt(i)).toString();
-                }
-            }
-            i++;
-            i++;
-            if(car.charAt(i) == '"')
-            {
-                String freeway = "";
-                for(i++; car.charAt(i) != '"'; i++)
-                    freeway = (new StringBuilder(String.valueOf(freeway))).append(car.charAt(i)).toString();
+				SpeedNum = (Double.parseDouble(SpeedVal));
+			}
+		}
+		i++;
+		if(oneCarData.charAt(i) == '"')
+		{
+			String direction = "";
+			for(i++; oneCarData.charAt(i) != '"'; i++)
+				direction = (new StringBuilder(String.valueOf(direction))).append(oneCarData.charAt(i)).toString();
 
-                if(freeway.equals("freeway"))
-                {
-                    String freewayval = "";
-                    i++;
-                    i++;
-                    for(i++; car.charAt(i) != '"'; i++)
-                        freewayval = (new StringBuilder(String.valueOf(freewayval))).append(car.charAt(i)).toString();
-//                    try
-//                    {
-//                    	FreewaySegment tempfs = GeoMapModel.searchForSegment(rampname, one_car.getDirection(), freewayval);
-//                    	one_car.setFreeway(tempfs);
-//                    }
-//                    catch(FreewaySegmentNotFoundException fsnfe)
-//                    {
-//                    	System.out.println("Freeway Segment Not Found Exception: " + fsnfe.getMessage());
-//                    }
-                    //one_car.setFreeway(freewayval);
-                }
-            }
-        }
+			if(direction.equals("direction"))
+			{
+				i++;
+				i++;
+				for(i++; oneCarData.charAt(i) != '"'; i++)
+					DirectionVal = (new StringBuilder(String.valueOf(DirectionVal))).append(oneCarData.charAt(i)).toString();
+				i++;
 
-        return one_car;
-    }
+				if (DirectionVal.equals("N"))
+					CarDirection = FreewaySegment.Direction.NORTH;
+				if (DirectionVal.equals("S"))
+					CarDirection = FreewaySegment.Direction.SOUTH;
+				if (DirectionVal.equals("E"))
+					CarDirection = FreewaySegment.Direction.EAST;
+				if (DirectionVal.equals("W"))
+					CarDirection = FreewaySegment.Direction.WEST;
+			}
+		}
+		i++;
+		if(oneCarData.charAt(i) == '"')
+		{
+			String ramp = "";
+			for(i++; oneCarData.charAt(i) != '"'; i++)
+				ramp = (new StringBuilder(String.valueOf(ramp))).append(oneCarData.charAt(i)).toString();
 
-    public ArrayList<Automobile> getUpdated_cars() {
+			if(ramp.equals("on\\/off ramp"))
+			{
+				RampVal = "";
+				i++;
+				i++;
+				for(i++; oneCarData.charAt(i) != '"'; i++)
+					RampVal = (new StringBuilder(String.valueOf(RampVal))).append(oneCarData.charAt(i)).toString();
+			}
+		}
+		i++;
+		i++;
+		if(oneCarData.charAt(i) == '"')
+		{
+			String freeway = "";
+			for(i++; oneCarData.charAt(i) != '"'; i++)
+				freeway = (new StringBuilder(String.valueOf(freeway))).append(oneCarData.charAt(i)).toString();
+
+			if(freeway.equals("freeway"))
+			{
+				i++;
+				i++;
+				for(i++; oneCarData.charAt(i) != '"'; i++)
+					FreewayVal = (new StringBuilder(String.valueOf(FreewayVal))).append(oneCarData.charAt(i)).toString();
+			}
+		}
+		FreewaySegment FreewaySegmentVal = null;
+		try
+		{
+			//        	System.out.println (RampVal);
+			//        	System.out.println (CarDirection);
+			//        	System.out.println (FreewayVal);
+			GeoMapModel a = new GeoMapModel();
+			FreewaySegmentVal = GeoMapModel.searchForSegment(RampVal, CarDirection, FreewayVal);
+		}
+		catch(FreewaySegmentNotFoundException fsnfe)
+		{
+			System.out.println ("INVALID DATA." + fsnfe.getMessage());
+			//throw fsnfe;
+		}
+		Automobile OneCar = new Automobile(IDNum, SpeedNum, CarDirection, RampVal, FreewaySegmentVal);
+		return OneCar;
+	}
+
+	public ArrayList<Automobile> getUpdatedCars() {
+		System.out.println("HELLO WORLD" + updated_cars.size());
+		for (int i = 0 ; i < updated_cars.size(); i++)
+			System.out.println(updated_cars.get(i).getCarsprite().toString());
 		return updated_cars;
 	}
 }

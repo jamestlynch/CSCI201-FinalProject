@@ -1,14 +1,18 @@
 package main.map;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import main.automobile.Automobile;
 import main.freeway.FreewaySegment;
+import main.jsonfile.JSONFileGetter;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
@@ -31,6 +35,13 @@ public class GeoMapView extends JPanel {
 		setPreferredSize(new Dimension(panelWidth, panelHeight));
 		
 		mapViewer.setDisplayPositionByLatLon(startLocation.getLat(), startLocation.getLon(), startZoom);
+//		MapMarkerCircle circle = new MapMarkerCircle(34.05, -118.25, .005);
+//		circle.setColor(Color.RED);
+//		circle.setBackColor(Color.GREEN);
+//		
+//		mapViewer.addMapMarker(circle);
+//		mapViewer.setMapMarkerVisible(true);
+		drawCar();
 		add(mapViewer);
 	}
 
@@ -61,5 +72,23 @@ public class GeoMapView extends JPanel {
 		polygonsToDraw.add(polygon);
 		mapViewer.setMapPolygonList(polygonsToDraw);
 		mapViewer.setMapPolygonsVisible(true);
+	}
+	//This method should be called in this MapView's threading
+	public void drawCar()
+	{
+		JSONFileGetter JSONFileUpdate= new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/test.json");
+		ArrayList<Automobile> CarsToDisplay = JSONFileUpdate.getUpdatedCar();
+		MapMarkerCircle circle = new MapMarkerCircle(34.05, -118.25, .005);
+		circle.setColor(Color.RED);
+		circle.setBackColor(Color.GREEN);
+		
+		mapViewer.addMapMarker(circle);
+		mapViewer.setMapMarkerVisible(true);
+		for (int i = 0 ; i < CarsToDisplay.size(); i++)
+		{
+			
+			mapViewer.addMapMarker(CarsToDisplay.get(i).getCarsprite());
+			mapViewer.setMapMarkerVisible(true);
+		}
 	}
 }

@@ -19,10 +19,9 @@ package main;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
-import main.automobile.Automobile;
 import main.freeway.FreewaySegment;
-import main.jsonfile.JSONFileGetter;
 import main.map.GeoMap;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
@@ -61,6 +60,7 @@ public class CSCI201Maps {
 			System.out.println("NPE: " + npe.getMessage());
 		}
 		JFrame a = new JFrame();
+		a.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		a.setSize(600,  600);
 		a.add(geoMapView);
 		a.setVisible(true);
