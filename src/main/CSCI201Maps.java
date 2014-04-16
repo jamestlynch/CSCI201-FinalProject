@@ -37,14 +37,21 @@ public class CSCI201Maps {
 		geoMapView = new GeoMapView(500, 500);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		ArrayList<FreewaySegment> temp = new ArrayList<FreewaySegment>();
+		ArrayList<FreewaySegment> temp2 = new ArrayList<FreewaySegment>();
+		ArrayList<FreewaySegment> temp3 = new ArrayList<FreewaySegment>();
+		ArrayList<FreewaySegment> temp4 = new ArrayList<FreewaySegment>();
 		//temp = geoMapModel.returnAllSegment();
 		temp = geoMapModel.getListOf405Segments();
+		temp2 = geoMapModel.getListOf105Segments();
+		temp3 = geoMapModel.getListOf10Segments();
+		temp4 = geoMapModel.getListOf101Segments();
 		System.out.println();
 		try
 		{
 			System.out.println("HH");
 			geoMapView.getMapViewer();
 			geoMapView.drawPath(temp);
+			
 		}
 		catch(NullPointerException npe)
 		{

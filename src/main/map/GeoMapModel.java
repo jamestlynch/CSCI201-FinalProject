@@ -26,20 +26,23 @@ public class GeoMapModel {
 	// HashMap that allows you to look-up a freeway section via its start ramp
 	private static FreewayNetwork defaultDirectionFreewayNetwork;
 	private static FreewayNetwork oppositeDirectionFreewayNetwork;
-	private static ArrayList<FreewaySegment> segments405 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> orderedSegments405 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> orderedSegments105 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> orderedSegments10 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> orderedSegments101 = new ArrayList<FreewaySegment>();
 	
 	private final File[] freewayXMLFiles = {
-		/*new File("./Freeway-10/Freeway10.xml"),
+		new File("./Freeway-10/Freeway10.xml"),
 		new File("./Freeway-10/Freeway10-1.xml"),
 		new File("./Freeway-10/Freeway10-2.xml"),
-		new File("./Freeway-10/Freeway10-J.xml"),
-		new File("./Freeway-10/Freeway10-J2.xml"),
+		//new File("./Freeway-10/Freeway10-J.xml"),
+		//new File("./Freeway-10/Freeway10-J2.xml"),
 		new File("./Freeway-101/Freeway101-1.xml"),
-		new File("./Freeway-101/Freeway101-J.xml"),
+		//new File("./Freeway-101/Freeway101-J.xml"),
 		new File("./Freeway-105/Freeway105-1.xml"),
 		new File("./Freeway-105/Freeway105-2.xml"),
 		new File("./Freeway-105/Freeway105-3.xml"),
-		new File("./Freeway-105/Freeway105-4.xml"),*/
+		new File("./Freeway-105/Freeway105-4.xml"),
 		new File("./Freeway-405/Freeway405.xml")
 	};
 
@@ -75,7 +78,19 @@ public class GeoMapModel {
 	}
 	public ArrayList<FreewaySegment> getListOf405Segments()
 	{
-		return segments405;
+		return orderedSegments405;
+	}
+	public ArrayList<FreewaySegment> getListOf105Segments()
+	{
+		return orderedSegments105;
+	}
+	public ArrayList<FreewaySegment> getListOf10Segments()
+	{
+		return orderedSegments10;
+	}
+	public ArrayList<FreewaySegment> getListOf101Segments()
+	{
+		return orderedSegments101;
 	}
 	
 	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
@@ -251,7 +266,14 @@ public class GeoMapModel {
 						endRamp,
 						startRamp
 					);
-					segments405.add(defaultFreewaySegment);
+					if (freewayName.equals("405"))
+						orderedSegments405.add(defaultFreewaySegment);
+					else if (freewayName.equals("105"))
+						orderedSegments105.add(defaultFreewaySegment);
+					else if (freewayName.equals("10"))
+						orderedSegments10.add(defaultFreewaySegment);
+					else if (freewayName.equals("101"))
+						orderedSegments101.add(defaultFreewaySegment);
 					defaultDirectionFreewayNetwork.put(startRamp, defaultFreewaySegment);
 					oppositeDirectionFreewayNetwork.put(endRamp, oppositeFreewaySegment);
 				} // [Close] Segment List loop
