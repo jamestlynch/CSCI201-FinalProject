@@ -35,10 +35,10 @@ public class GeoMapModel {
 			new File("./Freeway-10/Freeway10.xml"),
 			new File("./Freeway-10/Freeway10-1.xml"),
 			new File("./Freeway-10/Freeway10-2.xml"),
-			//new File("./Freeway-10/Freeway10-J.xml"),
-			//new File("./Freeway-10/Freeway10-J2.xml"),
+			new File("./Freeway-10/Freeway10-J.xml"),
+			new File("./Freeway-10/Freeway10-J2.xml"),
 			new File("./Freeway-101/Freeway101-1.xml"),
-			//new File("./Freeway-101/Freeway101-J.xml"),
+			new File("./Freeway-101/Freeway101-J.xml"),
 			new File("./Freeway-105/Freeway105-1.xml"),
 			new File("./Freeway-105/Freeway105-2.xml"),
 			new File("./Freeway-105/Freeway105-3.xml"),
@@ -96,10 +96,12 @@ public class GeoMapModel {
 	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
 			throws FreewaySegmentNotFoundException 
 	{
-		while (defaultDirectionFreewayNetwork.keySet().iterator().hasNext()) 
+		for (FreewayRamp ramp : defaultDirectionFreewayNetwork.keySet()) 
 		{
 			//System.out.println("asdfasdF");
-			FreewayRamp currentRamp = defaultDirectionFreewayNetwork.keySet().iterator().next();
+			
+			FreewayRamp currentRamp = ramp;
+			System.out.println(currentRamp.getRampName());
 			if (rampName == currentRamp.getRampName()) 
 			{
 				ArrayList<FreewaySegment> currentSegment = defaultDirectionFreewayNetwork.get(currentRamp);
@@ -116,6 +118,7 @@ public class GeoMapModel {
 				}
 			}
 		}
+		System.out.println("Done going through freeway network.");
 		throw new FreewaySegmentNotFoundException(rampName, freewayName, direction.toString());
 	}
 	
