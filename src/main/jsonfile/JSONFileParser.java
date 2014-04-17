@@ -29,6 +29,7 @@ public class JSONFileParser
 			}
 			if(!one_car.equals(""))
 			{
+				System.out.println(one_car);
 				Automobile a = parse(one_car);
 				updated_cars.add(a);              
 			}
@@ -154,7 +155,6 @@ public class JSONFileParser
 			System.out.println ("INVALID DATA." + fsnfe.getMessage());
 			//throw fsnfe;
 		}
-		System.out.println("HELLO WORLD");
 		Automobile OneCar = new Automobile(IDNum, SpeedNum, CarDirection, RampVal, FreewaySegmentVal);
 		return OneCar;
 	}
