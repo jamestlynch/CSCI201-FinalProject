@@ -27,7 +27,18 @@ public class Automobile implements Runnable
 	//FuturePoint holds the index of the array element that is upcoming. If futurepoint == Araylistsize, then we've reached the end.
 	int FuturePoint = 1;
 	int ArrayListSize;
-	final double carradius = 0.003;
+	final double carradius = 0.001;
+	
+	Color darkGreen = new Color(0x0B610B);
+	Color green = new Color(0x04B404);
+	Color lightGreen = new Color(0x58FA82);
+	Color yellowGreen = new Color(0xC8FE2E);
+	Color yellow = new Color(0xFFFF00);
+	Color yellowOrange = new Color(0xF7D358);
+	Color orange = new Color(0xFF8000);
+	Color redOrange = new Color(0xFF4000);
+	Color red = new Color(0xFF0000);
+	Color darkRed = new Color(0x8A0808);
 
 	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway)
 	{	
@@ -40,7 +51,7 @@ public class Automobile implements Runnable
 		currentLocation = freeway.getSegmentPath().get(0);
 		carsprite = new MapMarkerCircle(currentLocation, carradius);
 		carsprite.setColor(Color.BLACK);
-		carsprite.setBackColor(Color.GREEN);
+		this.updateCarColor();
 		carsprite.setVisible(true);
 	}
 	public Automobile()
@@ -74,6 +85,50 @@ public class Automobile implements Runnable
 	{
 		this.ramp = ramp;
 	}
+	public void updateCarColor()
+	{
+		if (this.speed>70)
+		{
+			carsprite.setBackColor(darkGreen);
+		}
+		else if (this.speed>65)
+		{
+			carsprite.setBackColor(green);
+		}
+		else if (this.speed>60)
+		{
+			carsprite.setBackColor(lightGreen);
+		}
+		else if (this.speed>50)
+		{
+			carsprite.setBackColor(yellowGreen);
+		}
+		else if (this.speed>40)
+		{
+			carsprite.setBackColor(yellow);
+		}
+		else if (this.speed>35)
+		{
+			carsprite.setBackColor(yellowOrange);
+		}
+		else if (this.speed>30)
+		{
+			carsprite.setBackColor(orange);
+		}
+		else if (this.speed>25)
+		{
+			carsprite.setBackColor(redOrange);
+		}
+		else if (this.speed>15)
+		{
+			carsprite.setBackColor(red);
+		}
+		else
+		{
+			carsprite.setBackColor(darkRed);
+		}
+		
+	}
 
 	public void setFreeway(FreewaySegment freeway)
 	{
@@ -104,6 +159,7 @@ public class Automobile implements Runnable
 			miles = miles - DistanceToCheckpoint;
 			StaysSameSegment(time_elapse_milliseconds);
 		}
+		this.updateCarColor();
 	}
 	private boolean StaysSameSegment(double time_elapse_milliseconds)
 	{
