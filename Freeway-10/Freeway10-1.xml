@@ -11,7 +11,7 @@
         </points>
     </segment>
     <segment>
-        <ramps begin="null" end="SR 1 south (Lincoln Boulevard) to SR 2 east"></ramps>
+        <ramps begin="4th Street, 5th Street" end="SR 1 south (Lincoln Boulevard) to SR 2 east"></ramps>
         <distance d="0.11860954423835642"> </distance>
         <points>
             <point x="34.01373405281156" y="-118.48776340484619" num="0"></point>

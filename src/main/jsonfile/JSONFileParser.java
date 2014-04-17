@@ -40,7 +40,10 @@ public class JSONFileParser
 
 	private Automobile parse(String oneCarData)
 	{
-		System.out.println(oneCarData);
+		System.out.println("=========================================================================================================================");
+		System.out.println("  Preparing to parse car: " + oneCarData);
+		System.out.println("=========================================================================================================================\n");
+		
 		String IDVal = "";
 		int IDNum = 0;
 		String SpeedVal = "";
@@ -122,6 +125,7 @@ public class JSONFileParser
 				i++;
 				for(i++; oneCarData.charAt(i) != '"'; i++)
 					RampVal = (new StringBuilder(String.valueOf(RampVal))).append(oneCarData.charAt(i)).toString();
+				RampVal = RampVal.toLowerCase().replaceAll("\\s+","");
 			}
 		}
 		i++;
@@ -151,10 +155,8 @@ public class JSONFileParser
 		}
 		catch(FreewaySegmentNotFoundException fsnfe)
 		{
-			System.out.println ("INVALID DATA." + fsnfe.getMessage());
-			//throw fsnfe;
+			System.out.println ("INVALID DATA: " + fsnfe.getMessage());
 		}
-		System.out.println("HELLO WORLD");
 		Automobile OneCar = new Automobile(IDNum, SpeedNum, CarDirection, RampVal, FreewaySegmentVal);
 		return OneCar;
 	}

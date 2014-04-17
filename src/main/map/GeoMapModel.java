@@ -96,30 +96,80 @@ public class GeoMapModel {
 	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
 			throws FreewaySegmentNotFoundException 
 	{
-		for (FreewayRamp ramp : defaultDirectionFreewayNetwork.keySet()) 
+		// Search through the default network, if found return that segment from the defaultDirectionFreewayNetwork
+		FreewaySegment segmentDefault  = searchForSegment(rampName, direction, freewayName, defaultDirectionFreewayNetwork);
+		FreewaySegment segmentOpposite = searchForSegment(rampName, direction, freewayName, oppositeDirectionFreewayNetwork);
+		
+		if (segmentDefault != null) System.out.println("[SEGMENT BEFORE SEARCHING OP]\t" + segmentDefault.getStartRamp().getRampName());
+		else 				 		System.out.println("[SEGMENT BEFORE SEARCHING OP]\t" + "UNDEFINED");
+		
+//		// If not found in the default network, search the opposite direction
+//		segment = (searchForSegment(rampName, direction, freewayName, oppositeDirectionFreewayNetwork) == null) 
+//				? segment
+//				: searchForSegment(rampName, direction, freewayName, oppositeDirectionFreewayNetwork);
+		
+		if (segmentOpposite != null) System.out.println("[SEGMENT AFTER SEARCHING OP]\t" + segmentOpposite.getStartRamp().getRampName());
+		else 				 		 System.out.println("[SEGMENT AFTER SEARCHING OP]\t" + "UNDEFINED");
+		
+		return (segmentDefault == null) ? segmentOpposite : segmentDefault;
+	}
+	
+	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName, HashMap<FreewayRamp, ArrayList<FreewaySegment>> networkToSearch) 
+			throws FreewaySegmentNotFoundException 
+	{
+		for (FreewayRamp ramp : networkToSearch.keySet()) 
 		{
-			//System.out.println("asdfasdF");
-			
 			FreewayRamp currentRamp = ramp;
-			System.out.println(currentRamp.getRampName());
-			if (rampName == currentRamp.getRampName()) 
+			/*System.out.println(" *  " + currentRamp.getRampName() + ", " + "<" +
+					networkToSearch.get(currentRamp).get(0).getDirectionEW().toString() + ", " + 
+					networkToSearch.get(currentRamp).get(0).getDirectionNS().toString() + ">");*/
+			
+			if (rampName.equals(currentRamp.getRampName())) 
 			{
-				ArrayList<FreewaySegment> currentSegment = defaultDirectionFreewayNetwork.get(currentRamp);
+				System.out.println("[RAMP FOUND]\t\t\t" + currentRamp.getRampName());
+				ArrayList<FreewaySegment> currentSegment = networkToSearch.get(currentRamp);
+				
+				System.out.println("Current Segment size: " + currentSegment.size());
+				
 				for(int i = 0; i < currentSegment.size(); i++) 
-				{
+				{	
 					if (direction == FreewaySegment.Direction.EAST || direction == FreewaySegment.Direction.WEST) 
 					{
+						System.out.println("[CHECK FREEWAY & DIRECTION]\tRamp: " + rampName + "\tDirection is E/W\t (Passed in) " + freewayName + " == " + 
+								currentSegment.get(i).getFreewayName() + " (Our value)?\t" + 
+								freewayName.equals(currentSegment.get(i).getFreewayName())
+						);
+						
 						if (currentSegment.get(i).getDirectionEW() == direction 
 						   && freewayName.equals(currentSegment.get(i).getFreewayName())) 
 						{
+							System.out.println("[CHECK FREEWAY & DIRECTION]\tReturning the E/W freeway ramp starting at " + 
+									currentSegment.get(i).getStartRamp().getRampName() + " on the " + currentSegment.get(i).getFreewayName());
+							return currentSegment.get(i);
+						}
+					} 
+				else if (direction == FreewaySegment.Direction.NORTH || direction == FreewaySegment.Direction.SOUTH) 
+					{
+						System.out.println("[CHECK FREEWAY & DIRECTION]\tRamp: " + rampName + "\tDirection is N/S\t (Passed in) " + freewayName + " == " + 
+								currentSegment.get(i).getFreewayName() + " (Our value)?\t" + 
+								freewayName.equals(currentSegment.get(i).getFreewayName())
+						);
+						
+						if (currentSegment.get(i).getDirectionNS() == direction 
+						   && freewayName.equals(currentSegment.get(i).getFreewayName())) 
+						{
+							System.out.println("[CHECK FREEWAY & DIRECTION] Returning the N/S freeway ramp starting at " + 
+									currentSegment.get(i).getStartRamp().getRampName() + " on the " + currentSegment.get(i).getFreewayName());
 							return currentSegment.get(i);
 						}
 					}
 				}
 			}
 		}
-		System.out.println("Done going through freeway network.");
-		throw new FreewaySegmentNotFoundException(rampName, freewayName, direction.toString());
+		return null; 
+		
+//		System.out.println("\n[NOT FOUND] Done searching through freeway network.\n");
+//		throw new FreewaySegmentNotFoundException(rampName, freewayName, direction.toString());
 	}
 	
 	
@@ -180,6 +230,7 @@ public class GeoMapModel {
 				
 				// Name of the Freeway (e.g., 10, 110, 105, 405, etc.)
 				String freewayName = freewayElement.getElementsByTagName("name").item(0).getTextContent();
+				//System.out.println("\nFREEWAY NAME TEST: " + freewayName + "\n");
 				
 				// List of all segment objects; Loops through to create the segment objects
 				NodeList segmentNodeList = freewayElement.getElementsByTagName("segment");
@@ -204,8 +255,8 @@ public class GeoMapModel {
 					}
 					
 					// Part of the Segment's definition; first and last <path> DOM object are the starting and ending ramps for the segment
-					FreewayRamp startRamp = new FreewayRamp(rampsElement.getAttribute("begin"), segmentPoints.get(0));
-					FreewayRamp endRamp = new FreewayRamp(rampsElement.getAttribute("end"), segmentPoints.get(segmentPoints.size() - 1));
+					FreewayRamp startRamp = new FreewayRamp(rampsElement.getAttribute("begin").toLowerCase().replaceAll("\\s+",""), segmentPoints.get(0));
+					FreewayRamp endRamp = new FreewayRamp(rampsElement.getAttribute("end").toLowerCase().replaceAll("\\s+",""), segmentPoints.get(segmentPoints.size() - 1));
 					
 					// Increase in longitude = EAST | Increase in latitude = NORTH
 					double latitudeDifference = segmentPoints.get(0).getLat() - segmentPoints.get(segmentPoints.size() - 1).getLat();
@@ -238,6 +289,8 @@ public class GeoMapModel {
 						startRamp,
 						endRamp
 					);
+					
+					
 					//System.out.println(defaultFreewaySegment.toString());
 					// =========================================================================
 					//   Store the opposite lane's data
@@ -270,6 +323,11 @@ public class GeoMapModel {
 						endRamp,
 						startRamp
 					);
+					
+//					System.out.println(" +  Creating " + segmentName + "\tBegin: " + startRamp.getRampName() + 
+//							"\tEnd: " + endRamp.getRampName() + "\tFreeway: " + freewayName + "\tDirection: <" + 
+//							directionEW.toString() + ", " + directionNS.toString() + ">");
+					
 					if (freewayName.equals("405"))
 						orderedSegments405.add(defaultFreewaySegment);
 					else if (freewayName.equals("105"))
