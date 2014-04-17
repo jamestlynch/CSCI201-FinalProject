@@ -12,5 +12,10 @@ public class UICSCI201Maps extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		add(new UIMapPanel(), BorderLayout.WEST);
 		add(new UISidePanel(), BorderLayout.EAST);
+		setVisible(true);
+	}
+	public static void main(String[] args)
+	{
+		new UICSCI201Maps();
 	}
 }

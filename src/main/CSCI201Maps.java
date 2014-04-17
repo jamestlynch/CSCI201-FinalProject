@@ -35,7 +35,7 @@ public class CSCI201Maps {
 	// Instantiate all objects
 	public CSCI201Maps() {
 		geoMapModel = new GeoMapModel();
-		geoMapView = new GeoMapView(500, 500);
+		geoMapView = new GeoMapView(500, 500, geoMapModel);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		ArrayList<FreewaySegment> temp = new ArrayList<FreewaySegment>();
 		//temp = geoMapModel.returnAllSegment();
@@ -59,11 +59,11 @@ public class CSCI201Maps {
 		{
 			System.out.println("NPE: " + npe.getMessage());
 		}
-		JFrame a = new JFrame();
-		a.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		a.setSize(600,  600);
-		a.add(geoMapView);
-		a.setVisible(true);
+		JFrame temporaryframethatwewillreplacewithUICSCI201MapJFrame = new JFrame();
+		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setSize(600,  600);
+		temporaryframethatwewillreplacewithUICSCI201MapJFrame.add(geoMapView);
+		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setVisible(true);
 		/*while(true)
     	{
     		JSONFileGetter jfg = new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/test.json");    		

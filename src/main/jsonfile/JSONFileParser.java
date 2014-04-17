@@ -13,8 +13,12 @@ import main.map.GeoMapModel;
 public class JSONFileParser
 {
 	ArrayList<Automobile> updated_cars;
-	public JSONFileParser()
-	{}
+	GeoMapModel currentMapModel;
+	int numcarsdeleted=0;
+	public JSONFileParser(GeoMapModel currentMapModel)
+	{
+		this.currentMapModel = currentMapModel;
+	}
 
 	public ArrayList<Automobile> updateCars(String filetoparse)
 	{
@@ -31,11 +35,14 @@ public class JSONFileParser
 			{
 				System.out.println(one_car);
 				Automobile a = parse(one_car);
-				updated_cars.add(a);              
+				if (a != null)
+					updated_cars.add(a);
+				else
+					numcarsdeleted++;
 			}
-			System.out.println(updated_cars.size());
+			
 		}
-		System.out.println(updated_cars.size());
+		System.out.println("__________________________NUMBER OF CARS DELETED:" + numcarsdeleted);
 		return updated_cars;
 	}
 
@@ -151,19 +158,25 @@ public class JSONFileParser
 //			System.out.println (RampVal);
 //			System.out.println (CarDirection);
 //			System.out.println (FreewayVal);
-			GeoMapModel a = new GeoMapModel();
 			FreewaySegmentVal = GeoMapModel.searchForSegment(RampVal, CarDirection, FreewayVal);
 		}
 		catch(FreewaySegmentNotFoundException fsnfe)
 		{
 			System.out.println ("INVALID DATA: " + fsnfe.getMessage());
 		}
-		Automobile OneCar = new Automobile(IDNum, SpeedNum, CarDirection, RampVal, FreewaySegmentVal);
-		return OneCar;
+		if (FreewaySegmentVal == null)
+		{
+			return null;
+		}
+		else
+		{
+			Automobile OneCar = new Automobile(IDNum, SpeedNum, CarDirection, RampVal, FreewaySegmentVal);
+			return OneCar;
+		}
 	}
 
 	public ArrayList<Automobile> getUpdatedCars() {
-		System.out.println("HELLO WORLD" + updated_cars.size());
+		//System.out.println("HELLO WORLD" + updated_cars.size());
 		for (int i = 0 ; i < updated_cars.size(); i++)
 			System.out.println(updated_cars.get(i).getCarsprite().toString());
 		return updated_cars;

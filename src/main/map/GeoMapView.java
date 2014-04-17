@@ -80,12 +80,6 @@ public class GeoMapView extends JPanel {
 	{
 		JSONFileGetter JSONFileUpdate= new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json", currentModel);
 		ArrayList<Automobile> CarsToDisplay = JSONFileUpdate.getUpdatedCar();
-		MapMarkerCircle circle = new MapMarkerCircle(34.05, -118.25, .005);
-		circle.setColor(Color.RED);
-		circle.setBackColor(Color.GREEN);
-		
-		mapViewer.addMapMarker(circle);
-		mapViewer.setMapMarkerVisible(true);
 		for (int i = 0 ; i < CarsToDisplay.size(); i++)
 		{
 			

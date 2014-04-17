@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 import main.automobile.Automobile;
+import main.map.GeoMapModel;
 
 
 // Referenced classes of package jsonFile:
@@ -19,9 +20,9 @@ public class JSONFileGetter extends Thread
 	URL url;
 	String JSONfile;
 	JSONFileParser jfp;
-    public JSONFileGetter(String urllink)
+    public JSONFileGetter(String urllink, GeoMapModel parserMapModel)
     {
-    	jfp = new JSONFileParser();
+    	jfp = new JSONFileParser(parserMapModel);
     	try
         {
         	System.out.println("TEST " + urllink);
