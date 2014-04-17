@@ -65,6 +65,19 @@ public class FreewaySegment {
 		System.out.println("\tNew average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
 		System.out.println("=========================================================================================================================\n\n");
 	}
+	
+	public void removeAutomobileFromSegment(Automobile automobileToRemove)
+	{
+		System.out.println("\n\n=========================================================================================================================");
+		System.out.println("\tOld average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
+
+		double totalSpeed = averageSpeed * automobilesOnSegment.size(); // Size BEFORE removing the automobileToRemove
+		automobilesOnSegment.remove(automobileToRemove);
+		averageSpeed = (totalSpeed - automobileToRemove.getSpeed()) / automobilesOnSegment.size(); // Size AFTER removing automobileToRemove
+		
+		System.out.println("\tNew average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
+		System.out.println("=========================================================================================================================\n\n");
+	}
 
 	public String getSegmentName() {
 		return segmentName;
