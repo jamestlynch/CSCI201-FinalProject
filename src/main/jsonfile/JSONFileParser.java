@@ -29,6 +29,7 @@ public class JSONFileParser
 			}
 			if(!one_car.equals(""))
 			{
+				System.out.println(one_car);
 				Automobile a = parse(one_car);
 				updated_cars.add(a);              
 			}
