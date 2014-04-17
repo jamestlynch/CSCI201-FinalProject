@@ -182,4 +182,9 @@ public class Automobile implements Runnable
 	public FreewaySegment.Direction getDirection() {
 		return direction;
 	}
+	
+	public double getSpeed()
+	{
+		return speed;
+	}
 }
