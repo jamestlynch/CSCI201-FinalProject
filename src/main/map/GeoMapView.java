@@ -26,8 +26,10 @@ public class GeoMapView extends JPanel {
 	
 	private ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>();//can move to inside of drawPath method if you want a new path to be drawn every time
 	
-	
-	public GeoMapView(int width, int height) {
+	private GeoMapModel currentModel;
+	public GeoMapView(int width, int height, GeoMapModel currentModel) 
+	{
+		this.currentModel = currentModel;
 		this.panelWidth = width;
 		this.panelHeight = height;
 		
@@ -76,7 +78,7 @@ public class GeoMapView extends JPanel {
 	//This method should be called in this MapView's threading
 	public void drawCar()
 	{
-		JSONFileGetter JSONFileUpdate= new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/test.json");
+		JSONFileGetter JSONFileUpdate= new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json", currentModel);
 		ArrayList<Automobile> CarsToDisplay = JSONFileUpdate.getUpdatedCar();
 		MapMarkerCircle circle = new MapMarkerCircle(34.05, -118.25, .005);
 		circle.setColor(Color.RED);

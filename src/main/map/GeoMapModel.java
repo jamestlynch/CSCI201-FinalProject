@@ -30,7 +30,7 @@ public class GeoMapModel {
 	private static ArrayList<FreewaySegment> orderedSegments105 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> orderedSegments10 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> orderedSegments101 = new ArrayList<FreewaySegment>();
-	
+
 	private final File[] freewayXMLFiles = {
 			new File("./Freeway-10/Freeway10.xml"),
 			new File("./Freeway-10/Freeway10-1.xml"),
@@ -44,7 +44,7 @@ public class GeoMapModel {
 			new File("./Freeway-105/Freeway105-3.xml"),
 			new File("./Freeway-105/Freeway105-4.xml"),
 			new File("./Freeway-405/Freeway405.xml")
-		};
+	};
 
 	public GeoMapModel() {
 		defaultDirectionFreewayNetwork = new FreewayNetwork();
@@ -53,20 +53,20 @@ public class GeoMapModel {
 		for(int i = 0; i < freewayXMLFiles.length; i++) {
 			new FreewayLoader(freewayXMLFiles[i]);
 		}
-		
-//		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) {
-//			System.out.println("\n\t" + defaultDirectionFreewayNetwork.get(key).get(0).getStartRamp().getRampName() 
-//					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getFreewayName() 
-//					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getSegmentName());
-//		}
+
+		//		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) {
+		//			System.out.println("\n\t" + defaultDirectionFreewayNetwork.get(key).get(0).getStartRamp().getRampName() 
+		//					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getFreewayName() 
+		//					+ "\t" + defaultDirectionFreewayNetwork.get(key).get(0).getSegmentName());
+		//		}
 	}
 	public ArrayList<FreewaySegment> returnAllSegment()
 	{
-		
+
 		ArrayList<FreewaySegment> allSegments = new ArrayList<FreewaySegment>();
 		for (FreewayRamp key: defaultDirectionFreewayNetwork.keySet()) 
 		{
-			
+
 			for (int i = 0; i < defaultDirectionFreewayNetwork.get(key).size(); i++)
 			{
 				FreewaySegment tempfs = defaultDirectionFreewayNetwork.get(key).get(i);
@@ -92,103 +92,105 @@ public class GeoMapModel {
 	{
 		return orderedSegments101;
 	}
-	
+
 	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName) 
 			throws FreewaySegmentNotFoundException 
-	{
+			{
 		// Search through the default network, if found return that segment from the defaultDirectionFreewayNetwork
-		FreewaySegment segmentDefault  = searchForSegment(rampName, direction, freewayName, defaultDirectionFreewayNetwork);
-		FreewaySegment segmentOpposite = searchForSegment(rampName, direction, freewayName, oppositeDirectionFreewayNetwork);
-		
-		if (segmentDefault != null) System.out.println("[SEGMENT BEFORE SEARCHING OP]\t" + segmentDefault.getStartRamp().getRampName());
-		else 				 		System.out.println("[SEGMENT BEFORE SEARCHING OP]\t" + "UNDEFINED");
-		
-//		// If not found in the default network, search the opposite direction
-//		segment = (searchForSegment(rampName, direction, freewayName, oppositeDirectionFreewayNetwork) == null) 
-//				? segment
-//				: searchForSegment(rampName, direction, freewayName, oppositeDirectionFreewayNetwork);
-		
-		if (segmentOpposite != null) System.out.println("[SEGMENT AFTER SEARCHING OP]\t" + segmentOpposite.getStartRamp().getRampName());
-		else 				 		 System.out.println("[SEGMENT AFTER SEARCHING OP]\t" + "UNDEFINED");
-		
+		FreewaySegment segmentDefault  = searchForSegmentWithNetwork(rampName, direction, freewayName, defaultDirectionFreewayNetwork);
+		System.out.println("[STARTING THE OPPOSITE DIRECTION NETWORK SEARCH]");
+		FreewaySegment segmentOpposite = searchForSegmentWithNetwork(rampName, direction, freewayName, oppositeDirectionFreewayNetwork);
+
+		if (segmentDefault != null) System.out.println("DEFAULT [SEGMENT BEFORE SEARCHING OP]\t" + segmentDefault.getStartRamp().getRampName());
+		else 				 		System.out.println("DEFAULT [SEGMENT BEFORE SEARCHING OP]\t" + "UNDEFINED");
+
+		//		// If not found in the default network, search the opposite direction
+		//		segment = (searchForSegment(rampName, direction, freewayName, oppositeDirectionFreewayNetwork) == null) 
+		//				? segment
+		//				: searchForSegment(rampName, direction, freewayName, oppositeDirectionFreewayNetwork);
+
+		if (segmentOpposite != null) System.out.println("OPPOSITE [SEGMENT AFTER SEARCHING OP]\t" + segmentOpposite.getStartRamp().getRampName());
+		else 				 		 System.out.println("OPPOSITE [SEGMENT AFTER SEARCHING OP]\t" + "UNDEFINED");
+
 		return (segmentDefault == null) ? segmentOpposite : segmentDefault;
-	}
-	
-	public static FreewaySegment searchForSegment(String rampName, FreewaySegment.Direction direction, String freewayName, HashMap<FreewayRamp, ArrayList<FreewaySegment>> networkToSearch) 
+			}
+
+	public static FreewaySegment searchForSegmentWithNetwork(String rampName, FreewaySegment.Direction direction, String freewayName, HashMap<FreewayRamp, ArrayList<FreewaySegment>> networkToSearch) 
 			throws FreewaySegmentNotFoundException 
-	{
+			{
 		for (FreewayRamp ramp : networkToSearch.keySet()) 
 		{
 			FreewayRamp currentRamp = ramp;
 			/*System.out.println(" *  " + currentRamp.getRampName() + ", " + "<" +
 					networkToSearch.get(currentRamp).get(0).getDirectionEW().toString() + ", " + 
 					networkToSearch.get(currentRamp).get(0).getDirectionNS().toString() + ">");*/
-			
+//			System.out.print(",");
 			if (rampName.equals(currentRamp.getRampName())) 
 			{
 				System.out.println("[RAMP FOUND]\t\t\t" + currentRamp.getRampName());
 				ArrayList<FreewaySegment> currentSegment = networkToSearch.get(currentRamp);
-				
-				System.out.println("Current Segment size: " + currentSegment.size());
-				
+
 				for(int i = 0; i < currentSegment.size(); i++) 
 				{	
+					
 					if (direction == FreewaySegment.Direction.EAST || direction == FreewaySegment.Direction.WEST) 
 					{
-						System.out.println("[CHECK FREEWAY & DIRECTION]\tRamp: " + rampName + "\tDirection is E/W\t (Passed in) " + freewayName + " == " + 
+						System.out.println("[CHECK FREEWAY & DIRECTION]\tRamp: " + rampName + "\tDirection is E/W: "+direction+ "\t (Passed in) " + freewayName + " == " + 
 								currentSegment.get(i).getFreewayName() + " (Our value)?\t" + 
 								freewayName.equals(currentSegment.get(i).getFreewayName())
-						);
-						
+								);
+						System.out.println("Current-Segment-We're-Checking's Direction: " + currentSegment.get(i).getDirectionEW() + ", Data direction We're Given: " + direction);
 						if (currentSegment.get(i).getDirectionEW() == direction 
-						   && freewayName.equals(currentSegment.get(i).getFreewayName())) 
+								&& freewayName.equals(currentSegment.get(i).getFreewayName())) 
 						{
-							System.out.println("[CHECK FREEWAY & DIRECTION]\tReturning the E/W freeway ramp starting at " + 
+							System.out.println("SEG FOUND [CHECK FREEWAY & DIRECTION]\tReturning the E/W freeway ramp starting at " + 
 									currentSegment.get(i).getStartRamp().getRampName() + " on the " + currentSegment.get(i).getFreewayName());
 							return currentSegment.get(i);
 						}
-					} 
-				else if (direction == FreewaySegment.Direction.NORTH || direction == FreewaySegment.Direction.SOUTH) 
+						System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Hello World");
+					}
+					if (direction == FreewaySegment.Direction.NORTH || direction == FreewaySegment.Direction.SOUTH) 
 					{
-						System.out.println("[CHECK FREEWAY & DIRECTION]\tRamp: " + rampName + "\tDirection is N/S\t (Passed in) " + freewayName + " == " + 
+						System.out.println("[CHECK FREEWAY & DIRECTION]\tRamp: " + rampName + "\tDirection is N/S:"+direction+"\t (Passed in) " + freewayName + " == " + 
 								currentSegment.get(i).getFreewayName() + " (Our value)?\t" + 
 								freewayName.equals(currentSegment.get(i).getFreewayName())
-						);
-						
+								);
+						System.out.println("\t\t\t\tOUR Direction: " + currentSegment.get(i).getDirectionNS() + ", \t\t\tTheir Direction " + direction);
 						if (currentSegment.get(i).getDirectionNS() == direction 
-						   && freewayName.equals(currentSegment.get(i).getFreewayName())) 
+								&& freewayName.equals(currentSegment.get(i).getFreewayName())) 
 						{
-							System.out.println("[CHECK FREEWAY & DIRECTION] Returning the N/S freeway ramp starting at " + 
+							System.out.println("SEG FOUND [CHECK FREEWAY & DIRECTION] Returning the N/S freeway ramp starting at " + 
 									currentSegment.get(i).getStartRamp().getRampName() + " on the " + currentSegment.get(i).getFreewayName());
 							return currentSegment.get(i);
 						}
 					}
 				}
+				
 			}
 		}
 		return null; 
-		
-//		System.out.println("\n[NOT FOUND] Done searching through freeway network.\n");
-//		throw new FreewaySegmentNotFoundException(rampName, freewayName, direction.toString());
-	}
-	
-	
+
+		//		System.out.println("\n[NOT FOUND] Done searching through freeway network.\n");
+		//		throw new FreewaySegmentNotFoundException(rampName, freewayName, direction.toString());
+			}
+
+
 	public ArrayList<FreewaySegment> searchForSegmentWithRamp(FreewayRamp ramp) {
 		return defaultDirectionFreewayNetwork.get(ramp);
 	}
-	
-	
-	
+
+
+
 	/* =========================================================================
 	 *   FREEWAY NETWORK: Custom version of Java's HashMap that overrides the 
 	 *     put() method so that if multiple FreewaySegment's derive from the 
 	 *     same FreewayRamp, we store both.
 	 * ========================================================================= */
-	
+
 	private class FreewayNetwork extends HashMap<FreewayRamp, ArrayList<FreewaySegment>> {
 		public void put(FreewayRamp ramp, FreewaySegment segment) {
 			ArrayList<FreewaySegment> freewaySegmentsStartingAtRamp = new ArrayList<FreewaySegment>();
-			
+
 			if (defaultDirectionFreewayNetwork.get(ramp) == null) {
 				freewaySegmentsStartingAtRamp.add(segment);
 				this.put(ramp, freewaySegmentsStartingAtRamp);
@@ -201,16 +203,16 @@ public class GeoMapModel {
 			}
 		}
 	}
-	
-	
-	
+
+
+
 	/* =========================================================================
 	 *   FREEWAY XML LOADER: Private, internal class for loading in the Segment
 	 *     path data.
 	 * ========================================================================= */
-	
+
 	private class FreewayLoader {
-		
+
 		public FreewayLoader(File file) 
 		{
 			// DocumentBuilderFactory creates a DocumentBuilder instance which parses the XML DOM for manipulation
@@ -218,116 +220,118 @@ public class GeoMapModel {
 			try 
 			{
 				DocumentBuilder documentBuilder = builderFactory.newDocumentBuilder();
-				
+
 				// Add exception handler for XML parse errors
 				documentBuilder.setErrorHandler(new ParseErrorHandler(new PrintWriter(System.out)));
-				
+
 				Document document = documentBuilder.parse(file);
 				document.normalize(); // Checks for DOM errors in the XML (combines adjacent text nodes, removes empty nodes)
-				
+
 				// Capture the root node (freeway); Assumption that there is only one per XML File
 				Element freewayElement = (Element) (document.getElementsByTagName("freeway").item(0));
-				
+
 				// Name of the Freeway (e.g., 10, 110, 105, 405, etc.)
 				String freewayName = freewayElement.getElementsByTagName("name").item(0).getTextContent();
 				//System.out.println("\nFREEWAY NAME TEST: " + freewayName + "\n");
-				
+
 				// List of all segment objects; Loops through to create the segment objects
 				NodeList segmentNodeList = freewayElement.getElementsByTagName("segment");
 				for (int segmentNumber = 0; segmentNumber < segmentNodeList.getLength(); segmentNumber++) {
 					Element segmentElement = (Element) segmentNodeList.item(segmentNumber);
-					
+
 					Element rampsElement = (Element) segmentElement.getElementsByTagName("ramps").item(0);
 					Element distanceElement = (Element) segmentElement.getElementsByTagName("distance").item(0);
-					
+
 					ArrayList<Coordinate> segmentPoints = new ArrayList<Coordinate>();
 					// Only one points object in DOM (houses all point objects); Grab the point node list from the single <points> DOM object
 					NodeList pointNodeList = ((Element) segmentElement.getElementsByTagName("points").item(0))
 							.getElementsByTagName("point");
-					
+
 					// Loop through each <point> DOM object and add the coordinates to the Segment's path
 					for (int pointNumber = 0; pointNumber < pointNodeList.getLength(); pointNumber++) {
 						Coordinate point = new Coordinate(
-							Double.parseDouble(((Element) pointNodeList.item(pointNumber)).getAttribute("x")), 
-							Double.parseDouble(((Element) pointNodeList.item(pointNumber)).getAttribute("y"))
-						);
+								Double.parseDouble(((Element) pointNodeList.item(pointNumber)).getAttribute("x")), 
+								Double.parseDouble(((Element) pointNodeList.item(pointNumber)).getAttribute("y"))
+								);
 						segmentPoints.add(point);
 					}
-					
+
 					// Part of the Segment's definition; first and last <path> DOM object are the starting and ending ramps for the segment
 					FreewayRamp startRamp = new FreewayRamp(rampsElement.getAttribute("begin").toLowerCase().replaceAll("\\s+",""), segmentPoints.get(0));
 					FreewayRamp endRamp = new FreewayRamp(rampsElement.getAttribute("end").toLowerCase().replaceAll("\\s+",""), segmentPoints.get(segmentPoints.size() - 1));
-					
+
 					// Increase in longitude = EAST | Increase in latitude = NORTH
 					double latitudeDifference = segmentPoints.get(0).getLat() - segmentPoints.get(segmentPoints.size() - 1).getLat();
 					double longitudeDifference = segmentPoints.get(0).getLat() - segmentPoints.get(segmentPoints.size() - 1).getLat();
-					
+
 					FreewaySegment.Direction directionEW;
 					FreewaySegment.Direction directionNS;
-					
+
 					if (latitudeDifference < 0) {
 						directionEW = FreewaySegment.Direction.EAST;
 					} else {
 						directionEW = FreewaySegment.Direction.WEST;
 					}
-					
+
 					if (longitudeDifference < 0) {
 						directionNS = FreewaySegment.Direction.NORTH;
 					} else {
 						directionNS = FreewaySegment.Direction.SOUTH;
 					}
-					
+
 					String segmentName = freewayName + "-0-" + segmentNumber;
-						
+
 					FreewaySegment defaultFreewaySegment = new FreewaySegment(
-						segmentName,
-						freewayName,
-						Double.parseDouble(distanceElement.getAttribute("d")),
-						directionEW,
-						directionNS,
-						segmentPoints,
-						startRamp,
-						endRamp
-					);
-					
-					
+							segmentName,
+							freewayName,
+							Double.parseDouble(distanceElement.getAttribute("d")),
+							directionEW,
+							directionNS,
+							segmentPoints,
+							startRamp,
+							endRamp
+							);
+
+					System.out.println(" +  Creating " + segmentName + "\tBegin: " + startRamp.getRampName() + 
+							"\tEnd: " + endRamp.getRampName() + "\tFreeway: " + freewayName + "\tDirection: <" + 
+							directionEW.toString() + ", " + directionNS.toString() + ">");
 					//System.out.println(defaultFreewaySegment.toString());
 					// =========================================================================
 					//   Store the opposite lane's data
 					// =========================================================================
 					latitudeDifference = segmentPoints.get(segmentPoints.size() - 1).getLat() - segmentPoints.get(0).getLat();
 					longitudeDifference = segmentPoints.get(segmentPoints.size() - 1).getLat() - segmentPoints.get(0).getLat();
-					
+
 					if (latitudeDifference < 0) {
 						directionEW = FreewaySegment.Direction.EAST;
 					} else {
 						directionEW = FreewaySegment.Direction.WEST;
 					}
-					
+
 					if (longitudeDifference < 0) {
 						directionNS = FreewaySegment.Direction.NORTH;
 					} else {
 						directionNS = FreewaySegment.Direction.SOUTH;
 					}
-					
+
 					segmentName = freewayName + "-1-" + segmentNumber;
 					Collections.reverse(segmentPoints);
-					
+
 					FreewaySegment oppositeFreewaySegment = new FreewaySegment(
-						segmentName,
-						freewayName,
-						Double.parseDouble(distanceElement.getAttribute("d")),
-						directionEW,
-						directionNS,
-						segmentPoints,
-						endRamp,
-						startRamp
-					);
-					
-//					System.out.println(" +  Creating " + segmentName + "\tBegin: " + startRamp.getRampName() + 
-//							"\tEnd: " + endRamp.getRampName() + "\tFreeway: " + freewayName + "\tDirection: <" + 
-//							directionEW.toString() + ", " + directionNS.toString() + ">");
-					
+							segmentName,
+							freewayName,
+							Double.parseDouble(distanceElement.getAttribute("d")),
+							directionEW,
+							directionNS,
+							segmentPoints,
+							endRamp,
+							startRamp
+							);
+
+					System.out.println(" +  Creating " + segmentName + "\tBegin: " + endRamp.getRampName() + 
+							"\tEnd: " + startRamp.getRampName() + "\tFreeway: " + freewayName + "\tDirection: <" + 
+							directionEW.toString() + ", " + directionNS.toString() + ">");
+
 					if (freewayName.equals("405"))
 						orderedSegments405.add(defaultFreewaySegment);
 					else if (freewayName.equals("105"))
@@ -350,70 +354,70 @@ public class GeoMapModel {
 				System.out.println("EXCEPTION: IOException: " + ioe.getMessage());
 			}
 		}
-		
+
 		// From Java API Documentation: http://docs.oracle.com/javase/tutorial/jaxp/dom/readingXML.html#gestm
 		private class ParseErrorHandler implements ErrorHandler 
 		{
 			/*	=========================================================================
 			 *  Member Variables
 			 * 	========================================================================= */
-		    
+
 			private PrintWriter out;
-		    
-		    /*	=========================================================================
+
+			/*	=========================================================================
 			 *  Constructors
 			 * 	========================================================================= */
-		   
+
 			ParseErrorHandler(PrintWriter out) 
 			{
-		        this.out = out;
-		    }
-		    
-		    /*	=========================================================================
+				this.out = out;
+			}
+
+			/*	=========================================================================
 			 *  Exception Info Reporting: Provides a descriptive report of the SAX 
 			 *  	Exception that is thrown.
 			 * 	========================================================================= */
-		    
-		    private String getParseExceptionInfo(SAXParseException spe) 
-		    {
-		        String systemId = spe.getSystemId();
-		        if (systemId == null) {
-		            systemId = "null";
-		        }
 
-		        String info = "URI = " + systemId + " Line = " + spe.getLineNumber() + ": " + spe.getMessage();
-		        return info;
-		    }
+			private String getParseExceptionInfo(SAXParseException spe) 
+			{
+				String systemId = spe.getSystemId();
+				if (systemId == null) {
+					systemId = "null";
+				}
 
-		    /*	=========================================================================
+				String info = "URI = " + systemId + " Line = " + spe.getLineNumber() + ": " + spe.getMessage();
+				return info;
+			}
+
+			/*	=========================================================================
 			 *  Exceptions/Warnings: If there is a parse error, throw an SAX (Simple API 
 			 *  	for XML)Exception. Not using an SAX parser, but leveraging the 
 			 *  	standards that it put into place
 			 * 	========================================================================= */
-		    
-		    public void warning(SAXParseException spe) throws SAXException 
-		    {
-		        out.println("Warning: " + getParseExceptionInfo(spe));
-		    }
-		        
-		    public void error(SAXParseException spe) throws SAXException 
-		    {
-		        String message = "Error: " + getParseExceptionInfo(spe);
-		        throw new SAXException(message);
-		    }
 
-		    public void fatalError(SAXParseException spe) throws SAXException 
-		    {
-		        String message = "Fatal Error: " + getParseExceptionInfo(spe);
-		        throw new SAXException(message);
-		    }
+			public void warning(SAXParseException spe) throws SAXException 
+			{
+				out.println("Warning: " + getParseExceptionInfo(spe));
+			}
+
+			public void error(SAXParseException spe) throws SAXException 
+			{
+				String message = "Error: " + getParseExceptionInfo(spe);
+				throw new SAXException(message);
+			}
+
+			public void fatalError(SAXParseException spe) throws SAXException 
+			{
+				String message = "Fatal Error: " + getParseExceptionInfo(spe);
+				throw new SAXException(message);
+			}
 		}
 	}
-	
-	
+
+
 	/* =========================================================================
 	 *   FREEWAY SEGMENT NOT FOUND EXCEPTION: Gets thrown if there is no segment
 	 *     in our HashMap that begins at the ramp passed in.
 	 * ========================================================================= */
-	
+
 }
