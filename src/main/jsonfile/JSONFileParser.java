@@ -171,6 +171,7 @@ public class JSONFileParser
 		else
 		{
 			Automobile OneCar = new Automobile(IDNum, SpeedNum, CarDirection, RampVal, FreewaySegmentVal);
+			FreewaySegmentVal.addAutomobileToSegment(OneCar);
 			return OneCar;
 		}
 	}
