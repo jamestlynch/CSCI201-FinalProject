@@ -39,6 +39,8 @@ public class Automobile implements Runnable
 	Color red = new Color(0xFF0000);
 	Color darkRed = new Color(0x8A0808);
 
+	private boolean debuggingAutomobileRunnable = false;
+	
 	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway)
 	{	
 		this.freeway = freeway;
@@ -56,6 +58,7 @@ public class Automobile implements Runnable
 	public Automobile()
 	{
 	}
+	
 	public String toString()
 	{
 		return ("Car #" + id + " is moving at " + speed);
@@ -186,7 +189,11 @@ public class Automobile implements Runnable
 			currentLocation.setLon(currentLocation.getLon() + loninc);
 			return true;
 		}
+<<<<<<< HEAD
 		else if (DistanceToNextCheckpoint - milesToTravel <= 0 && (numberOfSegmentPointsInThisPath-1 > nextPointNumber))
+=======
+		else if (DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount - 1 > nextPointNumber))
+>>>>>>> branch 'master' of https://github.com/jamestlynch/CSCI201_Team_FinalProject.git
 		{
 			//keep moving the base location until the miles remaining are within the distance to the next checkpoint.
 			//Otherwise, move to the next checkpoint.
@@ -230,13 +237,14 @@ public class Automobile implements Runnable
 			long timeAfter;
 			while(true)
 			{
+				if (debuggingAutomobileRunnable) System.out.println("[AUTOMOBILE RUN] Car #" + id + "'s thread is run");
+				
 				carMarker.setLat(currentLocation.getLat());
 				carMarker.setLon(currentLocation.getLon());
 				now = Calendar.getInstance();
 				timeAfter = now.get(Calendar.MILLISECOND);
 				updateLocation(timeBefore - timeAfter);
 				timeBefore = timeAfter;
-				Thread.yield();
 				Thread.sleep(130);
 			}
 		}

@@ -17,6 +17,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -74,7 +75,17 @@ public class CSCI201Maps {
 	}
 
 	public static void main(String [] args) {
-		new CSCI201Maps();
+		try{
+			new CSCI201Maps();
+		}
+		catch (IndexOutOfBoundsException ioobe)
+		{
+			System.out.println ("index out of bounds exception" + ioobe.getMessage());
+		}
+		catch (ConcurrentModificationException cme)
+		{
+			System.out.println("CME: " + cme.getMessage());
+		}
 
 	}
 }

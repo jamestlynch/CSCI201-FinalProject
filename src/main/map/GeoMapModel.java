@@ -58,7 +58,8 @@ public class GeoMapModel {
 			new File("./Freeway-405/Freeway405.xml") };
 
 	private boolean debuggingSearch = false;
-
+	private boolean debuggingAutomobileMarkers = false;
+	
 	/*
 	 * =========================================================================
 	 * CONSTRUCTORS
@@ -129,7 +130,8 @@ public class GeoMapModel {
 		synchronized(automobilesInFreewayNetwork) 
 		{
 			for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
-				System.out.println(automobilesInFreewayNetwork.get(i)
+				if (debuggingAutomobileMarkers) 
+					System.out.println("[GET AUTOMOBILES] " + automobilesInFreewayNetwork.get(i)
 						.getCarMarker().toString());
 			return automobilesInFreewayNetwork;	
 		}
@@ -137,13 +139,14 @@ public class GeoMapModel {
 	
 	public void runAllAutomobileThreads() {
 		Semaphore automobileSemaphore = new Semaphore(10);
+		ExecutorService executor = Executors.newFixedThreadPool(automobilesInFreewayNetwork.size());
 		
 		for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
-		{
+		{	
 			try {
 				automobileSemaphore.acquire(1);
-				new Thread(automobilesInFreewayNetwork.get(i)).start();
-				automobileSemaphore.release();
+				executor.execute(automobilesInFreewayNetwork.get(i));
+				automobileSemaphore.release(1);
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
