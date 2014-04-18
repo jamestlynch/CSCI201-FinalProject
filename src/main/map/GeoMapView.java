@@ -90,12 +90,16 @@ public class GeoMapView extends JPanel {
 		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Method called.");
 		ArrayList<Automobile> automobilesToDisplay = geoMapModel.getAutomobilesInFreewayNetwork();
 		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Amount of automobiles to draw: " + automobilesToDisplay.size());
-		
+				
 		for (int i = 0 ; i < automobilesToDisplay.size(); i++)
 		{
-			mapViewer.addMapMarker(automobilesToDisplay.get(i).getCarMarker());
-			mapViewer.setMapMarkerVisible(true);
+			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
+			{
+				mapViewer.getMapMarkerList().add(automobilesToDisplay.get(i).getCarMarker());
+			}
 		}
+		
+		mapViewer.setMapMarkerVisible(true);
 	}
 	
 	public void redrawSingleAutomobile(MapMarkerCircle automobileMarker)
