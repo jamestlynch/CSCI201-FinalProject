@@ -189,11 +189,7 @@ public class Automobile implements Runnable
 			currentLocation.setLon(currentLocation.getLon() + loninc);
 			return true;
 		}
-<<<<<<< HEAD
 		else if (DistanceToNextCheckpoint - milesToTravel <= 0 && (numberOfSegmentPointsInThisPath-1 > nextPointNumber))
-=======
-		else if (DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount - 1 > nextPointNumber))
->>>>>>> branch 'master' of https://github.com/jamestlynch/CSCI201_Team_FinalProject.git
 		{
 			//keep moving the base location until the miles remaining are within the distance to the next checkpoint.
 			//Otherwise, move to the next checkpoint.
