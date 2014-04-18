@@ -160,8 +160,11 @@ public class Automobile implements Runnable
 		//if (DistanceToNextCheckpoint - milesTravelled <= 0 && (currentSegmentPointsCount-1 == nextPointNumber))
 		else 
 		{
+			if (freeway == null)
+				return;
 			nextPointNumber = 1;
 			freeway = freeway.getAdjacentSections().get(0);
+				
 			numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
 			nextDestinationCoord = freeway.getSegmentPath().get(nextPointNumber);
 			DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
