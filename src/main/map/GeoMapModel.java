@@ -248,8 +248,17 @@ public class GeoMapModel {
 					NodeList pointNodeList = ((Element) segmentElement.getElementsByTagName("points").item(0))
 							.getElementsByTagName("point");
 
+//					// Loop through each <point> DOM object and add the coordinates to the Segment's path
+//					for (int pointNumber = 0; pointNumber < pointNodeList.getLength(); pointNumber++) {
+//						Coordinate point = new Coordinate(
+//								Double.parseDouble(((Element) pointNodeList.item(pointNumber)).getAttribute("x")), 
+//								Double.parseDouble(((Element) pointNodeList.item(pointNumber)).getAttribute("y"))
+//								);
+//						segmentPoints.add(point);
+//					}
 					// Loop through each <point> DOM object and add the coordinates to the Segment's path
-					for (int pointNumber = 0; pointNumber < pointNodeList.getLength(); pointNumber++) {
+					//Changed order that points were added in
+					for (int pointNumber = pointNodeList.getLength()-1; pointNumber >= 0; pointNumber--) {
 						Coordinate point = new Coordinate(
 								Double.parseDouble(((Element) pointNodeList.item(pointNumber)).getAttribute("x")), 
 								Double.parseDouble(((Element) pointNodeList.item(pointNumber)).getAttribute("y"))

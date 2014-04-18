@@ -13,7 +13,6 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
 
 public class Automobile implements Runnable
 {
-
 	int id;
 	double speed;
 	FreewaySegment.Direction direction;

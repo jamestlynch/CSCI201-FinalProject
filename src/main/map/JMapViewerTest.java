@@ -2,6 +2,7 @@ package main.map;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -44,10 +45,10 @@ public class JMapViewerTest extends JFrame {
 		this.setSize(new Dimension(600, 600));
 
 		map = new JMapViewer();
-		//map.setCenter(new Point(300,300));
+		map.setCenter(new Point(300,300));
 		//0, 0 is london. +x is north, + y is east
 		System.out.println(JMapViewer.MAX_ZOOM);
-		map.setDisplayPositionByLatLon(9999999,9999999, 12);
+		map.setDisplayPositionByLatLon(34.0,-118.4, 12);
 		map.addMouseListener(new PointListener(map));
 		map.addKeyListener(new UndoPoint(map));
 		map.setFocusable(true);
@@ -153,37 +154,36 @@ public class JMapViewerTest extends JFrame {
 		}
 
 	public static void main(String[] args) {
-		//		System.out.println("WHAT DO YOU WANT TO NAME THE FILE?");
-		//		String y;
-		//		try
-		//		{
-		//
-		//			y = fin.nextLine();
-		//			FileWriter out = new FileWriter(y+".xml");
-		//			br = new PrintWriter(out);
-		//			//System.out.println("WHAT FREEWAY WILL YOU BE GOING OVER?");
-		//			//String fwy = fin.nextLine();
-		//			System.out.println("What ramp will you be starting with?");
-		//			String segbegin = fin.nextLine();
-		//			System.out.println("What ramp are you ending with?");
-		//			String segend = fin.nextLine();
-		//			//br.println("<freeway>");	
-		//			//br.println("	<name>"+fwy+"</name>");
-		//			br.println("	<segment>");
-		//			br.println("		<number begin = "+segbegin+" end = " + segend + "></number>");
-		//			segbegin = segend;
-		//			br.println("		<points>");
-		//			br.flush();
+				System.out.println("WHAT DO YOU WANT TO NAME THE FILE?");
+				String y;
+				try
+				{
+					y = fin.nextLine();
+					FileWriter out = new FileWriter(y+".xml");
+					br = new PrintWriter(out);
+					//System.out.println("WHAT FREEWAY WILL YOU BE GOING OVER?");
+					//String fwy = fin.nextLine();
+					System.out.println("What ramp will you be starting with?");
+					String segbegin = fin.nextLine();
+					System.out.println("What ramp are you ending with?");
+					String segend = fin.nextLine();
+					//br.println("<freeway>");	
+					//br.println("	<name>"+fwy+"</name>");
+					br.println("	<segment>");
+					br.println("		<number begin = "+segbegin+" end = " + segend + "></number>");
+					segbegin = segend;
+					br.println("		<points>");
+					br.flush();
 		JMapViewerTest a = new JMapViewerTest();
-		//
-		//		}
-		//		catch (IOException ioe)
-		//		{
-		//			System.out.println("IOE: " + ioe.getMessage());
-		//
-		//		}
-		//		br.flush();
-		//		//br.close();
+		
+				}
+				catch (IOException ioe)
+				{
+					System.out.println("IOE: " + ioe.getMessage());
+		
+				}
+				br.flush();
+				br.close();
 	}
 	class UndoPoint extends KeyAdapter
 	{

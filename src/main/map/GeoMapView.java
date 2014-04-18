@@ -61,6 +61,7 @@ public class GeoMapView extends JPanel {
 			{
 				pathToDraw.add(new Coordinate(freewaysegments.get(i).getSegmentPath().get(j).getLat(),freewaysegments.get(i).getSegmentPath().get(j).getLon() ));
 			}
+			System.out.println("size of path so far: " + pathToDraw.size());
 
 		}
 		for (int i = pathToDraw.size()-1; i>=0; i--)
@@ -71,7 +72,9 @@ public class GeoMapView extends JPanel {
 		System.out.println("size of pathtodraw: " + pathToDraw.size());
 		//ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>(); 
 		MapPolygonImpl polygon = new MapPolygonImpl(pathToDraw);
+		polygon.setColor(Color.RED);
 		polygonsToDraw.add(polygon);
+	
 		mapViewer.setMapPolygonList(polygonsToDraw);
 		mapViewer.setMapPolygonsVisible(true);
 	}
