@@ -51,7 +51,9 @@ public class JSONFileGetter implements Runnable
     
     public void run()
     {
+    	int i = 1;
     	while(true) {
+    		geoMapView.eraseAutomobiles();
     		jfp.parseAutomobiles(jsonFile);
     		geoMapView.drawAutomobiles();
     		
@@ -59,7 +61,7 @@ public class JSONFileGetter implements Runnable
     		System.out.println("[JSONFileGetter] Last updated: " + new Timestamp(date.getTime()));
     		
     		try {
-        		Thread.sleep((3 * 60 * 1000)); // Sleep for 3 minutes (conversion to millis shown)
+        		Thread.sleep((3 * 1000)); // Sleep for 3 minutes (conversion to millis shown)
     		} catch (InterruptedException ie) {
     			ie.printStackTrace();
     		}

@@ -6,6 +6,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -109,14 +112,42 @@ public class GeoMapModel {
 	}
 
 	public void addAutomobileToNetwork(Automobile newAutomobile) {
-		automobilesInFreewayNetwork.add(newAutomobile);
+		synchronized(automobilesInFreewayNetwork) 
+		{
+			automobilesInFreewayNetwork.add(newAutomobile);
+		}
+	}
+	
+	public void eraseAutomobilesInFreewayNetwork() {
+		synchronized(automobilesInFreewayNetwork) 
+		{
+			automobilesInFreewayNetwork.clear();
+		}
 	}
 
 	public ArrayList<Automobile> getAutomobilesInFreewayNetwork() {
+		synchronized(automobilesInFreewayNetwork) 
+		{
+			for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
+				System.out.println(automobilesInFreewayNetwork.get(i)
+						.getCarMarker().toString());
+			return automobilesInFreewayNetwork;	
+		}
+	}
+	
+	public void runAllAutomobileThreads() {
+		Semaphore automobileSemaphore = new Semaphore(10);
+		
 		for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
-			System.out.println(automobilesInFreewayNetwork.get(i)
-					.getCarsprite().toString());
-		return automobilesInFreewayNetwork;
+		{
+			try {
+				automobileSemaphore.acquire(1);
+				new Thread(automobilesInFreewayNetwork.get(i)).start();
+				automobileSemaphore.release();
+			} catch (InterruptedException ie) {
+				ie.printStackTrace();
+			}
+		}
 	}
 
 	/*

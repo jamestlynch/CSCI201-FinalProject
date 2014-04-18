@@ -19,14 +19,14 @@ public class Automobile implements Runnable
 	
 	String ramp;
 	//String freeway;
-	MapMarkerCircle carsprite;
+	MapMarkerCircle carMarker;
 
 	FreewaySegment freeway;
 	Coordinate currentLocation;
 	//FuturePoint holds the index of the array element that is upcoming. If futurepoint == Araylistsize, then we've reached the end.
-	int FuturePoint = 1;
-	int ArrayListSize;
-	final double carradius = 0.001;
+	int nextPointNumber = 1;
+	int currentSegmentPointsCount;
+	final double carRadius = 0.001;
 	
 	Color darkGreen = new Color(0x0B610B);
 	Color green = new Color(0x04B404);
@@ -42,16 +42,16 @@ public class Automobile implements Runnable
 	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway)
 	{	
 		this.freeway = freeway;
-		ArrayListSize = freeway.getSegmentPath().size();
+		currentSegmentPointsCount = freeway.getSegmentPath().size();
 		this.id = id;
 		this.speed = speed;
 		this.direction = direction;
 		this.ramp = ramp;
 		currentLocation = freeway.getSegmentPath().get(0);
-		carsprite = new MapMarkerCircle(currentLocation, carradius);
-		carsprite.setColor(Color.BLACK);
+		carMarker = new MapMarkerCircle(currentLocation, carRadius);
+		carMarker.setColor(Color.BLACK);
 		this.updateCarColor();
-		carsprite.setVisible(true);
+		carMarker.setVisible(true);
 	}
 	public Automobile()
 	{
@@ -61,8 +61,8 @@ public class Automobile implements Runnable
 		return ("Car #" + id + " is moving at " + speed);
 	}
 	
-	public MapMarkerCircle getCarsprite() {
-		return carsprite;
+	public MapMarkerCircle getCarMarker() {
+		return carMarker;
 	}
 	
 	public void setId(int id)
@@ -88,43 +88,43 @@ public class Automobile implements Runnable
 	{
 		if (this.speed>70)
 		{
-			carsprite.setBackColor(darkGreen);
+			carMarker.setBackColor(darkGreen);
 		}
 		else if (this.speed>65)
 		{
-			carsprite.setBackColor(green);
+			carMarker.setBackColor(green);
 		}
 		else if (this.speed>60)
 		{
-			carsprite.setBackColor(lightGreen);
+			carMarker.setBackColor(lightGreen);
 		}
 		else if (this.speed>50)
 		{
-			carsprite.setBackColor(yellowGreen);
+			carMarker.setBackColor(yellowGreen);
 		}
 		else if (this.speed>40)
 		{
-			carsprite.setBackColor(yellow);
+			carMarker.setBackColor(yellow);
 		}
 		else if (this.speed>35)
 		{
-			carsprite.setBackColor(yellowOrange);
+			carMarker.setBackColor(yellowOrange);
 		}
 		else if (this.speed>30)
 		{
-			carsprite.setBackColor(orange);
+			carMarker.setBackColor(orange);
 		}
 		else if (this.speed>25)
 		{
-			carsprite.setBackColor(redOrange);
+			carMarker.setBackColor(redOrange);
 		}
 		else if (this.speed>15)
 		{
-			carsprite.setBackColor(red);
+			carMarker.setBackColor(red);
 		}
 		else
 		{
-			carsprite.setBackColor(darkRed);
+			carMarker.setBackColor(darkRed);
 		}
 		
 	}
@@ -146,15 +146,15 @@ public class Automobile implements Runnable
 		double hour_travelled = time_elapse_milliseconds/3600000;//3.6 million milliseoncds per hour
 		double miles = hour_travelled*speed; //mph * h = m
 		ArrayList<Coordinate> SegmentList = freeway.getSegmentPath();
-		Coordinate dest = SegmentList.get(FuturePoint);
+		Coordinate dest = SegmentList.get(nextPointNumber);
 		double DistanceToCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), dest.getLat(), dest.getLon());
 		if (StaysSameSegment(time_elapse_milliseconds))
 		{}
-		else if (DistanceToCheckpoint - miles <= 0 && (ArrayListSize == FuturePoint))
+		else if (DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount == nextPointNumber))
 		{
-			FuturePoint = 0;
+			nextPointNumber = 0;
 			freeway = freeway.getAdjacentSections().get(0);
-			ArrayListSize = freeway.getAdjacentSections().size();
+			currentSegmentPointsCount = freeway.getAdjacentSections().size();
 			miles = miles - DistanceToCheckpoint;
 			StaysSameSegment(time_elapse_milliseconds);
 		}
@@ -165,7 +165,7 @@ public class Automobile implements Runnable
 		double hour_travelled = time_elapse_milliseconds/3600000;//3.6 million milliseoncds per hour
 		double miles = hour_travelled*speed; //mph * h = m
 		ArrayList<Coordinate> SegmentList = freeway.getSegmentPath();
-		Coordinate dest = SegmentList.get(FuturePoint);
+		Coordinate dest = SegmentList.get(nextPointNumber);
 		double DistanceToCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), dest.getLat(), dest.getLon());
 
 		//This is saying if the distance to the checkpoint is within the miles capacity.
@@ -178,20 +178,20 @@ public class Automobile implements Runnable
 			currentLocation.setLon(currentLocation.getLon() + loninc);
 			return true;
 		}
-		else if (DistanceToCheckpoint - miles <= 0 && (ArrayListSize > FuturePoint))
+		else if (DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount > nextPointNumber))
 		{
 			//keep moving the base location until the miles remaining are within the distance to the next checkpoint.
 			//Otherwise, move to the next checkpoint.
 			Coordinate NewDest;
 			do
 			{
-				dest = SegmentList.get(FuturePoint);
+				dest = SegmentList.get(nextPointNumber);
 				miles = miles - DistanceToCheckpoint;
-				FuturePoint++;
-				NewDest = SegmentList.get(FuturePoint);
+				nextPointNumber++;
+				NewDest = SegmentList.get(nextPointNumber);
 				DistanceToCheckpoint = distance (dest.getLat(), dest.getLon(), NewDest.getLat(), NewDest.getLon());
 			}
-			while(DistanceToCheckpoint - miles <= 0 && (ArrayListSize > FuturePoint));
+			while(DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount > nextPointNumber));
 
 			double latinc = (NewDest.getLat() - dest.getLat()) * (miles/DistanceToCheckpoint);
 			double loninc = (NewDest.getLon() - dest.getLon()) * (miles/DistanceToCheckpoint);
@@ -210,30 +210,31 @@ public class Automobile implements Runnable
 		dist = dist * 60 * 1.1515;
 		return (dist);
 	}
-	@Override
+
 	public void run() {
 		try
 		{
 			Calendar now = Calendar.getInstance();
-			long timebefore = now.get(Calendar.MILLISECOND);
-			long timeafter;
+			long timeBefore = now.get(Calendar.MILLISECOND);
+			long timeAfter;
 			while(true)
 			{
-				carsprite.setLat(currentLocation.getLat());
-				carsprite.setLon(currentLocation.getLon());
+				carMarker.setLat(currentLocation.getLat());
+				carMarker.setLon(currentLocation.getLon());
 				now = Calendar.getInstance();
-				timeafter = now.get(Calendar.MILLISECOND);
-				updateLocation(timebefore-timeafter);
-				timebefore = timeafter;
-				Thread.sleep(13);
+				timeAfter = now.get(Calendar.MILLISECOND);
+				updateLocation(timeBefore - timeAfter);
+				timeBefore = timeAfter;
+				Thread.yield();
+				Thread.sleep(130);
 			}
 		}
 		catch(InterruptedException ie)
 		{
 			System.out.println ("INTERUPTED EXCEPTION: " + ie.getMessage());
 		}
-
 	}
+	
 	public FreewaySegment.Direction getDirection() {
 		return direction;
 	}

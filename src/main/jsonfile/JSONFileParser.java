@@ -21,6 +21,9 @@ public class JSONFileParser implements Runnable
 
 	public void parseAutomobiles(String fileToParse)
 	{
+		// Erase all pre-existing cars; re-parse, re-create, and re-draw
+		geoMapModel.eraseAutomobilesInFreewayNetwork();
+		
 		for(int i = 0; i < fileToParse.length(); i++)
 		{
 			String one_car = "";
@@ -41,6 +44,10 @@ public class JSONFileParser implements Runnable
 		}
 		if (debuggingParser || checkingNumCarsDeleted) 
 			System.out.println(">> Number of autombiles deleted: " + numCarsDeleted);
+		numCarsDeleted = 0;
+		
+		geoMapModel.runAllAutomobileThreads();
+		
 		Thread.yield();
 	}
 
