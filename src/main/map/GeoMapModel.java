@@ -110,6 +110,8 @@ public class GeoMapModel {
 	}
 
 	public FreewaySegment getNextFreewaySegment(FreewaySegment oldSegment) {
+		if (defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()) == null)
+			return null;
 		return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);
 	}
 	

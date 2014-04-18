@@ -166,6 +166,8 @@ public class Automobile implements Runnable
 		{
 			nextPointNumber = 1;
 			freeway = geoMapModel.getNextFreewaySegment(freeway);
+			if (freeway == null)
+				return;
 			numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
 			nextDestinationCoord = freeway.getSegmentPath().get(nextPointNumber);
 			DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
