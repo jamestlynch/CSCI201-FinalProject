@@ -26,10 +26,14 @@ public class GeoMapView extends JPanel {
 	
 	private ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>();//can move to inside of drawPath method if you want a new path to be drawn every time
 	
-	private GeoMapModel currentModel;
-	public GeoMapView(int width, int height, GeoMapModel currentModel) 
+	private GeoMapModel geoMapModel;
+	
+	private boolean debuggingDrawPath = true;
+	private boolean debuggingDrawAutomobiles = true;
+	
+	public GeoMapView(int width, int height, GeoMapModel geoMapModel) 
 	{
-		this.currentModel = currentModel;
+		this.geoMapModel = geoMapModel;
 		this.panelWidth = width;
 		this.panelHeight = height;
 		
@@ -43,7 +47,7 @@ public class GeoMapView extends JPanel {
 //		
 //		mapViewer.addMapMarker(circle);
 //		mapViewer.setMapMarkerVisible(true);
-		drawCar();
+		//drawAutomobiles();
 		add(mapViewer);
 	}
 
@@ -67,23 +71,25 @@ public class GeoMapView extends JPanel {
 		{
 			pathToDraw.add(new Coordinate(pathToDraw.get(i).getLat(), pathToDraw.get(i).getLon()));
 		}
-		System.out.println("# freeway segments: " + freewaysegments.size());
-		System.out.println("size of pathtodraw: " + pathToDraw.size());
+		
+		if (debuggingDrawPath) System.out.println("[DRAW PATH] Number freeway segments: " + freewaysegments.size());
+		if (debuggingDrawPath) System.out.println("[DRAW PATH] Number of points on pathToDraw: " + pathToDraw.size());
 		//ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>(); 
 		MapPolygonImpl polygon = new MapPolygonImpl(pathToDraw);
 		polygonsToDraw.add(polygon);
 		mapViewer.setMapPolygonList(polygonsToDraw);
 		mapViewer.setMapPolygonsVisible(true);
 	}
+	
 	//This method should be called in this MapView's threading
-	public void drawCar()
+	public void drawAutomobiles()
 	{
-		JSONFileGetter JSONFileUpdate= new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json", currentModel);
-		ArrayList<Automobile> CarsToDisplay = JSONFileUpdate.getUpdatedCar();
-		for (int i = 0 ; i < CarsToDisplay.size(); i++)
+		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Method called.");
+		ArrayList<Automobile> automobilesToDisplay = geoMapModel.getAutomobilesInFreewayNetwork();
+		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Amount of automobiles to draw: " + automobilesToDisplay.size());
+		for (int i = 0 ; i < automobilesToDisplay.size(); i++)
 		{
-			
-			mapViewer.addMapMarker(CarsToDisplay.get(i).getCarsprite());
+			mapViewer.addMapMarker(automobilesToDisplay.get(i).getCarsprite());
 			mapViewer.setMapMarkerVisible(true);
 		}
 	}

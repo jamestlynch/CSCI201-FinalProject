@@ -17,11 +17,15 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import main.freeway.FreewaySegment;
+import main.jsonfile.JSONFileGetter;
 import main.map.GeoMap;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
@@ -31,66 +35,46 @@ public class CSCI201Maps {
 	private GeoMapView geoMapView;
 	private GeoMap geoMap;
 	
+	private Thread jsonGetterThread;
+	
 	// Call the user interface
 	// Instantiate all objects
 	public CSCI201Maps() {
+		ExecutorService configurationExecutor = Executors.newFixedThreadPool(1);
+		
 		geoMapModel = new GeoMapModel();
 		geoMapView = new GeoMapView(500, 500, geoMapModel);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
-		ArrayList<FreewaySegment> temp = new ArrayList<FreewaySegment>();
-		//temp = geoMapModel.returnAllSegment();
-		//System.out.println();
-		ArrayList<FreewaySegment> temp2 = new ArrayList<FreewaySegment>();
-		ArrayList<FreewaySegment> temp3 = new ArrayList<FreewaySegment>();
-		ArrayList<FreewaySegment> temp4 = new ArrayList<FreewaySegment>();
-		//temp = geoMapModel.returnAllSegment();
-		temp = geoMapModel.getListOf405Segments();
-		temp2 = geoMapModel.getListOf105Segments();
-		temp3 = geoMapModel.getListOf10Segments();
-		temp4 = geoMapModel.getListOf101Segments();
-		System.out.println();
-		try
-		{
-			geoMapView.getMapViewer();
-			geoMapView.drawPath(temp);
-			
-		}
-		catch(NullPointerException npe)
-		{
-			System.out.println("NPE: " + npe.getMessage());
-		}
+		
+		ArrayList<FreewaySegment> segments405 = new ArrayList<FreewaySegment>();
+		ArrayList<FreewaySegment> segments105 = new ArrayList<FreewaySegment>();
+		ArrayList<FreewaySegment> segments10 = new ArrayList<FreewaySegment>();
+		ArrayList<FreewaySegment> segments101 = new ArrayList<FreewaySegment>();
+
+		segments405 = geoMapModel.getListOf405Segments();
+		segments105 = geoMapModel.getListOf105Segments();
+		segments10  = geoMapModel.getListOf10Segments();
+		segments101 = geoMapModel.getListOf101Segments();
+
+		jsonGetterThread = new Thread(
+			(new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json", geoMapModel, geoMapView)));
+		jsonGetterThread.start();
+		
+		configurationExecutor.shutdown();
+		
+		geoMapView.drawPath(segments105);
+		
+		// Instantiate the GUI
+		//new UICSCI201Maps();
 		JFrame temporaryframethatwewillreplacewithUICSCI201MapJFrame = new JFrame();
 		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setSize(600,  600);
 		temporaryframethatwewillreplacewithUICSCI201MapJFrame.add(geoMapView);
 		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setVisible(true);
-		/*while(true)
-    	{
-    		JSONFileGetter jfg = new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/test.json");    		
-    		try
-    		{
-    			jfg.start();
-    			ArrayList<Automobile> UpdatedCarsArrayList;
-    			UpdatedCarsArrayList = jfg.updatecar();
-    			System.out.println("SIZE: ");
-    			for (int i = 0; i < UpdatedCarsArrayList.size(); i++)
-    			{
-    				geoMapView.getMapViewer().addMapMarker(UpdatedCarsArrayList.get(i).getCarsprite());
-    			}
-    			Thread.sleep(180000);
-    		}
-    		catch( InterruptedException ie)
-    		{
-    			System.out.println("IE " + ie.getMessage());
-    		}
-    	}*/
-// 		Instantiate the GUI
-//		new UICSCI201Maps();
-//		new UICSCI201Maps();
 	}
-	
+
 	public static void main(String [] args) {
 		new CSCI201Maps();
-		
+
 	}
 }

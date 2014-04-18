@@ -1,56 +1,54 @@
 package main.jsonfile;
 
-import java.util.ArrayList;
-
 import main.automobile.Automobile;
 import main.freeway.FreewaySegment;
 import main.map.FreewaySegmentNotFoundException;
 import main.map.GeoMapModel;
 
-// Referenced classes of package objects:
-//            Automobile
-
-public class JSONFileParser
+public class JSONFileParser implements Runnable
 {
-	ArrayList<Automobile> updated_cars;
-	GeoMapModel currentMapModel;
-	int numcarsdeleted=0;
-	public JSONFileParser(GeoMapModel currentMapModel)
+	private GeoMapModel geoMapModel;
+	private int numCarsDeleted = 0;
+	
+	private boolean debuggingParser = false;
+	private boolean checkingNumCarsDeleted = true;
+	
+	
+	public JSONFileParser(GeoMapModel geoMapModel)
 	{
-		this.currentMapModel = currentMapModel;
+		this.geoMapModel = geoMapModel;
 	}
 
-	public ArrayList<Automobile> updateCars(String filetoparse)
+	public void parseAutomobiles(String fileToParse)
 	{
-		updated_cars = new ArrayList<Automobile>();
-		for(int i = 0; i < filetoparse.length(); i++)
+		for(int i = 0; i < fileToParse.length(); i++)
 		{
 			String one_car = "";
-			if(filetoparse.charAt(i) == '{')
+			if(fileToParse.charAt(i) == '{')
 			{
-				for(i++; filetoparse.charAt(i) != '}'; i++)
-					one_car = (new StringBuilder(String.valueOf(one_car))).append(filetoparse.charAt(i)).toString();
+				for(i++; fileToParse.charAt(i) != '}'; i++)
+					one_car = (new StringBuilder(String.valueOf(one_car))).append(fileToParse.charAt(i)).toString();
 			}
 			if(!one_car.equals(""))
 			{
-				System.out.println(one_car);
+				if (debuggingParser) System.out.println(one_car);
 				Automobile a = parse(one_car);
 				if (a != null)
-					updated_cars.add(a);
+					geoMapModel.addAutomobileToNetwork(a);
 				else
-					numcarsdeleted++;
+					numCarsDeleted++;
 			}
-			
 		}
-		System.out.println("__________________________NUMBER OF CARS DELETED:" + numcarsdeleted);
-		return updated_cars;
+		if (debuggingParser || checkingNumCarsDeleted) 
+			System.out.println(">> Number of autombiles deleted: " + numCarsDeleted);
+		Thread.yield();
 	}
 
 	private Automobile parse(String oneCarData)
 	{
-		System.out.println("=========================================================================================================================");
-		System.out.println("  Preparing to parse car: " + oneCarData);
-		System.out.println("=========================================================================================================================\n");
+		if (debuggingParser) System.out.println("=========================================================================================================================");
+		if (debuggingParser) System.out.println("  Preparing to parse car: " + oneCarData);
+		if (debuggingParser) System.out.println("=========================================================================================================================\n");
 		
 		String IDVal = "";
 		int IDNum = 0;
@@ -70,7 +68,6 @@ public class JSONFileParser
 
 			if(id.equals("id") || id.equals("ID") || id.equals("Id"))
 			{
-
 				i++;
 				for(i++; oneCarData.charAt(i) != ','; i++)
 					IDVal = (new StringBuilder(String.valueOf(IDVal))).append(oneCarData.charAt(i)).toString();
@@ -78,7 +75,9 @@ public class JSONFileParser
 				IDNum = (Integer.parseInt(IDVal));
 			}
 		}
+		
 		i++;
+		
 		if(oneCarData.charAt(i) == '"')
 		{
 			String speed = "";
@@ -94,7 +93,9 @@ public class JSONFileParser
 				SpeedNum = (Double.parseDouble(SpeedVal));
 			}
 		}
+		
 		i++;
+		
 		if(oneCarData.charAt(i) == '"')
 		{
 			String direction = "";
@@ -119,7 +120,9 @@ public class JSONFileParser
 					CarDirection = FreewaySegment.Direction.WEST;
 			}
 		}
+		
 		i++;
+		
 		if(oneCarData.charAt(i) == '"')
 		{
 			String ramp = "";
@@ -136,8 +139,10 @@ public class JSONFileParser
 				RampVal = RampVal.toLowerCase().replaceAll("\\s+","");
 			}
 		}
+		
 		i++;
 		i++;
+		
 		if(oneCarData.charAt(i) == '"')
 		{
 			String freeway = "";
@@ -152,13 +157,11 @@ public class JSONFileParser
 					FreewayVal = (new StringBuilder(String.valueOf(FreewayVal))).append(oneCarData.charAt(i)).toString();
 			}
 		}
+		
 		FreewaySegment FreewaySegmentVal = null;
 		try
 		{
-//			System.out.println (RampVal);
-//			System.out.println (CarDirection);
-//			System.out.println (FreewayVal);
-			FreewaySegmentVal = GeoMapModel.searchForSegment(RampVal, CarDirection, FreewayVal);
+			FreewaySegmentVal = geoMapModel.searchForSegment(RampVal, CarDirection, FreewayVal);
 		}
 		catch(FreewaySegmentNotFoundException fsnfe)
 		{
@@ -176,10 +179,7 @@ public class JSONFileParser
 		}
 	}
 
-	public ArrayList<Automobile> getUpdatedCars() {
-		//System.out.println("HELLO WORLD" + updated_cars.size());
-		for (int i = 0 ; i < updated_cars.size(); i++)
-			System.out.println(updated_cars.get(i).getCarsprite().toString());
-		return updated_cars;
+	public void run() {
+		
 	}
 }

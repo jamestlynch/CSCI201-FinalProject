@@ -26,6 +26,8 @@ public class FreewaySegment {
 	private ArrayList<Automobile> automobilesOnSegment = new ArrayList<Automobile>();
 	private double averageSpeed;
 	
+	private boolean debuggingAverageSpeed = false;
+	
 	//private ArrayList<Automobile> carsOnSection;
 	public FreewaySegment(
 		String name, String freewayName,
@@ -51,8 +53,8 @@ public class FreewaySegment {
 	
 	public void addAutomobileToSegment(Automobile newAutomobile)
 	{
-		System.out.println("\n\n=========================================================================================================================");
-		System.out.println("\tOld average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
+		if (debuggingAverageSpeed) System.out.println("\n\n=========================================================================================================================");
+		if (debuggingAverageSpeed) System.out.println("\tOld average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
 		
 		if (automobilesOnSegment.size() != 0)
 		{
@@ -65,21 +67,21 @@ public class FreewaySegment {
 			averageSpeed = newAutomobile.getSpeed();
 		}
 		
-		System.out.println("\tNew average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
-		System.out.println("=========================================================================================================================\n\n");
+		if (debuggingAverageSpeed) System.out.println("\tNew average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
+		if (debuggingAverageSpeed) System.out.println("=========================================================================================================================\n\n");
 	}
 	
 	public void removeAutomobileFromSegment(Automobile automobileToRemove)
 	{
-		System.out.println("\n\n=========================================================================================================================");
-		System.out.println("\tOld average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
+		if (debuggingAverageSpeed) System.out.println("\n\n=========================================================================================================================");
+		if (debuggingAverageSpeed) System.out.println("\tOld average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
 
 		double totalSpeed = averageSpeed * automobilesOnSegment.size(); // Size BEFORE removing the automobileToRemove
 		automobilesOnSegment.remove(automobileToRemove);
 		averageSpeed = (totalSpeed - automobileToRemove.getSpeed()) / automobilesOnSegment.size(); // Size AFTER removing automobileToRemove
 		
-		System.out.println("\tNew average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
-		System.out.println("=========================================================================================================================\n\n");
+		if (debuggingAverageSpeed) System.out.println("\tNew average speed on " + startRamp.getRampName() + " segment: " + averageSpeed);
+		if (debuggingAverageSpeed) System.out.println("=========================================================================================================================\n\n");
 	}
 
 	public String getSegmentName() {
