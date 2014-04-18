@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Timestamp;
 
+import main.CSCI201Maps;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
 
@@ -51,8 +52,8 @@ public class JSONFileGetter implements Runnable
     
     public void run()
     {
-    	int i = 1;
     	while(true) {
+    		CSCI201Maps.grabMapUpdateLock();
     		geoMapView.eraseAutomobiles();
     		jfp.parseAutomobiles(jsonFile);
     		geoMapView.drawAutomobiles();
@@ -61,7 +62,8 @@ public class JSONFileGetter implements Runnable
     		System.out.println("[JSONFileGetter] Last updated: " + new Timestamp(date.getTime()));
     		
     		try {
-        		Thread.sleep((3 * 1000)); // Sleep for 3 minutes (conversion to millis shown)
+    			CSCI201Maps.giveUpMapUpdateLock();
+    			Thread.sleep((3 * 60 * 1000)); // Sleep for 3 minutes (conversion to millis shown)
     		} catch (InterruptedException ie) {
     			ie.printStackTrace();
     		}

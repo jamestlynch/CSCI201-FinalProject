@@ -148,7 +148,7 @@ public class Automobile implements Runnable
 	 * @param time_elapse_milliseconds - the time we've elapsed
 	 */
 	//time_elapse is in milliseconds
-	private void updateLocation(double time_elapse_milliseconds)
+	public void updateLocation(double time_elapse_milliseconds)
 	{
 		double hour_travelled = time_elapse_milliseconds/3600000;//3.6 million milliseoncds per hour
 		double milesToTravel = hour_travelled*speed; //mph * h = m
