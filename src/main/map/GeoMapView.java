@@ -71,12 +71,15 @@ public class GeoMapView extends JPanel {
 		{
 			pathToDraw.add(new Coordinate(pathToDraw.get(i).getLat(), pathToDraw.get(i).getLon()));
 		}
-		
+
 		if (debuggingDrawPath) System.out.println("[DRAW PATH] Number freeway segments: " + freewaysegments.size());
 		if (debuggingDrawPath) System.out.println("[DRAW PATH] Number of points on pathToDraw: " + pathToDraw.size());
+		
 		//ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>(); 
 		MapPolygonImpl polygon = new MapPolygonImpl(pathToDraw);
+		polygon.setColor(Color.RED);
 		polygonsToDraw.add(polygon);
+	
 		mapViewer.setMapPolygonList(polygonsToDraw);
 		mapViewer.setMapPolygonsVisible(true);
 	}

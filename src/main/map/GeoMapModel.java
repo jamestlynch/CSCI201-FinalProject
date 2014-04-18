@@ -347,10 +347,10 @@ public class GeoMapModel {
 							.getElementsByTagName("points").item(0))
 							.getElementsByTagName("point");
 
-					// Loop through each <point> DOM object and add the
-					// coordinates to the Segment's path
-					for (int pointNumber = 0; pointNumber < pointNodeList
-							.getLength(); pointNumber++) {
+
+					// Loop through each <point> DOM object and add the coordinates to the Segment's path
+					// Changed order that points were added in (decrement instead of increment through list)
+					for (int pointNumber = pointNodeList.getLength()-1; pointNumber >= 0; pointNumber--) {
 						Coordinate point = new Coordinate(
 								Double.parseDouble(((Element) pointNodeList
 										.item(pointNumber)).getAttribute("x")),
