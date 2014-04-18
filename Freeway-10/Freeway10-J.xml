@@ -3,6 +3,7 @@
     <segment>
         <ramps begin="I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach" end="I-10 (Santa Monica Freeway)   Santa Monica, Los Angeles"></ramps>
         <distance d="0.42054456512653005"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.030113691197315" y="-118.44083547592163" num="0"></point>
             <point x="34.03009590828794" y="-118.43939781188965" num="1"></point>

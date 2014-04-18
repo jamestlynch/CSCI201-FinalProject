@@ -17,6 +17,7 @@ public class FreewaySegment {
 	private Direction directionEW;
 	private Direction directionNS;
 	private double distance;
+	private int speedLimit;
 	private ArrayList<Coordinate> segmentPath;
 	private ArrayList<FreewaySegment> adjacentSections;
 	private FreewayRamp startRamp = null;
@@ -29,6 +30,7 @@ public class FreewaySegment {
 	public FreewaySegment(
 		String name, String freewayName,
 		double distance, 
+		int speedLimit,
 		/* ArrayList<FreewaySegment> adjacentSections ,*/ 
 		Direction directionEW,
 		Direction directionNS,
@@ -42,6 +44,7 @@ public class FreewaySegment {
 		this.directionEW = directionEW;
 		this.directionNS = directionNS;
 		this.distance = distance;
+		this.speedLimit = speedLimit;
 		this.startRamp = start;
 		this.endRamp = end;
 	}

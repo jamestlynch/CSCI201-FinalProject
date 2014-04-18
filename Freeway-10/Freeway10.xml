@@ -3,6 +3,7 @@
     <segment>
         <ramps begin="Fairfax Avenue, Washington Boulevard" end="La Brea Avenue"></ramps>
         <distance d="1.088272444316325"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.0350571954564" y="-118.36948871612549" num="0"></point>
             <point x="34.03479046696695" y="-118.3671498298645" num="1"></point>
@@ -16,6 +17,7 @@
     <segment>
         <ramps begin="La Brea Avenue" end="Crenshaw Boulevard"></ramps>
         <distance d="0.9136590448430356"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.03471933922815" y="-118.34942579269409" num="0"></point>
             <point x="34.03471933922815" y="-118.34311723709106" num="1"></point>
@@ -28,6 +30,7 @@
     <segment>
         <ramps begin="Crenshaw Boulevard" end="Arlington Avenue"></ramps>
         <distance d="0.9168881186808739"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.03518166846445" y="-118.33354711532593" num="0"></point>
             <point x="34.035590649919314" y="-118.32500696182251" num="1"></point>
@@ -39,6 +42,7 @@
     <segment>
         <ramps begin="Arlington Avenue" end="Western Avenue, Normandie Avenue"></ramps>
         <distance d="0.4781845433268022"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.03685314545058" y="-118.31751823425293" num="0"></point>
             <point x="34.037404370000836" y="-118.3091926574707" num="1"></point>
@@ -47,6 +51,7 @@
     <segment>
         <ramps begin="Western Avenue, Normandie Avenue" end="Hoover Street, Vermont Avenue"></ramps>
         <distance d="0.9793535632902762"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.03720877460269" y="-118.30861330032349" num="0"></point>
             <point x="34.03701317875355" y="-118.30442905426025" num="1"></point>
@@ -58,6 +63,7 @@
     <segment>
         <ramps begin="Hoover Street, Vermont Avenue" end="Hoover Street"></ramps>
         <distance d="0.407898456134512"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.03701317875355" y="-118.29133987426758" num="0"></point>
             <point x="34.03708430456904" y="-118.28421592712402" num="1"></point>
@@ -66,6 +72,7 @@
     <segment>
         <ramps begin="Hoover Street" end="I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles"></ramps>
         <distance d="0.46944637513622695"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.037066523120764" y="-118.28359365463257" num="0"></point>
             <point x="34.03777777814487" y="-118.27945232391357" num="1"></point>
@@ -75,6 +82,7 @@
     <segment>
         <ramps begin="I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles" end="Grand Avenue"></ramps>
         <distance d="0.13770284741875183"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.03799115348916" y="-118.2742166519165" num="0"></point>
             <point x="34.03745771412207" y="-118.27189922332764" num="1"></point>
@@ -83,6 +91,7 @@
     <segment>
         <ramps begin="Grand Avenue" end="Los Angeles Street Convention Center"></ramps>
         <distance d="0.1022622378826228"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.03788446588411" y="-118.27179193496704" num="0"></point>
             <point x="34.03717321175457" y="-118.27022552490234" num="1"></point>
@@ -91,6 +100,7 @@
     <segment>
         <ramps begin="Los Angeles Street Convention Center" end="Maple Avenue"></ramps>
         <distance d="0.6427425494423068"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.03695983435275" y="-118.27041864395142" num="0"></point>
             <point x="34.03308338477587" y="-118.26428174972534" num="1"></point>
