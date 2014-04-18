@@ -25,7 +25,7 @@ public class Automobile implements Runnable
 	Coordinate currentLocation;
 	//FuturePoint holds the index of the array element that is upcoming. If futurepoint == Araylistsize, then we've reached the end.
 	int nextPointNumber = 1;
-	int currentSegmentPointsCount;
+	int numberOfSegmentPointsInThisPath;
 	final double carRadius = 0.001;
 	
 	Color darkGreen = new Color(0x0B610B);
@@ -42,7 +42,7 @@ public class Automobile implements Runnable
 	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway)
 	{	
 		this.freeway = freeway;
-		currentSegmentPointsCount = freeway.getSegmentPath().size();
+		numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
 		this.id = id;
 		this.speed = speed;
 		this.direction = direction;
@@ -144,62 +144,73 @@ public class Automobile implements Runnable
 	private void updateLocation(double time_elapse_milliseconds)
 	{
 		double hour_travelled = time_elapse_milliseconds/3600000;//3.6 million milliseoncds per hour
-		double miles = hour_travelled*speed; //mph * h = m
-		ArrayList<Coordinate> SegmentList = freeway.getSegmentPath();
-		Coordinate dest = SegmentList.get(nextPointNumber);
-		double DistanceToCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), dest.getLat(), dest.getLon());
-		if (StaysSameSegment(time_elapse_milliseconds))
-		{}
-		else if (DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount == nextPointNumber))
+		double milesToTravel = hour_travelled*speed; //mph * h = m
+		Coordinate nextDestinationCoord = freeway.getSegmentPath().get(nextPointNumber);
+		double DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
+		numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
+		
+		if (StaysSameSegment(DistanceToNextCheckpoint, milesToTravel))
 		{
-			nextPointNumber = 0;
+			if (false) 
+				System.out.println("This car is on the same segment!");
+		}
+		//if (DistanceToNextCheckpoint - milesTravelled <= 0 && (currentSegmentPointsCount-1 == nextPointNumber))
+		else 
+		{
+			nextPointNumber = 1;
 			freeway = freeway.getAdjacentSections().get(0);
-			currentSegmentPointsCount = freeway.getAdjacentSections().size();
-			miles = miles - DistanceToCheckpoint;
-			StaysSameSegment(time_elapse_milliseconds);
+			numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
+			nextDestinationCoord = freeway.getSegmentPath().get(nextPointNumber);
+			DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
+			StaysSameSegment(DistanceToNextCheckpoint, milesToTravel);
 		}
 		this.updateCarColor();
 	}
-	private boolean StaysSameSegment(double time_elapse_milliseconds)
+	private boolean StaysSameSegment(double _DistanceToCheckpoint, double _milesToTravel)
 	{
-		double hour_travelled = time_elapse_milliseconds/3600000;//3.6 million milliseoncds per hour
-		double miles = hour_travelled*speed; //mph * h = m
+		double milesToTravel = _milesToTravel;// = hour_travelled*speed; //mph * h = m
+		
+		//SegmentList holds all the upcoming segment points
 		ArrayList<Coordinate> SegmentList = freeway.getSegmentPath();
 		Coordinate dest = SegmentList.get(nextPointNumber);
-		double DistanceToCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), dest.getLat(), dest.getLon());
+		numberOfSegmentPointsInThisPath = SegmentList.size();
+		double DistanceToNextCheckpoint = _DistanceToCheckpoint;
 
 		//This is saying if the distance to the checkpoint is within the miles capacity.
-		if (DistanceToCheckpoint - miles > 0)
+		if (DistanceToNextCheckpoint - milesToTravel > 0)
 		{
 			//Create a latinc and loninc according to the remaining distance and setting a proportion of distance to go.
-			double latinc = (dest.getLat() - currentLocation.getLat()) * (miles/DistanceToCheckpoint);
-			double loninc = (dest.getLon() - currentLocation.getLon()) * (miles/DistanceToCheckpoint);
+			double latinc = (dest.getLat() - currentLocation.getLat()) * (milesToTravel/DistanceToNextCheckpoint);
+			double loninc = (dest.getLon() - currentLocation.getLon()) * (milesToTravel/DistanceToNextCheckpoint);
 			currentLocation.setLat(currentLocation.getLat() + latinc);
 			currentLocation.setLon(currentLocation.getLon() + loninc);
 			return true;
 		}
-		else if (DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount > nextPointNumber))
+		else if (DistanceToNextCheckpoint - milesToTravel <= 0 && (numberOfSegmentPointsInThisPath-1 > nextPointNumber))
 		{
 			//keep moving the base location until the miles remaining are within the distance to the next checkpoint.
 			//Otherwise, move to the next checkpoint.
-			Coordinate NewDest;
+			Coordinate NewCheckpoint;
 			do
 			{
 				dest = SegmentList.get(nextPointNumber);
-				miles = miles - DistanceToCheckpoint;
+				milesToTravel = milesToTravel - DistanceToNextCheckpoint;
 				nextPointNumber++;
-				NewDest = SegmentList.get(nextPointNumber);
-				DistanceToCheckpoint = distance (dest.getLat(), dest.getLon(), NewDest.getLat(), NewDest.getLon());
+				NewCheckpoint = SegmentList.get(nextPointNumber);
+				DistanceToNextCheckpoint = distance (dest.getLat(), dest.getLon(), NewCheckpoint.getLat(), NewCheckpoint.getLon());
 			}
-			while(DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount > nextPointNumber));
+			while(DistanceToNextCheckpoint - milesToTravel <= 0 && (numberOfSegmentPointsInThisPath-1 > nextPointNumber));
 
-			double latinc = (NewDest.getLat() - dest.getLat()) * (miles/DistanceToCheckpoint);
-			double loninc = (NewDest.getLon() - dest.getLon()) * (miles/DistanceToCheckpoint);
+			double latinc = (NewCheckpoint.getLat() - dest.getLat()) * (milesToTravel/DistanceToNextCheckpoint);
+			double loninc = (NewCheckpoint.getLon() - dest.getLon()) * (milesToTravel/DistanceToNextCheckpoint);
 			currentLocation.setLat(dest.getLat() + latinc);
 			currentLocation.setLon(dest.getLon() + loninc);
 			return true;
 		}
-		return false;
+		else
+		{
+			return false;
+		}
 	}
 	private double distance(double lat1, double lon1, double lat2, double lon2) 
 	{
