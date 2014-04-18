@@ -3,6 +3,7 @@
     <segment>
         <ramps begin="Hawthorne Boulevard" end="Prarie Avenue"></ramps>
         <distance d="0.5149281835868844"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.933533189189724" y="-118.35219383239746" num="0"></point>
             <point x="33.93339076407844" y="-118.35107803344727" num="1"></point>

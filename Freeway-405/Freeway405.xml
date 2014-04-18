@@ -3,6 +3,7 @@
     <segment>
         <ramps begin="Manchester Boulevard, La Cienega Boulevard, Florence Avenue" end="La Tijera Boulevard"></ramps>
         <distance d="0.6513031079231099"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.968900647962045" y="-118.37255716323853" num="0"></point>
             <point x="33.96961247404953" y="-118.37358713150024" num="1"></point>
@@ -15,6 +16,7 @@
     <segment>
         <ramps begin="La Tijera Boulevard" end="Howard Hughes Parkway, Sepulveda Boulevard"></ramps>
         <distance d="0.7076262007478362"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.97411463602787" y="-118.38208436965942" num="0"></point>
             <point x="33.97409684139046" y="-118.3820629119873" num="1"></point>
@@ -28,6 +30,7 @@
     <segment>
         <ramps begin="Howard Hughes Parkway, Sepulveda Boulevard" end="Sepulveda Boulevard, Slauson Avenue (SR 90 east)"></ramps>
         <distance d="0.026989731827315344"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.979559620146496" y="-118.39266300201416" num="0"></point>
             <point x="33.979897695896966" y="-118.39289903640747" num="1"></point>
@@ -36,6 +39,7 @@
     <segment>
         <ramps begin="Sepulveda Boulevard, Slauson Avenue (SR 90 east)" end="Jefferson Boulevard"></ramps>
         <distance d="0.8472694868954554"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.979951076155714" y="-118.39294195175171" num="0"></point>
             <point x="33.982228602636695" y="-118.39474439620972" num="1"></point>
@@ -46,6 +50,7 @@
     <segment>
         <ramps begin="Jefferson Boulevard" end="SR 90 west (Marina Freeway) Marina del Rey"></ramps>
         <distance d="0.27000737991388635"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.9902706298002" y="-118.40103149414062" num="0"></point>
             <point x="33.9935085762786" y="-118.40367078781128" num="1"></point>
@@ -54,6 +59,7 @@
     <segment>
         <ramps begin="SR 90 west (Marina Freeway) Marina del Rey" end="Culver Boulevard, Washington Boulevard Culver City"></ramps>
         <distance d="1.001546090176386"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.993579738551745" y="-118.40373516082764" num="0"></point>
             <point x="33.999539367400885" y="-118.40847730636597" num="1"></point>
@@ -63,6 +69,7 @@
     <segment>
         <ramps begin="Culver Boulevard, Washington Boulevard Culver City" end="Venice Boulevard (SR 187), Washington Boulevard"></ramps>
         <distance d="0.21650902579671286"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.005694246651856" y="-118.41328382492065" num="0"></point>
             <point x="34.008344620842834" y="-118.41530084609985" num="1"></point>
@@ -71,6 +78,7 @@
     <segment>
         <ramps begin="Venice Boulevard (SR 187), Washington Boulevard" end="National Boulevard"></ramps>
         <distance d="1.2286587250594172"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.008415770687726" y="-118.41536521911621" num="0"></point>
             <point x="34.01503244568028" y="-118.4206223487854" num="1"></point>
@@ -80,6 +88,7 @@
     <segment>
         <ramps begin="National Boulevard" end="I-10 (Santa Monica Freeway) Santa Monica, Los Angeles"></ramps>
         <distance d="0.11791127971463705"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.02332034861339" y="-118.42720985412598" num="0"></point>
             <point x="34.02474308317967" y="-118.42834711074829" num="1"></point>
@@ -88,6 +97,7 @@
     <segment>
         <ramps begin="I-10 (Santa Monica Freeway) Santa Monica, Los Angeles" end="Olympic Boulevard, Pico Boulevard"></ramps>
         <distance d="1.1704866632671382"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.02479643526194" y="-118.42836856842041" num="0"></point>
             <point x="34.02908227629405" y="-118.43175888061523" num="1"></point>
@@ -100,6 +110,7 @@
     <segment>
         <ramps begin="Olympic Boulevard, Pico Boulevard" end="SR 2 (Santa Monica Boulevard)"></ramps>
         <distance d="0.3735817150973702"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.038897992714205" y="-118.43971967697144" num="0"></point>
             <point x="34.0394492039761" y="-118.44017028808594" num="1"></point>
@@ -109,6 +120,7 @@
     <segment>
         <ramps begin="SR 2 (Santa Monica Boulevard)" end="Wilshire Boulevard"></ramps>
         <distance d="0.6630747903966354"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.04334314278396" y="-118.44358205795288" num="0"></point>
             <point x="34.046987991990264" y="-118.44675779342651" num="1"></point>
@@ -119,6 +131,7 @@
     <segment>
         <ramps begin="Wilshire Boulevard" end="Montana Avenue"></ramps>
         <distance d="0.9686619311888507"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.05178828603763" y="-118.44941854476929" num="0"></point>
             <point x="34.0535305477629" y="-118.45014810562134" num="1"></point>
@@ -129,6 +142,7 @@
     <segment>
         <ramps begin="Montana Avenue" end="Sunset Boulevard"></ramps>
         <distance d="0.4497487173316593"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.063627849292764" y="-118.45853805541992" num="0"></point>
             <point x="34.06887157175502" y="-118.46319437026978" num="1"></point>
@@ -137,6 +151,7 @@
     <segment>
         <ramps begin="Sunset Boulevard" end="Moraga Drive"></ramps>
         <distance d="0.5742370574076257"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.068907121308285" y="-118.46330165863037" num="0"></point>
             <point x="34.0718043597517" y="-118.46576929092407" num="1"></point>
@@ -146,6 +161,7 @@
     <segment>
         <ramps begin="Moraga Drive" end="Getty Center Drive"></ramps>
         <distance d="1.18828668908371"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.07589231907412" y="-118.46890211105347" num="0"></point>
             <point x="34.077740722865386" y="-118.47046852111816" num="1"></point>
@@ -158,6 +174,7 @@
     <segment>
         <ramps begin="Getty Center Drive" end="Mulholland Drive, Skirball Center Drive"></ramps>
         <distance d="2.0337470060825624"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.09213556406459" y="-118.47579002380371" num="0"></point>
             <point x="34.09487208415798" y="-118.47624063491821" num="1"></point>
@@ -175,6 +192,7 @@
     <segment>
         <ramps begin="Mulholland Drive, Skirball Center Drive" end="Ventura Boulevard, Sepulveda Boulevard, Valley Vista Boulevard"></ramps>
         <distance d="1.9842548684610626"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.12136199886612" y="-118.47971677780151" num="0"></point>
             <point x="34.127987621993796" y="-118.4744381904602" num="1"></point>
@@ -188,6 +206,7 @@
     <segment>
         <ramps begin="Ventura Boulevard, Sepulveda Boulevard, Valley Vista Boulevard" end="US 101 (Ventura Freeway) Ventura, Los Angeles"></ramps>
         <distance d="0.07474991382225887"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.14876703862443" y="-118.46920251846313" num="0"></point>
             <point x="34.149761480851076" y="-118.46868753433228" num="1"></point>
@@ -196,6 +215,7 @@
     <segment>
         <ramps begin="US 101 (Ventura Freeway) Ventura, Los Angeles" end="Burbank Boulevard"></ramps>
         <distance d="1.3500243670754604"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.149832511990695" y="-118.46866607666016" num="0"></point>
             <point x="34.15203444769161" y="-118.46780776977539" num="1"></point>
@@ -209,6 +229,7 @@
     <segment>
         <ramps begin="Burbank Boulevard" end="Victory Boulevard Van Nuys"></ramps>
         <distance d="1.158907913863655"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.16939931567629" y="-118.46797943115234" num="0"></point>
             <point x="34.17110365009924" y="-118.46765756607056" num="1"></point>
@@ -221,6 +242,7 @@
     <segment>
         <ramps begin="Victory Boulevard Van Nuys" end="Sherman Way"></ramps>
         <distance d="0.8621598382058175"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.185429350605524" y="-118.47390174865723" num="0"></point>
             <point x="34.18697361173359" y="-118.47415924072266" num="1"></point>
@@ -231,6 +253,7 @@
     <segment>
         <ramps begin="Sherman Way" end="Roscoe Boulevard Panorama City"></ramps>
         <distance d="1.3937783077610264"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.19790688173187" y="-118.47413778305054" num="0"></point>
             <point x="34.201527327529874" y="-118.47347259521484" num="1"></point>
@@ -241,6 +264,7 @@
     <segment>
         <ramps begin="Roscoe Boulevard Panorama City" end="Nordhoff Street"></ramps>
         <distance d="0.9586070893470935"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.218119047994115" y="-118.47321510314941" num="0"></point>
             <point x="34.22832089026034" y="-118.47315073013306" num="1"></point>
@@ -250,6 +274,7 @@
     <segment>
         <ramps begin="Nordhoff Street" end="Devonshire Street Granada Hills"></ramps>
         <distance d="1.4407608720987657"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.23197551050921" y="-118.47310781478882" num="0"></point>
             <point x="34.2428852050361" y="-118.4729790687561" num="1"></point>
@@ -261,6 +286,7 @@
     <segment>
         <ramps begin="Devonshire Street Granada Hills" end="SR 118 (Ronald Reagan Freeway) Simi Valley"></ramps>
         <distance d="0.32107967480398764"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.25288895036518" y="-118.47227096557617" num="0"></point>
             <point x="34.25753567575971" y="-118.4721851348877" num="1"></point>
@@ -269,6 +295,7 @@
     <segment>
         <ramps begin="SR 118 (Ronald Reagan Freeway) Simi Valley" end="San Fernando Mission Boulevard San Fernando"></ramps>
         <distance d="0.6738898743510204"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.25760661614314" y="-118.4721851348877" num="0"></point>
             <point x="34.26736034922727" y="-118.47214221954346" num="1"></point>
@@ -277,6 +304,7 @@
     <segment>
         <ramps begin="San Fernando Mission Boulevard San Fernando" end="Rinaldi Street Mission Hills"></ramps>
         <distance d="0.4311986208086965"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.26737808225728" y="-118.4721851348877" num="0"></point>
             <point x="34.27189988285619" y="-118.4720778465271" num="1"></point>
@@ -286,12 +314,12 @@
     <segment>
         <ramps begin="Rinaldi Street Mission Hills" end="I-5 north (Golden State Freeway) Sacramento"></ramps>
         <distance d="1.257430114389051"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="34.27360214478417" y="-118.47164869308472" num="0"></point>
             <point x="34.27916971911456" y="-118.46973896026611" num="1"></point>
             <point x="34.28305261796891" y="-118.46873044967651" num="2"></point>
             <point x="34.28844228069441" y="-118.46750736236572" num="3"></point>
-            <point x="34.28913369267159" y="-118.46353769302368" num="4"></point>
             <point x="34.291544725823904" y="-118.46795797348022" num="5"></point>
         </points>
     </segment>

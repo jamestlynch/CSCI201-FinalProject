@@ -6,32 +6,38 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 
-import main.automobile.Automobile;
 import main.map.GeoMapModel;
+import main.map.GeoMapView;
 
 
-// Referenced classes of package jsonFile:
-//            JSONFileParser
-//THIS Runs every 3 minutes which can be written as Thread.sleep(180000)
-public class JSONFileGetter extends Thread
+// THIS Runs every 3 minutes which can be written as Thread.sleep(180000)
+public class JSONFileGetter implements Runnable
 {
-	URL url;
-	String JSONfile;
-	JSONFileParser jfp;
-    public JSONFileGetter(String urllink, GeoMapModel parserMapModel)
+	private URL url;
+	private String jsonFile;
+	private JSONFileParser jfp;
+	private GeoMapView geoMapView;
+	
+	private boolean debuggingJSONFileGetter = true;
+	
+    public JSONFileGetter(String urlLink, GeoMapModel parserMapModel, GeoMapView geoMapView)
     {
-    	jfp = new JSONFileParser(parserMapModel);
+    	this.jfp = new JSONFileParser(parserMapModel);
+    	this.geoMapView = geoMapView;
+    	
     	try
         {
-        	System.out.println("TEST " + urllink);
-        	url = new URL(urllink);
-            URLConnection connection = url.openConnection();
-            java.io.InputStream is = connection.getInputStream();
+        	System.out.println("Parsing file from: " + urlLink);
+        	
+        	url = new URL(urlLink);
+            URLConnection urlConnection = url.openConnection();
+            java.io.InputStream is = urlConnection.getInputStream();
             BufferedReader in = new BufferedReader(new InputStreamReader(is));
-            JSONfile = in.readLine();
-            jfp.updateCars(JSONfile);
+            
+            // Store the contents of the JSON file in String and pass to the parser when JSONFileGetter task is run
+            jsonFile = in.readLine();
         }
         catch(MalformedURLException mue)
         {
@@ -41,17 +47,23 @@ public class JSONFileGetter extends Thread
         {
             System.out.println((new StringBuilder("IOE:")).append(ioe.getMessage()).toString());
         }
-    	//String asdf = jfp.getUpdated_cars().toString();
-    	//System.out.println();
-    }
-    public ArrayList<Automobile> getUpdatedCar()
-    {
-    	
-    	return jfp.getUpdatedCars();
     }
     
     public void run()
     {
-    	jfp.updateCars(JSONfile);
+    	while(true) {
+    		jfp.parseAutomobiles(jsonFile);
+    		geoMapView.drawAutomobiles();
+    		
+    		java.util.Date date = new java.util.Date();
+    		System.out.println("[JSONFileGetter] Last updated: " + new Timestamp(date.getTime()));
+    		
+    		try {
+        		Thread.sleep((3 * 60 * 1000)); // Sleep for 3 minutes (conversion to millis shown)
+    		} catch (InterruptedException ie) {
+    			ie.printStackTrace();
+    		}
+    		if (debuggingJSONFileGetter) System.out.println("[JSONFileGetter] Thread woken up.");
+    	}
     }
 }
