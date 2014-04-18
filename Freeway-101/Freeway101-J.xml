@@ -3,6 +3,7 @@
 	<segment>
 		<ramps begin="I-405 (San Diego Freeway) Santa Monica, Sacramento" end="US 101 (Ventura Freeway)   Ventura, Los Angeles"></ramps>
 		<distance d="0.18660744250439418"> </distance>
+        <speed-limit>65</speed-limit>
 		<points>
 			<point x="34.159971594281174" y="-118.46660614013672" num="0"></point>
 			<point x="34.160113639326454" y="-118.46712112426758" num="1"></point>

@@ -3,6 +3,7 @@
     <segment>
         <ramps begin="US 101 north (Santa Ana Freeway via San Bernardino Freeway) Los Angeles, Hollywood" end="I-10 east (San Bernardino Freeway) San Bernardino"></ramps>
         <distance d="0.6062741324765855"> </distance>
+        <speed-limit>55</speed-limit>
         <points>
             <point x="34.050543791455084" y="-118.21392059326172" num="0"></point>
             <point x="34.05089936319987" y="-118.21394205093384" num="1"></point>

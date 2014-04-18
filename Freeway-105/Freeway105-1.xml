@@ -3,6 +3,7 @@
     <segment>
         <ramps begin="Imperial Highway west" end="SR 1 (Sepulveda Boulevard) / Imperial Highway east LAX Airport"></ramps>
         <distance d="0.76089640234127664531"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.93139678750913" y="-118.40068817138672" num="0"></point>
             <point x="33.93139678750913" y="-118.3993148803711" num="1"></point>

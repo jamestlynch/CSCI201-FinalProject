@@ -241,6 +241,7 @@ public class GeoMapModel {
 
 					Element rampsElement = (Element) segmentElement.getElementsByTagName("ramps").item(0);
 					Element distanceElement = (Element) segmentElement.getElementsByTagName("distance").item(0);
+					Element speedLimitElement = (Element) segmentElement.getElementsByTagName("speed-limit").item(0);
 
 					ArrayList<Coordinate> segmentPoints = new ArrayList<Coordinate>();
 					// Only one points object in DOM (houses all point objects); Grab the point node list from the single <points> DOM object
@@ -285,6 +286,7 @@ public class GeoMapModel {
 							segmentName,
 							freewayName,
 							Double.parseDouble(distanceElement.getAttribute("d")),
+							Integer.parseInt(speedLimitElement.getTextContent()),
 							directionEW,
 							directionNS,
 							segmentPoints,
@@ -321,6 +323,7 @@ public class GeoMapModel {
 							segmentName,
 							freewayName,
 							Double.parseDouble(distanceElement.getAttribute("d")),
+							Integer.parseInt(speedLimitElement.getTextContent()),
 							directionEW,
 							directionNS,
 							segmentPoints,

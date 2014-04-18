@@ -3,6 +3,7 @@
     <segment>
         <ramps begin="Nash Street LAX Airport" end="La Cienega Boulevard, Aviation Boulevard"></ramps>
         <distance d="0.7509197912975829059"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.93118314439334" y="-118.38549613952637" num="0"></point>
             <point x="33.93118314439334" y="-118.38489532470703" num="1"></point>
@@ -21,6 +22,7 @@
     <segment>
         <ramps begin="La Cienega Boulevard, Aviation Boulevard" end="I-405 (San Diego Freeway) Santa Monica, Long Beach"></ramps>
         <distance d="1.057051396879861827"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.93082707134273" y="-118.3780288696289" num="0"></point>
             <point x="33.93054221183037" y="-118.37742805480957" num="1"></point>
@@ -40,6 +42,7 @@
     <segment>
         <ramps begin="I-405 (San Diego Freeway) Santa Monica, Long Beach" end="Hawthorne Boulevard"></ramps>
         <distance d="1.5600140428552535798"> </distance>
+        <speed-limit>60</speed-limit>
         <points>
             <point x="33.93047099680339" y="-118.36618423461914" num="0"></point>
             <point x="33.93082707134273" y="-118.36498260498047" num="1"></point>
