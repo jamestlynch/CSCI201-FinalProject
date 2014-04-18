@@ -112,6 +112,10 @@ public class GeoMapModel {
 		return orderedSegments101;
 	}
 
+	public FreewaySegment getNextFreewaySegment(FreewaySegment oldSegment) {
+		return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);
+	}
+	
 	public void addAutomobileToNetwork(Automobile newAutomobile) {
 		synchronized(automobilesInFreewayNetwork) 
 		{

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import main.freeway.FreewaySegment;
+import main.map.GeoMapModel;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
@@ -38,10 +39,12 @@ public class Automobile implements Runnable
 	Color redOrange = new Color(0xFF4000);
 	Color red = new Color(0xFF0000);
 	Color darkRed = new Color(0x8A0808);
+	
+	private GeoMapModel geoMapModel;
 
 	private boolean debuggingAutomobileRunnable = false;
 	
-	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway)
+	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway, GeoMapModel geoMapModel)
 	{	
 		this.freeway = freeway;
 		currentSegmentPointsCount = freeway.getSegmentPath().size();
@@ -50,6 +53,7 @@ public class Automobile implements Runnable
 		this.direction = direction;
 		this.ramp = ramp;
 		currentLocation = freeway.getSegmentPath().get(0);
+		this.geoMapModel = geoMapModel;
 		carMarker = new MapMarkerCircle(currentLocation, carRadius);
 		carMarker.setColor(Color.BLACK);
 		this.updateCarColor();
@@ -156,7 +160,7 @@ public class Automobile implements Runnable
 		else if (DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount == nextPointNumber))
 		{
 			nextPointNumber = 0;
-			freeway = freeway.getAdjacentSections().get(0);
+			freeway = geoMapModel.getNextFreewaySegment(freeway);
 			currentSegmentPointsCount = freeway.getAdjacentSections().size();
 			miles = miles - DistanceToCheckpoint;
 			StaysSameSegment(time_elapse_milliseconds);
