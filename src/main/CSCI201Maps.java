@@ -53,6 +53,9 @@ public class CSCI201Maps {
 		{
 			geoMapView.getMapViewer();
 			geoMapView.drawPath(temp);
+			//geoMapView.drawPath(temp2);
+			//geoMapView.drawPath(temp3);
+			//geoMapView.drawPath(temp4);
 			
 		}
 		catch(NullPointerException npe)

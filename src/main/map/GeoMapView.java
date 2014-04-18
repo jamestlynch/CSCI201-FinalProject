@@ -61,15 +61,14 @@ public class GeoMapView extends JPanel {
 			{
 				pathToDraw.add(new Coordinate(freewaysegments.get(i).getSegmentPath().get(j).getLat(),freewaysegments.get(i).getSegmentPath().get(j).getLon() ));
 			}
-			System.out.println("size of path so far: " + pathToDraw.size());
 
 		}
 		for (int i = pathToDraw.size()-1; i>=0; i--)
 		{
 			pathToDraw.add(new Coordinate(pathToDraw.get(i).getLat(), pathToDraw.get(i).getLon()));
 		}
-		System.out.println("# freeway segments: " + freewaysegments.size());
-		System.out.println("size of pathtodraw: " + pathToDraw.size());
+//		System.out.println("# freeway segments: " + freewaysegments.size());
+//		System.out.println("size of pathtodraw: " + pathToDraw.size());
 		//ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>(); 
 		MapPolygonImpl polygon = new MapPolygonImpl(pathToDraw);
 		polygon.setColor(Color.RED);
