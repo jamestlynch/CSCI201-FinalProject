@@ -96,7 +96,7 @@ public class GeoMapView extends JPanel implements Runnable {
 		{
 			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
 			{
-				mapViewer.getMapMarkerList().set(i, automobilesToDisplay.get(i).getCarMarker());
+				mapViewer.addMapMarker(automobilesToDisplay.get(i).getCarMarker());
 			}
 		}
 	}
@@ -108,11 +108,17 @@ public class GeoMapView extends JPanel implements Runnable {
 		ArrayList<Automobile> automobilesToDisplay = geoMapModel.getAutomobilesInFreewayNetwork();
 		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Amount of automobiles to draw: " + automobilesToDisplay.size());
 				
-		for (int i = 0 ; i < automobilesToDisplay.size(); i++)
+		if (debuggingDrawAutomobiles) System.out.println("DRAW AUTOMOBILES] Size of MapMarkerList: " + mapViewer.getMapMarkerList().size());
+		
+		for (int i = 0 ; i < mapViewer.getMapMarkerList().size(); i++)
 		{
 			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
 			{
-				mapViewer.getMapMarkerList().get(i);
+				try {
+					mapViewer.getMapMarkerList().get(i);
+				} catch (IndexOutOfBoundsException ioobe) {
+					System.out.println("IndexOutOfBounds");
+				}
 			}
 		}
 		

@@ -174,6 +174,8 @@ public class Automobile implements Runnable
 			DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
 			StaysSameSegment(DistanceToNextCheckpoint, milesToTravel);
 		}
+		this.carMarker.setLat(currentLocation.getLat());
+		this.carMarker.setLon(currentLocation.getLon());
 		this.updateCarColor();
 	}
 	private boolean StaysSameSegment(double _DistanceToCheckpoint, double _milesToTravel)

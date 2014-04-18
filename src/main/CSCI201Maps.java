@@ -48,7 +48,7 @@ public class CSCI201Maps {
 	public CSCI201Maps() {
 		ExecutorService configurationExecutor = Executors.newFixedThreadPool(1);
 		
-		geoMapModel = new GeoMapModel();
+		geoMapModel = new GeoMapModel(geoMapView);
 		geoMapView = new GeoMapView(500, 500, geoMapModel);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		
@@ -72,7 +72,6 @@ public class CSCI201Maps {
 		mapModelThread.start();
 		
 		mapViewThread = new Thread(geoMapView);
-		mapViewThread.setPriority(Thread.MAX_PRIORITY - 1);
 		mapViewThread.start();
 		
 		geoMapView.drawPath(segments105);
