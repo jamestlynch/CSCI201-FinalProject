@@ -110,13 +110,9 @@ public class GeoMapModel {
 	}
 
 	public FreewaySegment getNextFreewaySegment(FreewaySegment oldSegment) {
-		for (FreewayRamp ramp : defaultDirectionFreewayNetwork.keySet())
-		{
-			if (oldSegment.getEndRamp() == ramp) {
-				return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);
-			}
-		}
-		return null;
+		if (defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()) == null)
+			return null;
+		return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);
 	}
 	
 	public void addAutomobileToNetwork(Automobile newAutomobile) {
