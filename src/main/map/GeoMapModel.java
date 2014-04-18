@@ -58,7 +58,8 @@ public class GeoMapModel {
 			new File("./Freeway-405/Freeway405.xml") };
 
 	private boolean debuggingSearch = false;
-
+	private boolean debuggingAutomobileMarkers = false;
+	
 	/*
 	 * =========================================================================
 	 * CONSTRUCTORS
@@ -129,7 +130,7 @@ public class GeoMapModel {
 		synchronized(automobilesInFreewayNetwork) 
 		{
 			for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
-				System.out.println(automobilesInFreewayNetwork.get(i)
+				if (debuggingAutomobileMarkers) System.out.println(automobilesInFreewayNetwork.get(i)
 						.getCarMarker().toString());
 			return automobilesInFreewayNetwork;	
 		}
