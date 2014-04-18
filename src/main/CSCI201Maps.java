@@ -75,17 +75,6 @@ public class CSCI201Maps {
 	}
 
 	public static void main(String [] args) {
-		try{
-			new CSCI201Maps();
-		}
-		catch (IndexOutOfBoundsException ioobe)
-		{
-			System.out.println ("index out of bounds exception" + ioobe.getMessage());
-		}
-		catch (ConcurrentModificationException cme)
-		{
-			System.out.println("CME: " + cme.getMessage());
-		}
-
+		new CSCI201Maps();
 	}
 }
