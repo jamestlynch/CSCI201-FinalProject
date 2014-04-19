@@ -189,7 +189,7 @@ public class GeoMapModel implements Runnable {
 		
 		while (true) {
 			try {
-				Thread.sleep(13000);
+				Thread.sleep(CSCI201Maps.automobileUpdateRate);
 				for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
 				{	
 					timeInMillisAfter = timeNow.get(Calendar.MILLISECOND);

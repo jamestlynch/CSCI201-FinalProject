@@ -144,7 +144,7 @@ public class GeoMapView extends JPanel implements Runnable {
 				drawAutomobiles();
 				CSCI201Maps.giveUpMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map View gave up lock.");
-				Thread.sleep(13000);
+				Thread.sleep(CSCI201Maps.automobilePaintDelay);
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}

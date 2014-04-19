@@ -71,7 +71,7 @@ public class JSONFileGetter implements Runnable
     		try {
     			CSCI201Maps.giveUpMapUpdateLock();
     			if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter gave up lock.");
-    			Thread.sleep((3 * 60 * 1000)); // Sleep for 3 minutes (conversion to millis shown)
+    			Thread.sleep(CSCI201Maps.jsonFileFetchingDelay); // Sleep for 3 minutes (conversion to millis shown)
     		} catch (InterruptedException ie) {
     			ie.printStackTrace();
     		}

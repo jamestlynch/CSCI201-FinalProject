@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import main.CSCI201Maps;
 import main.freeway.FreewaySegment;
 import main.map.GeoMapModel;
 
@@ -250,7 +251,7 @@ public class Automobile implements Runnable
 				timeAfter = now.get(Calendar.MILLISECOND);
 				updateLocation(timeBefore - timeAfter);
 				timeBefore = timeAfter;
-				Thread.sleep(130);
+				Thread.sleep(CSCI201Maps.automobileUpdateRate);
 			}
 		}
 		catch(InterruptedException ie)
