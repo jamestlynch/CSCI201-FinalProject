@@ -16,9 +16,8 @@
 
 package main;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -26,6 +25,7 @@ import java.util.concurrent.Semaphore;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import main.GUI.UISidePanel;
 import main.freeway.FreewaySegment;
 import main.jsonfile.JSONFileGetter;
 import main.map.GeoMap;
@@ -79,14 +79,19 @@ public class CSCI201Maps {
 		mapViewThread.setPriority(Thread.MAX_PRIORITY - 1);
 		
 		geoMapView.drawPath(segments105);
-		
+		geoMapView.drawPath(segments101);
+		//geoMapView.drawPath(segments10);
+		geoMapView.drawPath(segments405);
 		// Instantiate the GUI
 		//new UICSCI201Maps();
-		JFrame temporaryframethatwewillreplacewithUICSCI201MapJFrame = new JFrame();
-		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setSize(600,  600);
-		temporaryframethatwewillreplacewithUICSCI201MapJFrame.add(geoMapView);
-		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setVisible(true);
+		JFrame entireFrame = new JFrame();
+		entireFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		entireFrame.setSize(1000,  600);
+		entireFrame.setResizable(false);
+		entireFrame.add(new UISidePanel(geoMapModel), BorderLayout.EAST);
+		entireFrame.add(geoMapView, BorderLayout.CENTER);
+		
+		entireFrame.setVisible(true);
 	}
 
 	public static void grabMapUpdateLock()
