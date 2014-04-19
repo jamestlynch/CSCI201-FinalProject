@@ -1,127 +1,97 @@
 <freeway>
 	<name>10</name>
 	<segment>
-		<number begin = SR 1 north (Pacific Coast Highway) Oxnard end = 4h Street, 5thh Street></number>
+		<ramps begin = "SR 1 north (Pacific Coast Highway) Oxnard" end = "4th Street, 5th Street"></ramps>
+		<distance d=0.2899845752850298> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.01147515762196 y=-118.49437236785889 num=0></point>
-			<point x=34.0117953196506 y=-118.49372863769531 num=1></point>
-			<point x=34.012115480471955 y=-118.49321365356445 num=2></point>
-			<point x=34.012364493609525 y=-118.49287033081055 num=3></point>
-			<point x=34.01247121330204 y=-118.49184036254883 num=4></point>
-			<point x=34.01257793286044 y=-118.49128246307373 num=5></point>
-			<point x=34.01279137157478 y=-118.49029541015625 num=6></point>
-			<point x=34.012898090730744 y=-118.48960876464844 num=7></point>
-        <distance d=0.2899845752850298> </distance>
+			<point x=34.012364493609525 y=-118.49287033081055 num=1></point>
+			<point x=34.01247121330204 y=-118.49184036254883 num=2></point>
+			<point x=34.012898090730744 y=-118.48960876464844 num=3></point>
 		</points>
 	</segment>
 	<segment>
-		<number begin = null end = SR 1 south (Lincoln Boulevard) to SR 2 east></number>
+		<ramps begin = "4th Street, 5th Street" end = "SR 1 south (Lincoln Boulevard) to SR 2 east"></ramps>
+		<distance d=0.23348276274883492> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.01282694464166 y=-118.48935127258301 num=0></point>
-			<point x=34.01304038273005 y=-118.48883628845215 num=1></point>
-			<point x=34.013324966013194 y=-118.488450050354 num=2></point>
-			<point x=34.0137518391494 y=-118.48784923553467 num=3></point>
-			<point x=34.01417871013931 y=-118.48729133605957 num=4></point>
-			<point x=34.014463289606894 y=-118.48669052124023 num=5></point>
-			<point x=34.01485458481722 y=-118.4860897064209 num=6></point>
-        <distance d=0.23348276274883492> </distance>
+			<point x=34.0137518391494 y=-118.48784923553467 num=1></point>
+			<point x=34.014463289606894 y=-118.48669052124023 num=2></point>
+			<point x=34.01485458481722 y=-118.4860897064209 num=3></point>
 		</points>
 	</segment>
 	<segment>
-		<number begin = SR 1 south (Lincoln Boulevard) to SR 2 east end = 20th Street></number>
+		<ramps begin = "SR 1 south (Lincoln Boulevard) to SR 2 east" end = "20th Street"></ramps>
+	    <distance d=0.8445342722665998> </distance>
+	    <speed-limit>55</speed-limit>
 		<points>
 			<point x=34.01489015701965 y=-118.48583221435547 num=0></point>
-			<point x=34.01524587822409 y=-118.48527431488037 num=1></point>
-			<point x=34.01567274170195 y=-118.48475933074951 num=2></point>
-			<point x=34.016028459627265 y=-118.48420143127441 num=3></point>
-			<point x=34.01631303289436 y=-118.48368644714355 num=4></point>
-			<point x=34.01670431957902 y=-118.4831714630127 num=5></point>
-			<point x=34.01702446188861 y=-118.48269939422607 num=6></point>
-			<point x=34.017558029721656 y=-118.4820556640625 num=7></point>
-			<point x=34.0182338774957 y=-118.48098278045654 num=8></point>
-			<point x=34.01937213526791 y=-118.47978115081787 num=9></point>
-			<point x=34.0208305057319 y=-118.47784996032715 num=10></point>
-			<point x=34.022146574641056 y=-118.47613334655762 num=11></point>
-			<point x=34.022822385880424 y=-118.47506046295166 num=12></point>
-			<point x=34.02296466124511 y=-118.47476005554199 num=13></point>
-        <distance d=0.8445342722665998> </distance>
+			<point x=34.01937213526791 y=-118.47978115081787 num=1></point>
+			<point x=34.0208305057319 y=-118.47784996032715 num=2></point>
+			<point x=34.022146574641056 y=-118.47613334655762 num=3></point>
+			<point x=34.022822385880424 y=-118.47506046295166 num=4></point>
+			<point x=34.02296466124511 y=-118.47476005554199 num=5></point>
 		</points>
 	</segment>
 	<segment>
-		<number begin = 20th Street end = Cloverfield Boulevard></number>
+		<ramps begin = "20th Street" end = "Cloverfield Boulevard"></ramps>
+		<distance d=0.37161526169630427> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02303579883802 y=-118.47450256347656 num=0></point>
-			<point x=34.02303579883802 y=-118.47437381744385 num=1></point>
-			<point x=34.02342705453319 y=-118.4736442565918 num=2></point>
-			<point x=34.02371160299675 y=-118.47244262695312 num=3></point>
-			<point x=34.024067287234615 y=-118.47132682800293 num=4></point>
-			<point x=34.02438740177414 y=-118.47029685974121 num=5></point>
-			<point x=34.024671947017836 y=-118.46926689147949 num=6></point>
-			<point x=34.02488535532449 y=-118.46840858459473 num=7></point>
-        <distance d=0.37161526169630427> </distance>
+			<point x=34.02488535532449 y=-118.46840858459473 num=2></point>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Cloverfield Boulevard end = Centinela Avenue></number>
+		<ramps begin = "Cloverfield Boulevard" end = "Centinela Avenue"></ramps>
+		<distance d=0.8918172048382608> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02495649130748 y=-118.46772193908691 num=0></point>
-			<point x=34.02545444151868 y=-118.46604824066162 num=1></point>
-			<point x=34.02605909141852 y=-118.46360206604004 num=2></point>
-			<point x=34.026503684184576 y=-118.46137046813965 num=3></point>
-			<point x=34.02682378953388 y=-118.45982551574707 num=4></point>
-			<point x=34.02739286272888 y=-118.45699310302734 num=5></point>
-			<point x=34.027552913877386 y=-118.45628499984741 num=6></point>
-			<point x=34.027659614475326 y=-118.45577001571655 num=7></point>
-			<point x=34.0277663149391 y=-118.4551477432251 num=8></point>
-			<point x=34.027659614475326 y=-118.45435380935669 num=9></point>
-			<point x=34.02764183105164 y=-118.4535813331604 num=10></point>
-			<point x=34.027552913877386 y=-118.4524655342102 num=11></point>
-        <distance d=0.8918172048382608> </distance>
+			<point x=34.02739286272888 y=-118.45699310302734 num=1></point>
+			<point x=34.027659614475326 y=-118.45435380935669 num=2></point>
+			<point x=34.02764183105164 y=-118.4535813331604 num=3></point>
+			<point x=34.027552913877386 y=-118.4524655342102 num=4></point>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Centinela Avenue end = Bundy Drive></number>
+		<ramps begin = "Centinela Avenue" end = "Bundy Drive"></ramps>
+		<distance d=0.18953142185586874> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02758848075827 y=-118.45248699188232 num=0></point>
-			<point x=34.027624047624265 y=-118.45173597335815 num=1></point>
-			<point x=34.0277663149391 y=-118.45107078552246 num=2></point>
-			<point x=34.02797971546417 y=-118.45019102096558 num=3></point>
-			<point x=34.0282108987607 y=-118.44952583312988 num=4></point>
-			<point x=34.028228682065105 y=-118.44926834106445 num=5></point>
-        <distance d=0.18953142185586874> </distance>
+			<point x=34.0277663149391 y=-118.45107078552246 num=1></point>
+			<point x=34.02797971546417 y=-118.45019102096558 num=2></point>
+			<point x=34.0282108987607 y=-118.44952583312988 num=3></point>
+			<point x=34.028228682065105 y=-118.44926834106445 num=4></point>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Bundy Drive end = I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach></number>
+		<ramps begin = "Bundy Drive" end = "I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach"></ramps>
+		<distance d=0.9238488820206017> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02819311545256 y=-118.44922542572021 num=0></point>
-			<point x=34.02829981524549 y=-118.44868898391724 num=1></point>
-			<point x=34.028779962653346 y=-118.44710111618042 num=2></point>
-			<point x=34.02926010734425 y=-118.44529867172241 num=3></point>
-			<point x=34.02986473012718 y=-118.44343185424805 num=4></point>
-			<point x=34.03025595433796 y=-118.44120025634766 num=5></point>
-			<point x=34.03057604553229 y=-118.43931198120117 num=6></point>
-			<point x=34.03103839734782 y=-118.43708038330078 num=7></point>
-			<point x=34.031216224298305 y=-118.43506336212158 num=8></point>
-			<point x=34.03125178964367 y=-118.433518409729 num=9></point>
-        <distance d=0.9238488820206017> </distance>
+			<point x=34.03025595433796 y=-118.44120025634766 num=1></point>
+			<point x=34.03125178964367 y=-118.433518409729 num=2></point>
 		</points>
 	</segment>
 	<segment>
-		<number begin = I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach end = National Boulevard, Overland Avenue></number>
+		<ramps begin = "I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach" end = "National Boulevard, Overland Avenue"></ramps>
+		<distance d=0.9467399118728239> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.03128735497415 y=-118.43347549438477 num=0></point>
-			<point x=34.03164300745878 y=-118.43167304992676 num=1></point>
-			<point x=34.03164300745878 y=-118.42991352081299 num=2></point>
-			<point x=34.031856398234 y=-118.42763900756836 num=3></point>
-			<point x=34.031856398234 y=-118.42527866363525 num=4></point>
-			<point x=34.031963093420316 y=-118.41862678527832 num=5></point>
-			<point x=34.03182083314206 y=-118.41695308685303 num=6></point>
-        <distance d=0.9467399118728239> </distance>
+			<point x=34.03164300745878 y=-118.42991352081299 num=1></point>
+			<point x=34.03182083314206 y=-118.41695308685303 num=2></point>
 		</points>
 	</segment>
 	<segment>
-		<number begin = National Boulevard, Overland Avenue end = National Boulevard></number>
+		<ramps begin = "National Boulevard, Overland Avenue" end = "National Boulevard"></ramps>
+		<distance d=0.8112161010858181> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.031678572625275 y=-118.41686725616455 num=0></point>
 			<point x=34.03178526803522 y=-118.41553688049316 num=1></point>
@@ -133,22 +103,24 @@
 			<point x=34.02993586193603 y=-118.40678215026855 num=7></point>
 			<point x=34.02965133434282 y=-118.40455055236816 num=8></point>
 			<point x=34.02961576832659 y=-118.40291976928711 num=9></point>
-        <distance d=0.8112161010858181> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = National Boulevard end = Robertson Boulevard Culver City></number>
+		<ramps begin = "National Boulevard" end = "Robertson Boulevard Culver City"></ramps>
+		<distance d=0.4483615311493174> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02958020229543 y=-118.40304851531982 num=0></point>
 			<point x=34.02950907018842 y=-118.40103149414062 num=1></point>
 			<point x=34.0293668057955 y=-118.39888572692871 num=2></point>
 			<point x=34.029117842533914 y=-118.39704036712646 num=3></point>
 			<point x=34.029117842533914 y=-118.39523792266846 num=4></point>
-        <distance d=0.4483615311493174> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Robertson Boulevard Culver City end = La Cienega Boulevard, Venice Boulevard (SR 187 West)></number>
+		<ramps begin = "Robertson Boulevard Culver City" end = "La Cienega Boulevard, Venice Boulevard (SR 187 West)"></ramps>
+		<distance d=1.01094241727969> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02933123965998 y=-118.39480876922607 num=0></point>
 			<point x=34.02982916420039 y=-118.39322090148926 num=1></point>
@@ -159,11 +131,12 @@
 			<point x=34.03512832291194 y=-118.38365077972412 num=6></point>
 			<point x=34.03623079084678 y=-118.38159084320068 num=7></point>
 			<point x=34.036906489918444 y=-118.3797025680542 num=8></point>
-        <distance d=1.01094241727969> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = La Cienega Boulevard, Venice Boulevard (SR 187 West) end = Fairfax Avenue, Washington Boulevard></number>
+		<ramps begin = "La Cienega Boulevard, Venice Boulevard (SR 187 West)" end = "Fairfax Avenue, Washington Boulevard"></ramps>
+		<distance d=0.6490808236765511> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.03694205287839 y=-118.37983131408691 num=0></point>
 			<point x=34.036906489918444 y=-118.37755680084229 num=1></point>
@@ -173,11 +146,12 @@
 			<point x=34.035590649919314 y=-118.37021827697754 num=5></point>
 			<point x=34.03527057764412 y=-118.36935997009277 num=6></point>
 			<point x=34.03509275919161 y=-118.3687162399292 num=7></point>
-        <distance d=0.6490808236765511> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Fairfax Avenue, Washington Boulevard end = La Brea Avenue></number>
+		<ramps begin = "Fairfax Avenue, Washington Boulevard" end = "La Brea Avenue"></ramps>
+		<distance d=1.0752417968092194> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.035199450307836 y=-118.36880207061768 num=0></point>
 			<point x=34.03498606794122 y=-118.36777210235596 num=1></point>
@@ -191,11 +165,12 @@
 			<point x=34.034168097230285 y=-118.35361003875732 num=9></point>
 			<point x=34.034381481654364 y=-118.35142135620117 num=10></point>
 			<point x=34.034381481654364 y=-118.35004806518555 num=11></point>
-        <distance d=1.0752417968092194> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = La Brea Avenue end = Crenshaw Boulevard></number>
+		<ramps begin = "La Brea Avenue" end = "Crenshaw Boulevard"></ramps>
+		<distance d=0.9276323978594444> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.034381481654364 y=-118.35000514984131 num=0></point>
 			<point x=34.03441704567287 y=-118.34815979003906 num=1></point>
@@ -205,11 +180,12 @@
 			<point x=34.0349149403664 y=-118.33880424499512 num=5></point>
 			<point x=34.03498606794122 y=-118.33605766296387 num=6></point>
 			<point x=34.03509275919161 y=-118.33382606506348 num=7></point>
-        <distance d=0.9276323978594444> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Crenshaw Boulevard end = Arlington Avenue></number>
+		<ramps begin = "Crenshaw Boulevard" end = "Arlington Avenue"></ramps>
+		<distance d=0.9304530483535923> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.03509275919161 y=-118.33386898040771 num=0></point>
 			<point x=34.03527057764412 y=-118.3317232131958 num=1></point>
@@ -220,11 +196,12 @@
 			<point x=34.03619522758865 y=-118.32112312316895 num=6></point>
 			<point x=34.036657548781385 y=-118.31923484802246 num=7></point>
 			<point x=34.03669311184571 y=-118.31773281097412 num=8></point>
-        <distance d=0.9304530483535923> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Arlington Avenue end = Western Avenue, Normandie Avenue></number>
+		<ramps begin = "Arlington Avenue" end = "Western Avenue, Normandie Avenue"></ramps>
+		<distance d=0.4975131490207929> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.03676423792959 y=-118.31768989562988 num=0></point>
 			<point x=34.03687092694359 y=-118.31601619720459 num=1></point>
@@ -232,42 +209,46 @@
 			<point x=34.03726211884693 y=-118.31245422363281 num=3></point>
 			<point x=34.03722655602115 y=-118.31026554107666 num=4></point>
 			<point x=34.03726211884693 y=-118.30902099609375 num=5></point>
-        <distance d=0.4975131490207929> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Western Avenue, Normandie Avenue end = Normandie Avenue></number>
+		<ramps begin = "Western Avenue, Normandie Avenue" end = "Normandie Avenue"></ramps>
+		<distance d=0.4963454136755635> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.03729768165777 y=-118.30897808074951 num=0></point>
 			<point x=34.037155430324916 y=-118.30696105957031 num=1></point>
 			<point x=34.03736880723472 y=-118.30374240875244 num=2></point>
 			<point x=34.03722655602115 y=-118.30030918121338 num=3></point>
-        <distance d=0.4963454136755635> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Normandie Avenue end = Hoover Street, Vermont Avenue></number>
+		<ramps begin = Normandie Avenue end = Hoover Street, Vermont Avenue></ramps>
+		<distance d=0.4914320032244933> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.037155430324916 y=-118.30035209655762 num=0></point>
 			<point x=34.03701317875355 y=-118.29691886901855 num=1></point>
 			<point x=34.03708430456904 y=-118.29314231872559 num=2></point>
 			<point x=34.03722655602115 y=-118.29176902770996 num=3></point>
-        <distance d=0.4914320032244933> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Hoover Street, Vermont Avenue end = Hoover Street></number>
+		<ramps begin = "Hoover Street, Vermont Avenue" end = "Hoover Street"></ramps>
+		<distance d=0.4300943486860388> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.03701317875355 y=-118.29151153564453 num=0></point>
 			<point x=34.03694205287839 y=-118.28919410705566 num=1></point>
 			<point x=34.03701317875355 y=-118.2872200012207 num=2></point>
 			<point x=34.03704874166876 y=-118.28481674194336 num=3></point>
 			<point x=34.037155430324916 y=-118.28400135040283 num=4></point>
-        <distance d=0.4300943486860388> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Hoover Street end = I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles></number>
+		<ramps begin = "Hoover Street" end = "I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles"></ramps>
+		<distance d=0.5570948173267001> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.037119867454436 y=-118.2839584350586 num=0></point>
 			<point x=34.03765330894618 y=-118.28185558319092 num=1></point>
@@ -275,11 +256,12 @@
 			<point x=34.03800893474363 y=-118.27812194824219 num=3></point>
 			<point x=34.03818674708324 y=-118.27631950378418 num=4></point>
 			<point x=34.03811562219211 y=-118.27430248260498 num=5></point>
-        <distance d=0.5570948173267001> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles end = Grand Avenue></number>
+		<ramps begin = "I-110 south (Harbor Freeway) / SR 110 north (Harbor Freeway) / Pico Boulevard San Pedro, Pasadena, Downtown Los Angeles" end = "Grand Avenue"></ramps>
+		<distance d=0.49735641493974214> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.028762179464465 y=-118.27262878417969 num=0></point>
 			<point x=34.03818674708324 y=-118.27404499053955 num=1></point>
@@ -287,150 +269,165 @@
 			<point x=34.03623079084678 y=-118.2698392868042 num=3></point>
 			<point x=34.035306141289865 y=-118.26868057250977 num=4></point>
 			<point x=34.03455930159776 y=-118.2674789428711 num=5></point>
-        <distance d=0.49735641493974214> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Grand Avenue end = Los Angeles Street Convention Center></number>
+		<ramps begin = "Grand Avenue" end = "Los Angeles Street Convention Center"></ramps>
+		<distance d=0.3327422982557781> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.03470155728413 y=-118.26713562011719 num=0></point>
 			<point x=34.03240765525245 y=-118.26346635818481 num=1></point>
 			<point x=34.03174970291349 y=-118.26254367828369 num=2></point>
-        <distance d=0.3327422982557781> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Los Angeles Street Convention Center end = Maple Avenue></number>
+		<ramps begin = "Los Angeles Street Convention Center" end = "Maple Avenue"></ramps>
+		<distance d=0.14969286743158436> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.031856398234 y=-118.26260805130005 num=0></point>
 			<point x=34.03148296402519 y=-118.26164245605469 num=1></point>
 			<point x=34.03126957231077 y=-118.26099872589111 num=2></point>
 			<point x=34.031091745472104 y=-118.26016187667847 num=3></point>
-        <distance d=0.14969286743158436> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Maple Avenue end = San Pedro Street></number>
+		<ramps begin = "Maple Avenue" end = "San Pedro Street"></ramps>
+		<distance d=0.24836328357958828> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.03112731086966 y=-118.26009750366211 num=0></point>
 			<point x=34.030700525115094 y=-118.25876712799072 num=1></point>
 			<point x=34.030309302954194 y=-118.257737159729 num=2></point>
 			<point x=34.029491287152354 y=-118.25623512268066 num=3></point>
-        <distance d=0.24836328357958828> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = San Pedro Street end = Central Avenue></number>
+		<ramps begin = "San Pedro Street" end = "Central Avenue"></ramps>
+		<distance d=0.46143154517950286> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02965133434282 y=-118.25606346130371 num=0></point>
 			<point x=34.02588125365989 y=-118.24941158294678 num=1></point>
-        <distance d=0.46143154517950286> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Central Avenue end = Alaeda Street></number>
+		<ramps begin = "Central Avenue" end = "Alaeda Street"></ramps>
+		<distance d=0.48539527049084835> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02595238880807 y=-118.24928283691406 num=0></point>
 			<point x=34.02417399221528 y=-118.24576377868652 num=1></point>
 			<point x=34.02371160299675 y=-118.24374675750732 num=2></point>
 			<point x=34.02403171887788 y=-118.24112892150879 num=3></point>
-        <distance d=0.48539527049084835> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Alaeda Street end = Mateo Street, Santa Fe Avenue></number>
+		<ramps begin = "Alaeda Street" end = "Mateo Street, Santa Fe Avenue"></ramps>
+		<distance d=0.5491874619028342> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02417399221528 y=-118.24100017547607 num=0></point>
 			<point x=34.02733951227898 y=-118.23220252990723 num=1></point>
-        <distance d=0.5491874619028342> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Mateo Street, Santa Fe Avenue end = I-5 north (Golden State Freeway) Sacramento></number>
+		<ramps begin = "Mateo Street, Santa Fe Avenue" end = "I-5 north (Golden State Freeway) Sacramento"></ramps>
+		<distance d=0.38877129231475477> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.02810419885594 y=-118.2299280166626 num=0></point>
 			<point x=34.0293668057955 y=-118.22585105895996 num=1></point>
 			<point x=34.030184822797445 y=-118.22361946105957 num=2></point>
-        <distance d=0.38877129231475477> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = I-5 north (Golden State Freeway) Sacramento end = Boyle Avenue></number>
+		<ramps begin = "I-5 north (Golden State Freeway) Sacramento" end = "Boyle Avenue"></ramps>
+		<distance d=0.38445158456531586> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.030113691197315 y=-118.22379112243652 num=0></point>
 			<point x=34.03480824889235 y=-118.22018623352051 num=1></point>
-        <distance d=0.38445158456531586> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Boyle Avenue end = Fourth Street></number>
+		<ramps begin = "Boyle Avenue" end = "Fourth Street"></ramps>
+		<distance d=0.6503250538552335> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.034096968969656 y=-118.22065830230713 num=0></point>
 			<point x=34.03950254681135 y=-118.21937084197998 num=1></point>
 			<point x=34.04302309976223 y=-118.21705341339111 num=2></point>
-        <distance d=0.6503250538552335> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Fourth Street end = Cesar Chavez Avenue></number>
+		<ramps begin = "Fourth Street" end = "Cesar Chavez Avenue"></ramps>
+		<distance d=0.5023482812644652> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.04295197892673 y=-118.21718215942383 num=0></point>
 			<point x=34.04689909509306 y=-118.21499347686768 num=1></point>
 			<point x=34.04974374957696 y=-118.21404933929443 num=2></point>
-        <distance d=0.5023482812644652> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Cesar Chavez Avenue end = I-5 north (Golden State Freeway) Sacramento></number>
+		<ramps begin = "Cesar Chavez Avenue" end = "I-5 north (Golden State Freeway) Sacramento"></ramps>
+		<distance d=0.0> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.055290551312964 y=-118.2140064239502 num=0></point>
-        <distance d=0.0> </distance>
+        
 		</points>
 	</segment>
 	<segment>
-		<number begin = I-5 north (Golden State Freeway) Sacramento end = US 101 north (Santa Ana Freeway) via San Bernardino Freeway) Los Angeles, Hollywood></number>
+		<ramps begin = "I-5 north (Golden State Freeway) Sacramento" end = "US 101 north (Santa Ana Freeway) via San Bernardino Freeway) Los Angeles, Hollywood"></ramps>
+		<distance d=0.0> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.05532610656368 y=-118.21422100067139 num=0></point>
-        <distance d=0.0> </distance>
+        
 		</points>
 	</segment>
 	<segment>
-		<number begin = US 101 north (Santa Ana Freeway) via San Bernardino Freeway) Los Angeles, Hollywood end = State Street></number>
+		<ramps begin = "US 101 north (Santa Ana Freeway) via San Bernardino Freeway) Los Angeles, Hollywood" end = "State Street"></ramps>
+		<distance d=0.5209918616505282> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.054970553385445 y=-118.211989402771 num=0></point>
 			<point x=34.05422388685686 y=-118.20894241333008 num=1></point>
 			<point x=34.053868329055504 y=-118.20559501647949 num=2></point>
 			<point x=34.05475722076266 y=-118.20289134979248 num=3></point>
-        <distance d=0.5209918616505282> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = State Street end = Soto Street></number>
+		<ramps begin = "State Street" end = "Soto Street"></ramps>
+		<distance d=0.515923029963614> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.05489944257083 y=-118.21190357208252 num=0></point>
 			<point x=34.05379721731628 y=-118.2070541381836 num=1></point>
 			<point x=34.05479277623705 y=-118.20289134979248 num=2></point>
-        <distance d=0.515923029963614> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = Soto Street end = City Terrace Drive></number>
+		<ramps begin = "Soto Street" end = "City Terrace Drive"></ramps>
+		<distance d=1.1256079707206061> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.05472166527333 y=-118.202805519104 num=0></point>
 			<point x=34.05571721333726 y=-118.19804191589355 num=1></point>
 			<point x=34.05578832346585 y=-118.18589687347412 num=2></point>
 			<point x=34.056321647528826 y=-118.18323612213135 num=3></point>
-        <distance d=1.1256079707206061> </distance>
 		</points>
 	</segment>
 	<segment>
-		<number begin = City Terrace Drive end = Eastern Avenue></number>
+		<ramps begin = "City Terrace Drive" end = "Eastern Avenue"></ramps>
+		<distance d=0.6284446676920866> </distance>
+		<speed-limit>55</speed-limit>
 		<points>
 			<point x=34.05646386671222 y=-118.18323612213135 num=0></point>
 			<point x=34.06065922527251 y=-118.17349433898926 num=1></point>
-        <distance d=0.6284446676920866> </distance>
 		</points>
 	</segment>
-	<segment>
-		<number begin = Eastern Avenue end = blah></number>
-		<points>
+</freeway>
