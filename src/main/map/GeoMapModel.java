@@ -56,11 +56,9 @@ public class GeoMapModel implements Runnable {
 			new File("./Freeway-105/Freeway105-1.xml"),
 			new File("./Freeway-405/Freeway405.xml") };
 
-	private Thread mapViewThread;
 	private Calendar timeNow = Calendar.getInstance();
 	private long timeInMillisAfter;
 	private long timeInMillisBefore;
-	private GeoMapView geoMapView;
 	
 	private boolean debuggingSearch = false;
 	private boolean debuggingAutomobileMarkers = false;
@@ -72,7 +70,7 @@ public class GeoMapModel implements Runnable {
 	 * =========================================================================
 	 */
 
-	public GeoMapModel(GeoMapView geoMapView) {
+	public GeoMapModel() {
 		defaultDirectionFreewayNetwork = new FreewayNetwork();
 		oppositeDirectionFreewayNetwork = new FreewayNetwork();
 
@@ -80,8 +78,6 @@ public class GeoMapModel implements Runnable {
 		for (int i = 0; i < freewayXMLFiles.length; i++) {
 			new FreewayLoader(freewayXMLFiles[i]);
 		}
-		
-		this.geoMapView = geoMapView;
 	}
 
 	/*
@@ -172,30 +168,37 @@ public class GeoMapModel implements Runnable {
 		
 		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model grabbed lock.");
 		
+		timeInMillisAfter = System.currentTimeMillis();
 		for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
 		{	
-			timeInMillisAfter = timeNow.get(Calendar.MILLISECOND);
 			automobilesInFreewayNetwork.get(i).updateLocation(timeInMillisBefore - timeInMillisAfter);
-			timeInMillisBefore = timeInMillisAfter;
 		}
+		timeInMillisBefore = timeInMillisAfter;
 		CSCI201Maps.giveUpMapUpdateLock();
 		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model gave up lock.");
-		mapViewThread = new Thread(geoMapView);
-		mapViewThread.start();
+		CSCI201Maps.startMapViewThread();
 	}
 	
 	public void run() {		
+		timeInMillisBefore = System.currentTimeMillis();
+		
 		this.init();
 		
 		while (true) {
 			try {
 				Thread.sleep(CSCI201Maps.automobileUpdateRate);
+				
+				CSCI201Maps.grabMapUpdateLock();
+				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model grabbed lock.");
+				
+				timeInMillisAfter = System.currentTimeMillis();
+				System.out.println("Time After: " + timeInMillisAfter + " Time Before: " + timeInMillisBefore);
 				for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
 				{	
-					timeInMillisAfter = timeNow.get(Calendar.MILLISECOND);
-					automobilesInFreewayNetwork.get(i).updateLocation(timeInMillisBefore - timeInMillisAfter);
-					timeInMillisBefore = timeInMillisAfter;
+					automobilesInFreewayNetwork.get(i).updateLocation(timeInMillisAfter - timeInMillisBefore);
 				}
+				timeInMillisBefore = timeInMillisAfter;
+				
 				CSCI201Maps.giveUpMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model gave up lock.");
 			} catch (InterruptedException ie) {

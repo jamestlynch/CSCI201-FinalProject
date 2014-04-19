@@ -23,11 +23,13 @@ public class Automobile implements Runnable
 	//String freeway;
 	MapMarkerCircle carMarker;
 
-	FreewaySegment freeway;
+	FreewaySegment freewaySegment;
+	
 	Coordinate currentLocation;
 	//FuturePoint holds the index of the array element that is upcoming. If futurepoint == Araylistsize, then we've reached the end.
 	int nextPointNumber = 1;
 	int numberOfSegmentPointsInThisPath;
+	private int locationPointNumber;
 	final double carRadius = 0.001;
 	
 	Color darkGreen = new Color(0x0B610B);
@@ -44,16 +46,18 @@ public class Automobile implements Runnable
 	private GeoMapModel geoMapModel;
 
 	private boolean debuggingAutomobileRunnable = false;
+	private boolean debuggingUpdateFunction = true;
 	
 	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway, GeoMapModel geoMapModel)
 	{	
-		this.freeway = freeway;
+		this.freewaySegment = freeway;
 		numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
 		this.id = id;
 		this.speed = speed;
 		this.direction = direction;
 		this.ramp = ramp;
 		currentLocation = freeway.getSegmentPath().get(0);
+		locationPointNumber = 0;
 		this.geoMapModel = geoMapModel;
 		carMarker = new MapMarkerCircle(currentLocation, carRadius);
 		carMarker.setColor(Color.BLACK);
@@ -139,54 +143,91 @@ public class Automobile implements Runnable
 
 	public void setFreeway(FreewaySegment freeway)
 	{
-		this.freeway = freeway;
+		this.freewaySegment = freeway;
 	}
 	/**updateLocation updates the current location according to three different test cases
 	 * Case 1: the distance moved is within the same 2 points as defined in the segment path
 	 * Case 2: the distance moved is past the same 2 points and has moved onto the next path, but hasn't gone onto the next segment
 	 * Case 3: the distance moved is into the next segment.
 	 * Case 3 invokes case 1 and 2 after moving into the new segment.
-	 * @param time_elapse_milliseconds - the time we've elapsed
+	 * @param timeElapsedInMilliseconds - the time we've elapsed
 	 */
+	
 	//time_elapse is in milliseconds
-	public void updateLocation(double time_elapse_milliseconds)
-	{
-		double hour_travelled = time_elapse_milliseconds/3600000;//3.6 million milliseoncds per hour
-		double milesToTravel = hour_travelled*speed; //mph * h = m
-		Coordinate nextDestinationCoord = freeway.getSegmentPath().get(nextPointNumber);
-		double DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
-		numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
+	public void updateLocation(double timeElapsedInMilliseconds)
+	{		
+		double timeElapsedInHours = timeElapsedInMilliseconds / 3600000; //3.6 million milliseconds per hour
+		//double milesToTravel = timeElapsedInHours * speed; //mph * h = m
+		//Coordinate nextDestinationCoord = freewaySegment.getSegmentPath().get(nextPointNumber);
+		//double DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
+		numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
 		
-		if (StaysSameSegment(DistanceToNextCheckpoint, milesToTravel))
-		{
-			if (false) 
-				System.out.println("This car is on the same segment!");
-		}
-		//if (DistanceToNextCheckpoint - milesTravelled <= 0 && (currentSegmentPointsCount-1 == nextPointNumber))
-		else 
-		{
-			nextPointNumber = 1;
-			if (geoMapModel.getNextFreewaySegment(freeway) != null) {
-				freeway = geoMapModel.getNextFreewaySegment(freeway);
+		// Get the destination coordinate
+		Coordinate destination;
+		if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // Same segment, different target point
+			destination = freewaySegment.getSegmentPath().get(++ locationPointNumber);
+		} else {
+			if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
+				return;
+			} else {
+				freewaySegment = geoMapModel.getNextFreewaySegment(freewaySegment);
+				numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
+				locationPointNumber = 0;
+				if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) {
+					destination = freewaySegment.getSegmentPath().get(locationPointNumber + 1);
+				} else if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
+					return;
+				} else {
+					destination = geoMapModel.getNextFreewaySegment(freewaySegment).getSegmentPath().get(0);
+				}
+				this.updateCarColor();
 			}
-			
-			numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
-			nextDestinationCoord = freeway.getSegmentPath().get(nextPointNumber);
-			DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
-			StaysSameSegment(DistanceToNextCheckpoint, milesToTravel);
 		}
-		this.carMarker.setLat(currentLocation.getLat());
+		
+		Coordinate newLocationAfterUpdate = getTargetCoordinate(timeElapsedInHours, currentLocation, destination);
+		currentLocation = newLocationAfterUpdate;
+		this.carMarker.setLat(newLocationAfterUpdate.getLat());
+		this.carMarker.setLon(newLocationAfterUpdate.getLon());
+		
+		this.carMarker.setLat(currentLocation.getLat() + 1);
 		this.carMarker.setLon(currentLocation.getLon());
-		this.updateCarColor();
+		
+		
+		
+//		if (StaysSameSegment(DistanceToNextCheckpoint, milesToTravel))
+//		{
+//			if (false) 
+//				System.out.println("This car is on the same segment!");
+//		}
+//		//if (DistanceToNextCheckpoint - milesTravelled <= 0 && (currentSegmentPointsCount-1 == nextPointNumber))
+//		else 
+//		{
+//			nextPointNumber = 1;
+//			if (geoMapModel.getNextFreewaySegment(freewaySegment) != null) {
+//				freewaySegment = geoMapModel.getNextFreewaySegment(freewaySegment);
+//			}
+//			
+//			numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
+//			nextDestinationCoord = freewaySegment.getSegmentPath().get(nextPointNumber);
+//			DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
+//			StaysSameSegment(DistanceToNextCheckpoint, milesToTravel);
+//		}
+//		this.carMarker.setLat(currentLocation.getLat());
+//		this.carMarker.setLon(currentLocation.getLon());
+//		this.updateCarColor();
 	}
+	
+	
 	private boolean StaysSameSegment(double _DistanceToCheckpoint, double _milesToTravel)
 	{
 		double milesToTravel = _milesToTravel;// = hour_travelled*speed; //mph * h = m
 		
 		//SegmentList holds all the upcoming segment points
-		ArrayList<Coordinate> SegmentList = freeway.getSegmentPath();
-		Coordinate dest = SegmentList.get(nextPointNumber);
-		numberOfSegmentPointsInThisPath = SegmentList.size();
+		ArrayList<Coordinate> pathList = freewaySegment.getSegmentPath();
+		Coordinate dest = pathList.get(nextPointNumber);
+		System.out.println(dest.toString());
+		
+		numberOfSegmentPointsInThisPath = pathList.size();
 		double DistanceToNextCheckpoint = _DistanceToCheckpoint;
 
 		//This is saying if the distance to the checkpoint is within the miles capacity.
@@ -206,10 +247,10 @@ public class Automobile implements Runnable
 			Coordinate NewCheckpoint;
 			do
 			{
-				dest = SegmentList.get(nextPointNumber);
+				dest = pathList.get(nextPointNumber);
 				milesToTravel = milesToTravel - DistanceToNextCheckpoint;
 				nextPointNumber++;
-				NewCheckpoint = SegmentList.get(nextPointNumber);
+				NewCheckpoint = pathList.get(nextPointNumber);
 				DistanceToNextCheckpoint = distance (dest.getLat(), dest.getLon(), NewCheckpoint.getLat(), NewCheckpoint.getLon());
 			}
 			while(DistanceToNextCheckpoint - milesToTravel <= 0 && (numberOfSegmentPointsInThisPath-1 > nextPointNumber));
@@ -225,6 +266,7 @@ public class Automobile implements Runnable
 			return false;
 		}
 	}
+	
 	private double distance(double lat1, double lon1, double lat2, double lon2) 
 	{
 		double theta = lon1 - lon2;
@@ -233,6 +275,72 @@ public class Automobile implements Runnable
 		dist = Math.toDegrees(dist);
 		dist = dist * 60 * 1.1515;
 		return (dist);
+	}
+	
+	private Coordinate getTargetCoordinate(double timeRemaining, Coordinate currentLocation, Coordinate destination)
+	{	
+		if (debuggingUpdateFunction && id % 100 == 0) System.out.println("[AUTOMOBILE UPDATE] Values at the start of update "
+				+ "call for Automobile ID #" + id + 
+				" Time remaining: " + timeRemaining + " Current Location: " + currentLocation.toString() + 
+				" Destination: " + destination.toString());
+		double dLat_dLon = (destination.getLat() - currentLocation.getLat()) 
+					/ /*   -------------------------------------------------- 	*/
+						   (destination.getLon() - currentLocation.getLon());
+		
+		double dLon_dLat = (destination.getLon() - currentLocation.getLon())
+					/ /*   -------------------------------------------------- 	*/
+						   (destination.getLat() - currentLocation.getLat());
+		
+		double distanceDestinationAndLocation = Math.sqrt(Math.pow(currentLocation.getLat() + destination.getLat(), 2)
+														+ Math.pow(currentLocation.getLon() + destination.getLon(), 2));
+		
+		double timeElapsedAlongPath = distanceDestinationAndLocation / speed;
+		
+		double distanceToTravelAlongPath;
+		if ((timeRemaining - timeElapsedAlongPath) > 0) { // Still timeRemaining after taking off time to travel along path
+			timeRemaining -= timeElapsedAlongPath;
+			distanceToTravelAlongPath = timeElapsedAlongPath * speed;
+		} else { // No remainder time so just use what's left of timeRemaining to travel a portion of the segment
+			distanceToTravelAlongPath = timeRemaining * speed;
+			timeRemaining = 0;
+		}
+		
+		if (distanceDestinationAndLocation - distanceToTravelAlongPath > 0 && timeRemaining <= 0) { // If you did not travel down full path,
+			double portionOfPathDistance = (distanceDestinationAndLocation - distanceToTravelAlongPath)
+									/ /*   ------------------------------------------------------------ 	*/
+														(distanceDestinationAndLocation);
+			double newLatitude  = (dLat_dLon * distanceToTravelAlongPath) * portionOfPathDistance; // x = (dx/dy) * y
+			double newLongitude = (dLon_dLat * distanceToTravelAlongPath) * portionOfPathDistance; // y = (dy/dx) * x
+			if (debuggingUpdateFunction && id % 100 == 0) System.out.println("[AUTOMOBILE UPDATE] ID #" + id+ " dLat_dLon: " + dLat_dLon + " Destination longitude: " + destination.getLon() + " Portion of path's distance: " + portionOfPathDistance);
+			if (debuggingUpdateFunction && id % 100 == 0) System.out.println("[AUTOMOBILE UPDATE] ID #" + id+ " dLon_dLat: " + dLon_dLat + " Destination latitude: " + destination.getLat() + " Portion of path's distance: " + portionOfPathDistance + "\n");
+			return new Coordinate(newLatitude, newLongitude);
+		} else if (distanceDestinationAndLocation - distanceToTravelAlongPath == 0 && timeRemaining <= 0) {
+			return destination;
+		} else { // Else, there is distance remaining passed going to the end of path
+			Coordinate newLocation;
+			Coordinate newDestination;
+			if (freewaySegment.getSegmentPath().get(++ locationPointNumber) != null) { // Same segment, different target point
+				newLocation = destination;
+				newDestination = freewaySegment.getSegmentPath().get(locationPointNumber);
+			} if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
+				return currentLocation;
+			} else {
+				newLocation = destination;
+				freewaySegment = geoMapModel.getNextFreewaySegment(freewaySegment);
+				numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
+				locationPointNumber = 0;
+				if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) {
+					newDestination = freewaySegment.getSegmentPath().get(locationPointNumber + 1);
+				}  else if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
+					return currentLocation;
+				} else {
+					newDestination = geoMapModel.getNextFreewaySegment(freewaySegment).getSegmentPath().get(0);
+				}
+				speed = freewaySegment.getAverageSpeed();
+				this.updateCarColor();
+			}
+			return getTargetCoordinate(timeRemaining, newLocation, newDestination);
+		}
 	}
 
 	public void run() {
