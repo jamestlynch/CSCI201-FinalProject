@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import main.CSCI201Maps;
 import main.automobile.Automobile;
 import main.freeway.FreewaySegment;
 import main.jsonfile.JSONFileGetter;
@@ -16,7 +17,7 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
-public class GeoMapView extends JPanel {
+public class GeoMapView extends JPanel implements Runnable {
 	private int panelWidth;
 	private int panelHeight;
 	
@@ -30,6 +31,7 @@ public class GeoMapView extends JPanel {
 	
 	private boolean debuggingDrawPath = true;
 	private boolean debuggingDrawAutomobiles = true;
+	private boolean debuggingMapUpdateLock = true;
 	
 	public GeoMapView(int width, int height, GeoMapModel geoMapModel) 
 	{
@@ -84,18 +86,43 @@ public class GeoMapView extends JPanel {
 		mapViewer.setMapPolygonsVisible(true);
 	}
 	
+	public void setAutomobileMarkers()
+	{
+		if (debuggingDrawAutomobiles) System.out.println("[SET AUTOMOBILES] Method called.");
+		ArrayList<Automobile> automobilesToDisplay = geoMapModel.getAutomobilesInFreewayNetwork();
+		if (debuggingDrawAutomobiles) System.out.println("[SET AUTOMOBILES] Amount of automobiles to draw: " + automobilesToDisplay.size());
+		
+		for (int i = 0 ; i < automobilesToDisplay.size(); i++)
+		{
+			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
+			{
+				mapViewer.addMapMarker(automobilesToDisplay.get(i).getCarMarker());
+			}
+		}
+	}
+	
 	//This method should be called in this MapView's threading
 	public void drawAutomobiles()
 	{
 		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Method called.");
 		ArrayList<Automobile> automobilesToDisplay = geoMapModel.getAutomobilesInFreewayNetwork();
 		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Amount of automobiles to draw: " + automobilesToDisplay.size());
+				
+		if (debuggingDrawAutomobiles) System.out.println("DRAW AUTOMOBILES] Size of MapMarkerList: " + mapViewer.getMapMarkerList().size());
 		
-		for (int i = 0 ; i < automobilesToDisplay.size(); i++)
+		for (int i = 0 ; i < mapViewer.getMapMarkerList().size(); i++)
 		{
-			mapViewer.addMapMarker(automobilesToDisplay.get(i).getCarMarker());
-			mapViewer.setMapMarkerVisible(true);
+			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
+			{
+				try {
+					mapViewer.getMapMarkerList().get(i);
+				} catch (IndexOutOfBoundsException ioobe) {
+					System.out.println("IndexOutOfBounds");
+				}
+			}
 		}
+		
+		mapViewer.setMapMarkerVisible(true);
 	}
 	
 	public void redrawSingleAutomobile(MapMarkerCircle automobileMarker)
@@ -107,5 +134,20 @@ public class GeoMapView extends JPanel {
 	public void eraseAutomobiles()
 	{
 		mapViewer.removeAllMapMarkers();
+	}
+
+	public void run() {
+		while(true) {
+			try {
+				CSCI201Maps.grabMapUpdateLock();
+				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map View grabbed lock.");
+				drawAutomobiles();
+				CSCI201Maps.giveUpMapUpdateLock();
+				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map View gave up lock.");
+				Thread.sleep(CSCI201Maps.automobilePaintDelay);
+			} catch (InterruptedException ie) {
+				ie.printStackTrace();
+			}
+		}
 	}
 }

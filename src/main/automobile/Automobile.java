@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import main.CSCI201Maps;
 import main.freeway.FreewaySegment;
+import main.map.GeoMapModel;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
@@ -25,7 +27,7 @@ public class Automobile implements Runnable
 	Coordinate currentLocation;
 	//FuturePoint holds the index of the array element that is upcoming. If futurepoint == Araylistsize, then we've reached the end.
 	int nextPointNumber = 1;
-	int currentSegmentPointsCount;
+	int numberOfSegmentPointsInThisPath;
 	final double carRadius = 0.001;
 	
 	Color darkGreen = new Color(0x0B610B);
@@ -38,16 +40,21 @@ public class Automobile implements Runnable
 	Color redOrange = new Color(0xFF4000);
 	Color red = new Color(0xFF0000);
 	Color darkRed = new Color(0x8A0808);
+	
+	private GeoMapModel geoMapModel;
 
-	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway)
+	private boolean debuggingAutomobileRunnable = false;
+	
+	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway, GeoMapModel geoMapModel)
 	{	
 		this.freeway = freeway;
-		currentSegmentPointsCount = freeway.getSegmentPath().size();
+		numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
 		this.id = id;
 		this.speed = speed;
 		this.direction = direction;
 		this.ramp = ramp;
 		currentLocation = freeway.getSegmentPath().get(0);
+		this.geoMapModel = geoMapModel;
 		carMarker = new MapMarkerCircle(currentLocation, carRadius);
 		carMarker.setColor(Color.BLACK);
 		this.updateCarColor();
@@ -56,6 +63,7 @@ public class Automobile implements Runnable
 	public Automobile()
 	{
 	}
+	
 	public String toString()
 	{
 		return ("Car #" + id + " is moving at " + speed);
@@ -141,65 +149,81 @@ public class Automobile implements Runnable
 	 * @param time_elapse_milliseconds - the time we've elapsed
 	 */
 	//time_elapse is in milliseconds
-	private void updateLocation(double time_elapse_milliseconds)
+	public void updateLocation(double time_elapse_milliseconds)
 	{
 		double hour_travelled = time_elapse_milliseconds/3600000;//3.6 million milliseoncds per hour
-		double miles = hour_travelled*speed; //mph * h = m
-		ArrayList<Coordinate> SegmentList = freeway.getSegmentPath();
-		Coordinate dest = SegmentList.get(nextPointNumber);
-		double DistanceToCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), dest.getLat(), dest.getLon());
-		if (StaysSameSegment(time_elapse_milliseconds))
-		{}
-		else if (DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount == nextPointNumber))
+		double milesToTravel = hour_travelled*speed; //mph * h = m
+		Coordinate nextDestinationCoord = freeway.getSegmentPath().get(nextPointNumber);
+		double DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
+		numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
+		
+		if (StaysSameSegment(DistanceToNextCheckpoint, milesToTravel))
 		{
-			nextPointNumber = 0;
-			freeway = freeway.getAdjacentSections().get(0);
-			currentSegmentPointsCount = freeway.getAdjacentSections().size();
-			miles = miles - DistanceToCheckpoint;
-			StaysSameSegment(time_elapse_milliseconds);
+			if (false) 
+				System.out.println("This car is on the same segment!");
 		}
+		//if (DistanceToNextCheckpoint - milesTravelled <= 0 && (currentSegmentPointsCount-1 == nextPointNumber))
+		else 
+		{
+			nextPointNumber = 1;
+			if (geoMapModel.getNextFreewaySegment(freeway) != null) {
+				freeway = geoMapModel.getNextFreewaySegment(freeway);
+			}
+			
+			numberOfSegmentPointsInThisPath = freeway.getSegmentPath().size();
+			nextDestinationCoord = freeway.getSegmentPath().get(nextPointNumber);
+			DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
+			StaysSameSegment(DistanceToNextCheckpoint, milesToTravel);
+		}
+		this.carMarker.setLat(currentLocation.getLat());
+		this.carMarker.setLon(currentLocation.getLon());
 		this.updateCarColor();
 	}
-	private boolean StaysSameSegment(double time_elapse_milliseconds)
+	private boolean StaysSameSegment(double _DistanceToCheckpoint, double _milesToTravel)
 	{
-		double hour_travelled = time_elapse_milliseconds/3600000;//3.6 million milliseoncds per hour
-		double miles = hour_travelled*speed; //mph * h = m
+		double milesToTravel = _milesToTravel;// = hour_travelled*speed; //mph * h = m
+		
+		//SegmentList holds all the upcoming segment points
 		ArrayList<Coordinate> SegmentList = freeway.getSegmentPath();
 		Coordinate dest = SegmentList.get(nextPointNumber);
-		double DistanceToCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), dest.getLat(), dest.getLon());
+		numberOfSegmentPointsInThisPath = SegmentList.size();
+		double DistanceToNextCheckpoint = _DistanceToCheckpoint;
 
 		//This is saying if the distance to the checkpoint is within the miles capacity.
-		if (DistanceToCheckpoint - miles > 0)
+		if (DistanceToNextCheckpoint - milesToTravel > 0)
 		{
 			//Create a latinc and loninc according to the remaining distance and setting a proportion of distance to go.
-			double latinc = (dest.getLat() - currentLocation.getLat()) * (miles/DistanceToCheckpoint);
-			double loninc = (dest.getLon() - currentLocation.getLon()) * (miles/DistanceToCheckpoint);
+			double latinc = (dest.getLat() - currentLocation.getLat()) * (milesToTravel/DistanceToNextCheckpoint);
+			double loninc = (dest.getLon() - currentLocation.getLon()) * (milesToTravel/DistanceToNextCheckpoint);
 			currentLocation.setLat(currentLocation.getLat() + latinc);
 			currentLocation.setLon(currentLocation.getLon() + loninc);
 			return true;
 		}
-		else if (DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount > nextPointNumber))
+		else if (DistanceToNextCheckpoint - milesToTravel <= 0 && (numberOfSegmentPointsInThisPath-1 > nextPointNumber))
 		{
 			//keep moving the base location until the miles remaining are within the distance to the next checkpoint.
 			//Otherwise, move to the next checkpoint.
-			Coordinate NewDest;
+			Coordinate NewCheckpoint;
 			do
 			{
 				dest = SegmentList.get(nextPointNumber);
-				miles = miles - DistanceToCheckpoint;
+				milesToTravel = milesToTravel - DistanceToNextCheckpoint;
 				nextPointNumber++;
-				NewDest = SegmentList.get(nextPointNumber);
-				DistanceToCheckpoint = distance (dest.getLat(), dest.getLon(), NewDest.getLat(), NewDest.getLon());
+				NewCheckpoint = SegmentList.get(nextPointNumber);
+				DistanceToNextCheckpoint = distance (dest.getLat(), dest.getLon(), NewCheckpoint.getLat(), NewCheckpoint.getLon());
 			}
-			while(DistanceToCheckpoint - miles <= 0 && (currentSegmentPointsCount > nextPointNumber));
+			while(DistanceToNextCheckpoint - milesToTravel <= 0 && (numberOfSegmentPointsInThisPath-1 > nextPointNumber));
 
-			double latinc = (NewDest.getLat() - dest.getLat()) * (miles/DistanceToCheckpoint);
-			double loninc = (NewDest.getLon() - dest.getLon()) * (miles/DistanceToCheckpoint);
+			double latinc = (NewCheckpoint.getLat() - dest.getLat()) * (milesToTravel/DistanceToNextCheckpoint);
+			double loninc = (NewCheckpoint.getLon() - dest.getLon()) * (milesToTravel/DistanceToNextCheckpoint);
 			currentLocation.setLat(dest.getLat() + latinc);
 			currentLocation.setLon(dest.getLon() + loninc);
 			return true;
 		}
-		return false;
+		else
+		{
+			return false;
+		}
 	}
 	private double distance(double lat1, double lon1, double lat2, double lon2) 
 	{
@@ -219,14 +243,15 @@ public class Automobile implements Runnable
 			long timeAfter;
 			while(true)
 			{
+				if (debuggingAutomobileRunnable) System.out.println("[AUTOMOBILE RUN] Car #" + id + "'s thread is run");
+				
 				carMarker.setLat(currentLocation.getLat());
 				carMarker.setLon(currentLocation.getLon());
 				now = Calendar.getInstance();
 				timeAfter = now.get(Calendar.MILLISECOND);
 				updateLocation(timeBefore - timeAfter);
 				timeBefore = timeAfter;
-				Thread.yield();
-				Thread.sleep(130);
+				Thread.sleep(CSCI201Maps.automobileUpdateRate);
 			}
 		}
 		catch(InterruptedException ie)

@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Timestamp;
 
+import main.CSCI201Maps;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
 
@@ -21,6 +22,7 @@ public class JSONFileGetter implements Runnable
 	private GeoMapView geoMapView;
 	
 	private boolean debuggingJSONFileGetter = true;
+	private boolean debuggingMapUpdateLock = true;
 	
     public JSONFileGetter(String urlLink, GeoMapModel parserMapModel, GeoMapView geoMapView)
     {
@@ -49,23 +51,33 @@ public class JSONFileGetter implements Runnable
         }
     }
     
+    public void reInit() 
+    {
+    	if (debuggingJSONFileGetter) System.out.println("[JSONFileGetter] Thread woken up.");
+		geoMapView.eraseAutomobiles();
+    }
+    
     public void run()
     {
-    	int i = 1;
     	while(true) {
-    		geoMapView.eraseAutomobiles();
+    		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
+    		CSCI201Maps.grabMapUpdateLock();
     		jfp.parseAutomobiles(jsonFile);
-    		geoMapView.drawAutomobiles();
+    		geoMapView.setAutomobileMarkers();
     		
     		java.util.Date date = new java.util.Date();
     		System.out.println("[JSONFileGetter] Last updated: " + new Timestamp(date.getTime()));
     		
     		try {
-        		Thread.sleep((3 * 1000)); // Sleep for 3 minutes (conversion to millis shown)
+    			CSCI201Maps.giveUpMapUpdateLock();
+    			if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter gave up lock.");
+    			Thread.sleep(CSCI201Maps.jsonFileFetchingDelay); // Sleep for 3 minutes (conversion to millis shown)
     		} catch (InterruptedException ie) {
     			ie.printStackTrace();
     		}
-    		if (debuggingJSONFileGetter) System.out.println("[JSONFileGetter] Thread woken up.");
+    		
+    		// After woken up for the first time, it has been 3 minutes so everything that happens to reinit the parser is done here.
+    		this.reInit();
     	}
     }
 }

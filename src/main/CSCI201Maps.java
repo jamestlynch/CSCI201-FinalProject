@@ -17,9 +17,11 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -36,13 +38,21 @@ public class CSCI201Maps {
 	private GeoMap geoMap;
 	
 	private Thread jsonGetterThread;
+	private Thread mapModelThread;
+	private Thread mapViewThread;
+	
+	private static Semaphore mapUpdateSemaphore = new Semaphore(1);
+	
+	public static final long automobileUpdateRate = 1300; // 13 milliseconds to wait between updates
+	public static final long automobilePaintDelay = 1300; // 13 milliseconds to fully paint
+	public static final long jsonFileFetchingDelay = 3 * 60 * 1000; // 3 minutes to wait between grabbing JSON file
 	
 	// Call the user interface
 	// Instantiate all objects
 	public CSCI201Maps() {
 		ExecutorService configurationExecutor = Executors.newFixedThreadPool(1);
 		
-		geoMapModel = new GeoMapModel();
+		geoMapModel = new GeoMapModel(geoMapView);
 		geoMapView = new GeoMapView(500, 500, geoMapModel);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		
@@ -55,12 +65,18 @@ public class CSCI201Maps {
 		segments105 = geoMapModel.getListOf105Segments();
 		segments10  = geoMapModel.getListOf10Segments();
 		segments101 = geoMapModel.getListOf101Segments();
-
+		
 		jsonGetterThread = new Thread(
 			(new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json", geoMapModel, geoMapView)));
+		jsonGetterThread.setPriority(Thread.MAX_PRIORITY);
 		jsonGetterThread.start();
 		
-		configurationExecutor.shutdown();
+		mapModelThread = new Thread(geoMapModel);
+		mapModelThread.setPriority(Thread.MAX_PRIORITY - 1);
+		mapModelThread.start();
+		
+		mapViewThread = new Thread(geoMapView);
+		mapViewThread.start();
 		
 		geoMapView.drawPath(segments105);
 		
@@ -73,8 +89,21 @@ public class CSCI201Maps {
 		temporaryframethatwewillreplacewithUICSCI201MapJFrame.setVisible(true);
 	}
 
+	public static void grabMapUpdateLock()
+	{
+		try {
+			mapUpdateSemaphore.acquire();
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+		}
+	}
+	
+	public static void giveUpMapUpdateLock()
+	{
+		mapUpdateSemaphore.release();
+	}
+	
 	public static void main(String [] args) {
 		new CSCI201Maps();
-
 	}
 }

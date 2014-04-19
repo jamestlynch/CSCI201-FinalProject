@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
@@ -14,6 +15,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import main.CSCI201Maps;
 import main.freeway.FreewayRamp;
 import main.freeway.FreewaySegment;
 import main.automobile.Automobile;
@@ -26,7 +28,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-public class GeoMapModel {
+public class GeoMapModel implements Runnable {
 	/*
 	 * =========================================================================
 	 * MEMBER VARIABLES
@@ -52,20 +54,25 @@ public class GeoMapModel {
 			new File("./Freeway-101/Freeway101-1.xml"),
 			new File("./Freeway-101/Freeway101-J.xml"),
 			new File("./Freeway-105/Freeway105-1.xml"),
-			new File("./Freeway-105/Freeway105-2.xml"),
-			new File("./Freeway-105/Freeway105-3.xml"),
-			new File("./Freeway-105/Freeway105-4.xml"),
 			new File("./Freeway-405/Freeway405.xml") };
 
+	private Thread mapViewThread;
+	private Calendar timeNow = Calendar.getInstance();
+	private long timeInMillisAfter;
+	private long timeInMillisBefore;
+	private GeoMapView geoMapView;
+	
 	private boolean debuggingSearch = false;
-
+	private boolean debuggingAutomobileMarkers = false;
+	private boolean debuggingMapUpdateLock = true;
+	
 	/*
 	 * =========================================================================
 	 * CONSTRUCTORS
 	 * =========================================================================
 	 */
 
-	public GeoMapModel() {
+	public GeoMapModel(GeoMapView geoMapView) {
 		defaultDirectionFreewayNetwork = new FreewayNetwork();
 		oppositeDirectionFreewayNetwork = new FreewayNetwork();
 
@@ -73,6 +80,8 @@ public class GeoMapModel {
 		for (int i = 0; i < freewayXMLFiles.length; i++) {
 			new FreewayLoader(freewayXMLFiles[i]);
 		}
+		
+		this.geoMapView = geoMapView;
 	}
 
 	/*
@@ -111,6 +120,12 @@ public class GeoMapModel {
 		return orderedSegments101;
 	}
 
+	public FreewaySegment getNextFreewaySegment(FreewaySegment oldSegment) {
+		if (defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()) == null)
+			return null;
+		return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);
+	}
+	
 	public void addAutomobileToNetwork(Automobile newAutomobile) {
 		synchronized(automobilesInFreewayNetwork) 
 		{
@@ -129,7 +144,8 @@ public class GeoMapModel {
 		synchronized(automobilesInFreewayNetwork) 
 		{
 			for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
-				System.out.println(automobilesInFreewayNetwork.get(i)
+				if (debuggingAutomobileMarkers) 
+					System.out.println("[GET AUTOMOBILES] " + automobilesInFreewayNetwork.get(i)
 						.getCarMarker().toString());
 			return automobilesInFreewayNetwork;	
 		}
@@ -137,13 +153,51 @@ public class GeoMapModel {
 	
 	public void runAllAutomobileThreads() {
 		Semaphore automobileSemaphore = new Semaphore(10);
+		ExecutorService executor = Executors.newFixedThreadPool(automobilesInFreewayNetwork.size());
 		
-		for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
-		{
+		for (int i = 0; i < 10/*automobilesInFreewayNetwork.size()*/; i++)
+		{	
 			try {
 				automobileSemaphore.acquire(1);
-				new Thread(automobilesInFreewayNetwork.get(i)).start();
-				automobileSemaphore.release();
+				executor.execute(automobilesInFreewayNetwork.get(i));
+				automobileSemaphore.release(1);
+			} catch (InterruptedException ie) {
+				ie.printStackTrace();
+			}
+		}
+	}
+	
+	public void init() {		
+		CSCI201Maps.grabMapUpdateLock();
+		
+		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model grabbed lock.");
+		
+		for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
+		{	
+			timeInMillisAfter = timeNow.get(Calendar.MILLISECOND);
+			automobilesInFreewayNetwork.get(i).updateLocation(timeInMillisBefore - timeInMillisAfter);
+			timeInMillisBefore = timeInMillisAfter;
+		}
+		CSCI201Maps.giveUpMapUpdateLock();
+		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model gave up lock.");
+		mapViewThread = new Thread(geoMapView);
+		mapViewThread.start();
+	}
+	
+	public void run() {		
+		this.init();
+		
+		while (true) {
+			try {
+				Thread.sleep(CSCI201Maps.automobileUpdateRate);
+				for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
+				{	
+					timeInMillisAfter = timeNow.get(Calendar.MILLISECOND);
+					automobilesInFreewayNetwork.get(i).updateLocation(timeInMillisBefore - timeInMillisAfter);
+					timeInMillisBefore = timeInMillisAfter;
+				}
+				CSCI201Maps.giveUpMapUpdateLock();
+				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model gave up lock.");
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
