@@ -21,20 +21,31 @@ public class SetRoutePanel extends JPanel{
 	JComboBox<String> freewayList;
 	JComboBox<String> rampList;
 	JComboBox<String> endingFreeway;
-	JComboBox<String> endingFreewayRamp;
+	JComboBox<String> endingRampList;
 	GeoMapModel geoMapModel;
 	//Pass in the String of freeway names
 	public boolean isValidEntry()
 	{
-		return true;
+		String endingFreewayRampString = (String)endingRampList.getSelectedItem();
+		String rampListString = (String)rampList.getSelectedItem();
+		if (rampListString != null && endingFreewayRampString != null &&
+				rampListString != endingFreewayRampString)
+		{
+			return true;
+		}
+		else
+			return false;
+			
 	}
-	private String[] FreewayNames = new String[]{"10", "101", "105", "405"}; 
+	private String[] FreewayNames = new String[]{"", "10", "101", "105", "405"}; 
 	public SetRoutePanel(int width, int height, GeoMapModel geoMapModel)//String[] f1, String[] f2)
 	{
 		this.geoMapModel = geoMapModel;
 		this.width = width;
 		this.height = height;
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
+		//Starting Freeway Declaration and Action Listener
 		JLabel startingFreewayLabel = new JLabel("Select Starting Freeway:");
 		freewayList = new JComboBox<String>(FreewayNames);
 		
@@ -43,18 +54,22 @@ public class SetRoutePanel extends JPanel{
 		
 		RampPopulate startPopulate = new RampPopulate(freewayList, rampList);
 		freewayList.addActionListener(startPopulate);
+		rampList.setEnabled(false);
 		
+		//Ending freeway Declaration and Action Listener
 		JLabel endingFreewayLabel = new JLabel("Select Ending Freeway:");
 		endingFreeway = new JComboBox<String>(FreewayNames);
 		JLabel endingFreewayRampLabel = new JLabel("Select Ending Freeway Ramp:");
-		endingFreewayRamp = new JComboBox<String>();
+		endingRampList = new JComboBox<String>();
 		
-		RampPopulate endPopulate = new RampPopulate(endingFreeway, endingFreewayRamp);
+		RampPopulate endPopulate = new RampPopulate(endingFreeway, endingRampList);
 		endingFreeway.addActionListener(endPopulate);
+		endingRampList.setEnabled(false);
 		
 		setLayout(null);
 		setPreferredSize(new Dimension(width, height));
 		
+		//Set Location for each component.
 		startingFreewayLabel.setBounds(
 				width/2 - startingFreewayLabel.getPreferredSize().width,
 				5, 
@@ -94,11 +109,11 @@ public class SetRoutePanel extends JPanel{
 				endingFreeway.getY() + endingFreeway.getPreferredSize().height + 5,
 				width - 10,
 				endingFreewayRampLabel.getPreferredSize().height);
-		endingFreewayRamp.setBounds(
+		endingRampList.setBounds(
 				5,
 				endingFreewayRampLabel.getY()+endingFreewayRampLabel.getPreferredSize().height + 5, 
 				width - 10,
-				endingFreewayRamp.getPreferredSize().height);
+				endingRampList.getPreferredSize().height);
 		
 		add(startingFreewayLabel);
 		add(freewayList);
@@ -110,7 +125,7 @@ public class SetRoutePanel extends JPanel{
 		add(endingFreeway);
 		
 		add(endingFreewayRampLabel);
-		add(endingFreewayRamp);
+		add(endingRampList);
 		
 	}
 	class RampPopulate implements ActionListener
@@ -145,11 +160,13 @@ public class SetRoutePanel extends JPanel{
 			{
 				tempSeg = geoMapModel.getListOf405Segments();
 			}
-			if (tempSeg == null)
+			else //This means they chose the null option.
 			{
-				System.out.println("hello world");
+				childComboBox.setEnabled(false);
+				return;
 			}
 			int i;
+			childComboBox.setEnabled(true);
 			for (i = 0 ; i < tempSeg.size(); i++)
 			{
 				childComboBox.addItem(tempSeg.get(i).getStartRamp().getRampName());
