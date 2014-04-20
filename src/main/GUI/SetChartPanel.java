@@ -9,6 +9,7 @@ import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -23,7 +24,7 @@ public class SetChartPanel extends JPanel{
 	final int total_rows = 25;
 	String BeginLocation, EndLocation;
 	JTable tables;
-	public void setLocations(String BeginLocation, String EndLocation)
+	public void setLocations(String BeginLocation, String EndLocation, ArrayList<Double> TimeValues)//)
 	{
 		this.BeginLocation = BeginLocation;
 		this.EndLocation = EndLocation;
@@ -33,6 +34,10 @@ public class SetChartPanel extends JPanel{
 		beginAndEnd.setLayout(new BorderLayout());
 		beginAndEnd.add(begin, BorderLayout.WEST);
 		beginAndEnd.add(end, BorderLayout.SOUTH);
+		for (int i = 1; i < tables.getRowCount(); i++)
+		{
+			tables.setValueAt(TimeValues.get(i-1) +" minutes", i, 1);
+		}
 		//begin.setBounds(10, 0, begin.getWidth(), begin.getHeight());
 		//end.setBounds(5, 5+begin.getHeight(), end.getWidth(), end.getHeight());
 		//tables.setBounds(width/2 - tables.getWidth()/2, end.getY()+end.getHeight(), tables.getWidth(), tables.getHeight());
@@ -49,7 +54,7 @@ public class SetChartPanel extends JPanel{
 		tables = new JTable(dtm);
 		tables.setEnabled(false);
 		tables.setValueAt("Hour", 0, 0);
-		tables.setValueAt("ETA", 0, 1);
+		tables.setValueAt("ETA(minutes)", 0, 1);
 		for (int i = 1 ; i < 25; i++)
 		{
 			tables.setValueAt(i +":00", i , 0);
