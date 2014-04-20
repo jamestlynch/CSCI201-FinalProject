@@ -24,6 +24,7 @@ public class Automobile implements Runnable
 	MapMarkerCircle carMarker;
 
 	FreewaySegment freewaySegment;
+	FreewaySegment oldSegment;
 	
 	Coordinate currentLocation;
 	//FuturePoint holds the index of the array element that is upcoming. If futurepoint == Araylistsize, then we've reached the end.
@@ -258,7 +259,6 @@ public class Automobile implements Runnable
 			timeRemaining = 0;
 		}
 		
-		if (distanceDestinationAndLocation - distanceToTravelAlongPath > 0 && timeRemaining <= 0) { // If you did not travel down full path,
 			double portionOfPathDistance = (distanceDestinationAndLocation - distanceToTravelAlongPath)
 									/ /*   ------------------------------------------------------------ 	*/
 														(distanceDestinationAndLocation);
@@ -270,36 +270,36 @@ public class Automobile implements Runnable
 			if (debuggingUpdateFunction && id % 100 == 0) System.out.println("[AUTOMOBILE UPDATE] ID #" + id+ " dLat_dLon: " + dLat_dLon + " Destination longitude: " + destination.getLon() + " Portion of path's distance: " + portionOfPathDistance);
 			if (debuggingUpdateFunction && id % 100 == 0) System.out.println("[AUTOMOBILE UPDATE] ID #" + id+ " dLon_dLat: " + dLon_dLat + " Destination latitude: " + destination.getLat() + " Portion of path's distance: " + portionOfPathDistance + "\n");
 			return new Coordinate(newLatitude, newLongitude);
-		} else if (distanceDestinationAndLocation == distanceToTravelAlongPath && timeRemaining <= 0) {
-			return destination;
-		} else { // Else, there is distance remaining passed going to the end of path
-			Coordinate newLocation;
-			Coordinate newDestination;
-			if (freewaySegment.getSegmentPath().get(++ locationPointNumber) != null) { // Same segment, different target point
-				newLocation = destination;
-				newDestination = freewaySegment.getSegmentPath().get(locationPointNumber);
-			} if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
-				System.out.println("1. Return currentLocation");
-				return currentLocation;
-			} else {
-				newLocation = destination;
-				freewaySegment = geoMapModel.getNextFreewaySegment(freewaySegment);
-				numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
-				locationPointNumber = 0;
-				if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) {
-					newDestination = freewaySegment.getSegmentPath().get(locationPointNumber + 1);
-				}  else if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
-					System.out.println("2. Return currentLocation");
-					return currentLocation;
-				} else {
-					newDestination = geoMapModel.getNextFreewaySegment(freewaySegment).getSegmentPath().get(0);
-				}
-				speed = freewaySegment.getAverageSpeed();
-				this.updateCarColor();
-			}
-			System.out.println("3. Return recursive call");
-			return getTargetCoordinate(timeRemaining, newLocation, newDestination);
-		}
+//		} else if (distanceDestinationAndLocation == distanceToTravelAlongPath && timeRemaining <= 0) {
+//			return destination;
+//		} else { // Else, there is distance remaining passed going to the end of path
+//			Coordinate newLocation;
+//			Coordinate newDestination;
+//			if (freewaySegment.getSegmentPath().get(++ locationPointNumber) != null) { // Same segment, different target point
+//				newLocation = destination;
+//				newDestination = freewaySegment.getSegmentPath().get(locationPointNumber);
+//			} if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
+//				System.out.println("1. Return currentLocation");
+//				return currentLocation;
+//			} else {
+//				newLocation = destination;
+//				freewaySegment = geoMapModel.getNextFreewaySegment(freewaySegment);
+//				numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
+//				locationPointNumber = 0;
+//				if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) {
+//					newDestination = freewaySegment.getSegmentPath().get(locationPointNumber + 1);
+//				}  else if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
+//					System.out.println("2. Return currentLocation");
+//					return currentLocation;
+//				} else {
+//					newDestination = geoMapModel.getNextFreewaySegment(freewaySegment).getSegmentPath().get(0);
+//				}
+//				speed = freewaySegment.getAverageSpeed();
+//				this.updateCarColor();
+//			}
+//			System.out.println("3. Return recursive call");
+//			return getTargetCoordinate(timeRemaining, newLocation, newDestination);
+//		}
 	}
 
 	public void run() {
