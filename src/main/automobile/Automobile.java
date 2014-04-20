@@ -79,6 +79,11 @@ public class Automobile implements Runnable
 		return carMarker;
 	}
 	
+	public int getId()
+	{
+		return id;
+	}
+	
 	public void setId(int id)
 	{
 		this.id = id;
@@ -190,7 +195,7 @@ public class Automobile implements Runnable
 		currentLocation = newLocationAfterUpdate;
 		this.carMarker.setLat(newLocationAfterUpdate.getLat());
 		this.carMarker.setLon(newLocationAfterUpdate.getLon());
-		
+		System.out.println("[UPDATE AUTOMOBILES] Updating Car ID #" + id);
 //		this.carMarker.setLat(currentLocation.getLat() + 1);
 //		this.carMarker.setLon(currentLocation.getLon());
 		
@@ -328,6 +333,7 @@ public class Automobile implements Runnable
 				newLocation = destination;
 				newDestination = freewaySegment.getSegmentPath().get(locationPointNumber);
 			} if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
+				System.out.println("1. Return currentLocation");
 				return currentLocation;
 			} else {
 				newLocation = destination;
@@ -337,6 +343,7 @@ public class Automobile implements Runnable
 				if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) {
 					newDestination = freewaySegment.getSegmentPath().get(locationPointNumber + 1);
 				}  else if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
+					System.out.println("2. Return currentLocation");
 					return currentLocation;
 				} else {
 					newDestination = geoMapModel.getNextFreewaySegment(freewaySegment).getSegmentPath().get(0);
@@ -344,6 +351,7 @@ public class Automobile implements Runnable
 				speed = freewaySegment.getAverageSpeed();
 				this.updateCarColor();
 			}
+			System.out.println("3. Return recursive call");
 			return getTargetCoordinate(timeRemaining, newLocation, newDestination);
 		}
 	}
