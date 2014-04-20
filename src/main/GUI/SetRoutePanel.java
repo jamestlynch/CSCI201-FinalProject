@@ -24,6 +24,14 @@ public class SetRoutePanel extends JPanel{
 	JComboBox<String> endingRampList;
 	GeoMapModel geoMapModel;
 	//Pass in the String of freeway names
+	public String getBeginningLocation()
+	{
+		return (String)rampList.getSelectedItem();
+	}
+	public String getEndingLocation()
+	{
+		return (String)endingRampList.getSelectedItem();
+	}
 	public boolean isValidEntry()
 	{
 		String endingFreewayRampString = (String)endingRampList.getSelectedItem();

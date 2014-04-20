@@ -1,23 +1,52 @@
 package main.GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 
 public class SetChartPanel extends JPanel{
 	int width;
 	int height;
 	final int total_rows = 25;
+	String BeginLocation, EndLocation;
+	JTable tables;
+	public void setLocations(String BeginLocation, String EndLocation)
+	{
+		this.BeginLocation = BeginLocation;
+		this.EndLocation = EndLocation;
+		JLabel begin = new JLabel ("Starting from "+ BeginLocation + "\n");
+		JLabel end = new JLabel ("Ending at " + EndLocation);
+		JPanel beginAndEnd = new JPanel();
+		beginAndEnd.setLayout(new BorderLayout());
+		beginAndEnd.add(begin, BorderLayout.WEST);
+		beginAndEnd.add(end, BorderLayout.SOUTH);
+		//begin.setBounds(10, 0, begin.getWidth(), begin.getHeight());
+		//end.setBounds(5, 5+begin.getHeight(), end.getWidth(), end.getHeight());
+		//tables.setBounds(width/2 - tables.getWidth()/2, end.getY()+end.getHeight(), tables.getWidth(), tables.getHeight());
+		add(beginAndEnd, BorderLayout.NORTH);
+		add(tables, BorderLayout.CENTER);
+	}
 	public SetChartPanel(int width, int height)
 	{
 		setPreferredSize(new Dimension(width, height));
+		setLayout(new BorderLayout());
 		this.width = width;
 		this.height = height;
 		DefaultTableModel dtm = new DefaultTableModel(total_rows, 2);
-		JTable tables = new JTable(dtm);
+		tables = new JTable(dtm);
 		tables.setEnabled(false);
 		tables.setValueAt("Hour", 0, 0);
 		tables.setValueAt("ETA", 0, 1);
@@ -28,6 +57,59 @@ public class SetChartPanel extends JPanel{
 		
 		
 		Dimension tableDimensions = tables.getPreferredSize();
-		add(tables);
+		
+		
+		//http://stackoverflow.com/questions/3548140/how-to-open-and-save-using-java
+		JButton exportToCSV = new JButton("Export data to CSV file");
+		//exportToCSV.setBounds(5, 500 - exportToCSV.getPreferredSize().height - 30, 400- 10, exportToCSV.getPreferredSize().height);
+		exportToCSV.addActionListener(new ExportButton(this));
+		add(exportToCSV, BorderLayout.SOUTH);
 	}
+	class ExportButton implements ActionListener
+	{
+		JPanel parentPanel;
+		public ExportButton(JPanel parentPanel)
+		{
+			this.parentPanel = parentPanel;
+		}
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser fileChooser = new JFileChooser();
+			
+			int returnVal = fileChooser.showSaveDialog(parentPanel);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+			  File file = fileChooser.getSelectedFile();
+			  generateCSV(file);
+			}
+			
+		}
+	}
+	public void generateCSV(File file)
+	{
+		try
+		{
+			FileWriter fw = new FileWriter(file + ".csv");
+			PrintWriter pw = new PrintWriter(fw);
+			pw.println(BeginLocation + "," + EndLocation);
+			for (int i = 0 ; i < tables.getRowCount(); i++)
+				pw.println(tables.getValueAt(i, 0)+",");
+			pw.close();
+		}
+		catch(IOException ioe)
+		{
+			System.out.println("IOE: " + ioe.getMessage());
+		}
+	}
+	
+}
+class CSVSaveFileView implements FileFilter
+{
+
+	public boolean accept(File arg0) {
+		return false;
+	}
+	public String getDescription()
+	{
+		return ".CSV files";
+	}
+	
 }

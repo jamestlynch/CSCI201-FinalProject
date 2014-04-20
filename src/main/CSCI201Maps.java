@@ -39,12 +39,12 @@ public class CSCI201Maps {
 	
 	private Thread jsonGetterThread;
 	private Thread mapModelThread;
-	private Thread mapViewThread;
+	private static Thread mapViewThread;
 	
 	private static Semaphore mapUpdateSemaphore = new Semaphore(1);
 	
-	public static final long automobileUpdateRate = 1300; // 13 milliseconds to wait between updates
-	public static final long automobilePaintDelay = 1300; // 13 milliseconds to fully paint
+	public static final long automobileUpdateRate = 13000; // 13 milliseconds to wait between updates
+	public static final long automobilePaintDelay = 13000; // 13 milliseconds to fully paint
 	public static final long jsonFileFetchingDelay = 3 * 60 * 1000; // 3 minutes to wait between grabbing JSON file
 	
 	// Call the user interface
@@ -52,7 +52,7 @@ public class CSCI201Maps {
 	public CSCI201Maps() {
 		ExecutorService configurationExecutor = Executors.newFixedThreadPool(1);
 		
-		geoMapModel = new GeoMapModel(geoMapView);
+		geoMapModel = new GeoMapModel();
 		geoMapView = new GeoMapView(500, 500, geoMapModel);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		
@@ -76,7 +76,7 @@ public class CSCI201Maps {
 		mapModelThread.start();
 		
 		mapViewThread = new Thread(geoMapView);
-		mapViewThread.start();
+		mapViewThread.setPriority(Thread.MAX_PRIORITY - 1);
 		
 		geoMapView.drawPath(segments105);
 		geoMapView.drawPath(segments101);
@@ -106,6 +106,11 @@ public class CSCI201Maps {
 	public static void giveUpMapUpdateLock()
 	{
 		mapUpdateSemaphore.release();
+	}
+	
+	public static void startMapViewThread() 
+	{
+		mapViewThread.start();
 	}
 	
 	public static void main(String [] args) {

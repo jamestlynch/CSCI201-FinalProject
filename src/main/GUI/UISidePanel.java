@@ -12,6 +12,8 @@ import main.map.GeoMapModel;
 
 public class UISidePanel extends JPanel {
 	GeoMapModel geoMapModel;
+	String BeginLocation;
+	String EndLocation;
 	public UISidePanel(GeoMapModel geoMapModel)
 	{
 		this.geoMapModel = geoMapModel;
@@ -20,13 +22,6 @@ public class UISidePanel extends JPanel {
 		
 		SetRoutePanel SetRoute = new SetRoutePanel(400, 500, geoMapModel);
 		ThreeOpts.addTab("Set Route", SetRoute); //Add the name of the JPanel of the chart
-
-		JButton jb = new JButton ("Calculate Route");
-		jb.setBounds(5, 500 - jb.getPreferredSize().height - 30, 400- 10, jb.getPreferredSize().height);
-		BtnListener activateRoute = new BtnListener(SetRoute, ThreeOpts);
-		jb.addActionListener(activateRoute);
-		SetRoute.add(jb);
-		
 		
 		SetChartPanel DisplayChart = new SetChartPanel(400, 500);
 		ThreeOpts.addTab("Chart", DisplayChart);//Add the name of the JPanel
@@ -36,28 +31,40 @@ public class UISidePanel extends JPanel {
 		SetGraphPanel DisplayGraph = new SetGraphPanel(400, 500);
 		ThreeOpts.addTab("Graph", DisplayGraph);//Add the name of the JPanel
 		ThreeOpts.setEnabledAt(2, false);
+		
+		JButton jb = new JButton ("Calculate Route");
+		jb.setBounds(5, 500 - jb.getPreferredSize().height - 30, 400- 10, jb.getPreferredSize().height);
+		BtnListener activateRoute = new BtnListener(SetRoute, ThreeOpts, DisplayChart);
+		jb.addActionListener(activateRoute);
+		SetRoute.add(jb);
 		//add(new Map(600, 800), BorderLayout.EAST);
 		
 		add(ThreeOpts, BorderLayout.WEST);
 	}
-	
-}
-class BtnListener implements ActionListener
-{
-	SetRoutePanel SetRoute;
-	JTabbedPane ThreeOpts;
-	public BtnListener(SetRoutePanel SetRoute, JTabbedPane ThreeOpts)
+
+	class BtnListener implements ActionListener
 	{
-		this.SetRoute = SetRoute;
-		this.ThreeOpts = ThreeOpts;
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (SetRoute.isValidEntry())
+		SetRoutePanel SetRoute;
+		JTabbedPane ThreeOpts;
+		SetChartPanel DisplayChart;
+		public BtnListener(SetRoutePanel SetRoute, JTabbedPane ThreeOpts, SetChartPanel DisplayChart)
 		{
-			ThreeOpts.setEnabledAt(1, true);
-			ThreeOpts.setEnabledAt(2, true);
+			this.SetRoute = SetRoute;
+			this.ThreeOpts = ThreeOpts;
+			this.DisplayChart = DisplayChart;
 		}
+		public void actionPerformed(ActionEvent e) {
+			if (SetRoute.isValidEntry())
+			{
+				ThreeOpts.setEnabledAt(1, true);
+				ThreeOpts.setEnabledAt(2, true);
+				BeginLocation = SetRoute.getBeginningLocation();
+				EndLocation = SetRoute.getEndingLocation();
+				DisplayChart.setLocations(BeginLocation, EndLocation);
+				
+			}
+		}
+		
 	}
-	
+
 }

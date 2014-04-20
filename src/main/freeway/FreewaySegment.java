@@ -120,4 +120,8 @@ public class FreewaySegment {
 	public FreewayRamp getEndRamp() {
 		return endRamp;
 	}
+	
+	public double getAverageSpeed() {
+		return averageSpeed;
+	}
 }

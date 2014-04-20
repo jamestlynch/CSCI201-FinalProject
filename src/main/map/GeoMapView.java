@@ -108,17 +108,17 @@ public class GeoMapView extends JPanel implements Runnable {
 		ArrayList<Automobile> automobilesToDisplay = geoMapModel.getAutomobilesInFreewayNetwork();
 		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Amount of automobiles to draw: " + automobilesToDisplay.size());
 				
-		if (debuggingDrawAutomobiles) System.out.println("DRAW AUTOMOBILES] Size of MapMarkerList: " + mapViewer.getMapMarkerList().size());
+		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Size of MapMarkerList: " + mapViewer.getMapMarkerList().size());
 		
 		for (int i = 0 ; i < mapViewer.getMapMarkerList().size(); i++)
 		{
 			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
 			{
-				try {
-					mapViewer.getMapMarkerList().get(i);
-				} catch (IndexOutOfBoundsException ioobe) {
-					System.out.println("IndexOutOfBounds");
+				if (i == 100) {
+					mapViewer.setDisplayPositionByLatLon(mapViewer.getMapMarkerList().get(i).getLat(), mapViewer.getMapMarkerList().get(i).getLon(), startZoom);
+					System.out.println(mapViewer.getMapMarkerList().get(i).toString());
 				}
+				mapViewer.getMapMarkerList().get(i);
 			}
 		}
 		
@@ -141,7 +141,7 @@ public class GeoMapView extends JPanel implements Runnable {
 			try {
 				CSCI201Maps.grabMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map View grabbed lock.");
-				drawAutomobiles();
+				this.drawAutomobiles();
 				CSCI201Maps.giveUpMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map View gave up lock.");
 				Thread.sleep(CSCI201Maps.automobilePaintDelay);
