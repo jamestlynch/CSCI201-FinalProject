@@ -21,8 +21,8 @@ public class JSONFileGetter implements Runnable
 	private JSONFileParser jfp;
 	private GeoMapView geoMapView;
 	
-	private boolean debuggingJSONFileGetter = true;
-	private boolean debuggingMapUpdateLock = true;
+	private boolean debuggingJSONFileGetter = false;
+	private boolean debuggingMapUpdateLock = false;
 	
     public JSONFileGetter(String urlLink, GeoMapModel parserMapModel, GeoMapView geoMapView)
     {
@@ -63,10 +63,11 @@ public class JSONFileGetter implements Runnable
     		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
     		CSCI201Maps.grabMapUpdateLock();
     		jfp.parseAutomobiles(jsonFile);
+    		geoMapView.eraseAutomobiles();
     		geoMapView.setAutomobileMarkers();
     		
     		java.util.Date date = new java.util.Date();
-    		System.out.println("[JSONFileGetter] Last updated: " + new Timestamp(date.getTime()));
+    		System.out.println("[JSONFileGetter] Last pulled from the server: " + new Timestamp(date.getTime()));
     		
     		try {
     			CSCI201Maps.giveUpMapUpdateLock();

@@ -29,9 +29,9 @@ public class GeoMapView extends JPanel implements Runnable {
 	
 	private GeoMapModel geoMapModel;
 	
-	private boolean debuggingDrawPath = true;
-	private boolean debuggingDrawAutomobiles = true;
-	private boolean debuggingMapUpdateLock = true;
+	private boolean debuggingDrawPath = false;
+	private boolean debuggingDrawAutomobiles = false;
+	private boolean debuggingMapUpdateLock = false;
 	
 	public GeoMapView(int width, int height, GeoMapModel geoMapModel) 
 	{
@@ -115,7 +115,6 @@ public class GeoMapView extends JPanel implements Runnable {
 			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
 			{
 				if (i == 100) {
-					mapViewer.setDisplayPositionByLatLon(mapViewer.getMapMarkerList().get(i).getLat(), mapViewer.getMapMarkerList().get(i).getLon(), startZoom);
 					System.out.println(mapViewer.getMapMarkerList().get(i).toString());
 				}
 				mapViewer.getMapMarkerList().get(i);
