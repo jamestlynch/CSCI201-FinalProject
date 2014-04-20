@@ -18,6 +18,10 @@ public class JSONFileParser implements Runnable
 	{
 		this.geoMapModel = geoMapModel;
 	}
+	public GeoMapModel getGeoMapModel()
+	{
+		return geoMapModel;
+	}
 
 	public void parseAutomobiles(String fileToParse)
 	{
