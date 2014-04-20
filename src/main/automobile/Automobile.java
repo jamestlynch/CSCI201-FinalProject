@@ -24,6 +24,7 @@ public class Automobile implements Runnable
 	MapMarkerCircle carMarker;
 
 	FreewaySegment freewaySegment;
+	FreewaySegment oldSegment;
 	
 	Coordinate currentLocation;
 	//FuturePoint holds the index of the array element that is upcoming. If futurepoint == Araylistsize, then we've reached the end.
