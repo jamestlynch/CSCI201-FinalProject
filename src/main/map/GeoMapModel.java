@@ -97,6 +97,14 @@ public class GeoMapModel implements Runnable {
 				allSegments.add(tempfs);
 			}
 		}
+		for (FreewayRamp key : oppositeDirectionFreewayNetwork.keySet()) {
+
+			for (int i = 0; i < oppositeDirectionFreewayNetwork.get(key).size(); i++) {
+				FreewaySegment tempfs = oppositeDirectionFreewayNetwork.get(key)
+						.get(i);
+				allSegments.add(tempfs);
+			}
+		}
 		return allSegments;
 	}
 

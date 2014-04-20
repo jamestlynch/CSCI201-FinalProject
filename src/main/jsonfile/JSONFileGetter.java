@@ -38,6 +38,8 @@ public class JSONFileGetter implements Runnable
     	this.jfp = new JSONFileParser(parserMapModel);
     	this.geoMapView = geoMapView;
     	sqlDatabaseHandler = new SQLDatabaseHandler();
+    	sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
+    	System.out.println("Size: " + jfp.getGeoMapModel().returnAllSegment().size());
     	try
         {
         	System.out.println("Parsing file from: " + urlLink);
@@ -78,7 +80,7 @@ public class JSONFileGetter implements Runnable
     		java.util.Date date = new java.util.Date();
     		System.out.println("[JSONFileGetter] Last pulled from the server: " + new Timestamp(date.getTime()));
     		
-    		
+    		sqlDatabaseHandler.updateAverageSpeedOfSegments(jfp.getGeoMapModel().returnAllSegment(), cal.get(Calendar.HOUR_OF_DAY));
     		
     		
     		try {

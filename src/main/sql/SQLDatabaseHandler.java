@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import main.freeway.FreewaySegment;
+import main.map.GeoMapModel;
 import main.automobile.Automobile;
 
 public class SQLDatabaseHandler {
@@ -83,6 +84,34 @@ public class SQLDatabaseHandler {
 		   System.out.println("Unable to create table for " + fs.getSegmentName());
 	   }
    }
+   public void createFreewaySegmentTables(ArrayList<FreewaySegment> freewaysegments)
+   {
+	   for (int j = 0; j<freewaysegments.size(); j++)
+	   { 
+		   try {
+		   String createtable;
+		   String tablename = freewaysegments.get(j).getStartRamp().getRampName()+freewaysegments.get(j).getEndRamp().getRampName();
+		   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + " (Time INT PRIMARY KEY, CarCount INT, AverageSpeed DOUBLE, Distance DOUBLE) Engine=InnoDB";
+		   stmt.executeUpdate(createtable);
+		   //initialize table
+		
+		   for (int i=0; i<24; i++)
+		   {
+			   PreparedStatement pst;
+			   pst = conn.prepareStatement("INSERT INTO " + tablename +" VALUES(?, ?, ?, ?)");
+			   pst.setInt(1,i);
+			   pst.setInt(2,0);
+			   pst.setDouble(3, 0);
+			   pst.setDouble(4, freewaysegments.get(j).getDistance());
+			   pst.executeUpdate();
+		   }
+
+	   } catch (SQLException ex) {
+		   System.out.println("Unable to create table for " + freewaysegments.get(j).getSegmentName());
+	   }
+	   }
+   }
+
 
    public void updateAverageSpeedOfSegment(FreewaySegment fs, int hour)
    {
@@ -140,7 +169,7 @@ public class SQLDatabaseHandler {
    {
 	   try {
 		   String createtable;
-		   String tablename = "hello";
+		   String tablename = "0";
 		   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + "(Time INT PRIMARY KEY AUTO_INCREMENT, CarCount INT, AverageSpeed DOUBLE, Distance DOUBLE) Engine=InnoDB";
 		   stmt.executeUpdate(createtable);
 
@@ -225,6 +254,8 @@ public class SQLDatabaseHandler {
    public static void main(String[] args) throws SQLException 
    {
 	   SQLDatabaseHandler sqlhandler = new SQLDatabaseHandler();
+	   GeoMapModel gmm = new GeoMapModel();
+	   sqlhandler.createFreewaySegmentTables(gmm.getListOf101Segments());
 	   sqlhandler.test();
 	   
 	   /*
