@@ -112,11 +112,10 @@ public class GeoMapView extends JPanel implements Runnable {
 		
 		for (int i = 0 ; i < mapViewer.getMapMarkerList().size(); i++)
 		{
+			System.out.println("[DRAW AUTOMOBILES] Drawing Car ID #" + geoMapModel.getAutomobilesInFreewayNetwork().get(i).getId());
+			
 			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
 			{
-				if (i == 100) {
-					System.out.println(mapViewer.getMapMarkerList().get(i).toString());
-				}
 				mapViewer.getMapMarkerList().get(i);
 			}
 		}
