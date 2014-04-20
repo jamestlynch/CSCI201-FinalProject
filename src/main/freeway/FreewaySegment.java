@@ -47,6 +47,7 @@ public class FreewaySegment {
 		this.directionNS = directionNS;
 		this.distance = distance;
 		this.speedLimit = speedLimit;
+		this.averageSpeed = speedLimit;
 		this.startRamp = start;
 		this.endRamp = end;
 	}
