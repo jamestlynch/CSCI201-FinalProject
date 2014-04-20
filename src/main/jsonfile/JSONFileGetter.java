@@ -7,10 +7,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import main.CSCI201Maps;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
+import main.sql.SQLDatabaseHandler;
 
 
 // THIS Runs every 3 minutes which can be written as Thread.sleep(180000)
@@ -20,15 +24,22 @@ public class JSONFileGetter implements Runnable
 	private String jsonFile;
 	private JSONFileParser jfp;
 	private GeoMapView geoMapView;
+	private SQLDatabaseHandler sqlDatabaseHandler;
 	
 	private boolean debuggingJSONFileGetter = false;
 	private boolean debuggingMapUpdateLock = false;
 	
+	private static Calendar cal;
+	
     public JSONFileGetter(String urlLink, GeoMapModel parserMapModel, GeoMapView geoMapView)
     {
+    	cal = Calendar.getInstance();
+    	System.out.println("Hour: " + cal.get(Calendar.HOUR_OF_DAY));
     	this.jfp = new JSONFileParser(parserMapModel);
     	this.geoMapView = geoMapView;
-    	
+    	sqlDatabaseHandler = new SQLDatabaseHandler();
+    	sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
+    	System.out.println("Size: " + jfp.getGeoMapModel().returnAllSegment().size());
     	try
         {
         	System.out.println("Parsing file from: " + urlLink);
@@ -68,6 +79,9 @@ public class JSONFileGetter implements Runnable
     		
     		java.util.Date date = new java.util.Date();
     		System.out.println("[JSONFileGetter] Last pulled from the server: " + new Timestamp(date.getTime()));
+    		
+    		sqlDatabaseHandler.updateAverageSpeedOfSegments(jfp.getGeoMapModel().returnAllSegment(), cal.get(Calendar.HOUR_OF_DAY));
+    		
     		
     		try {
     			CSCI201Maps.giveUpMapUpdateLock();
