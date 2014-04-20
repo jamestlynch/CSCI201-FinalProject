@@ -167,19 +167,22 @@ public class Automobile implements Runnable
 		//double milesToTravel = timeElapsedInHours * speed; //mph * h = m
 		//Coordinate nextDestinationCoord = freewaySegment.getSegmentPath().get(nextPointNumber);
 		//double DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
-		numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
-		
+		numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();	
 		// Get the destination coordinate
+		//locationPointNumber starts at 0  according to the location of the current point.
 		Coordinate destination;
-		if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // Same segment, different target point
+		if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // Same segment, different target point. -2 because Moving thats the one right before. Last Segment moving forward
 			destination = freewaySegment.getSegmentPath().get(++ locationPointNumber);
 		} else { // If it needs to switch onto next segment
 			if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) { // If it's at the end of a highway
 				return; // Keep the currentLocation the same
 			} else {
+				//setting a new FreewaySegment value over the current one.
 				freewaySegment = geoMapModel.getNextFreewaySegment(freewaySegment);
+				//Establishing new free segment number and new starting location on the new segment.
 				numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
 				locationPointNumber = 0;
+				
 				if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) {
 					destination = freewaySegment.getSegmentPath().get(locationPointNumber + 1);
 				} else if (geoMapModel.getNextFreewaySegment(freewaySegment) == null) {
@@ -192,88 +195,31 @@ public class Automobile implements Runnable
 		}
 		
 		Coordinate newLocationAfterUpdate = getTargetCoordinate(timeElapsedInHours, currentLocation, destination);
+		if (freewaySegment == null)
+		{
+			System.out.println ("reached the end of a freeway.");
+			this.carMarker.setVisible(false);
+			return;
+			
+		}
+		
+		
+		if (currentLocation.getLat() == destination.getLat() && currentLocation.getLon() == destination.getLon() )
+		{
+			System.out.println("THIS SHOULD NEVER BE PRINTING--------------------");
+		}
+		else
+		{
+			System.out.println(" THIS IS THE DIFFERENCE IN LOCATION: " + newLocationAfterUpdate.toString() + "," + destination.toString());
+		}
+		System.out.println(freewaySegment.getSegmentName());
 		currentLocation = newLocationAfterUpdate;
 		this.carMarker.setLat(newLocationAfterUpdate.getLat());
 		this.carMarker.setLon(newLocationAfterUpdate.getLon());
 		System.out.println("[UPDATE AUTOMOBILES] Updating Car ID #" + id);
-//		this.carMarker.setLat(currentLocation.getLat() + 1);
-//		this.carMarker.setLon(currentLocation.getLon());
-		
-		
-		
-//		if (StaysSameSegment(DistanceToNextCheckpoint, milesToTravel))
-//		{
-//			if (false) 
-//				System.out.println("This car is on the same segment!");
-//		}
-//		//if (DistanceToNextCheckpoint - milesTravelled <= 0 && (currentSegmentPointsCount-1 == nextPointNumber))
-//		else 
-//		{
-//			nextPointNumber = 1;
-//			if (geoMapModel.getNextFreewaySegment(freewaySegment) != null) {
-//				freewaySegment = geoMapModel.getNextFreewaySegment(freewaySegment);
-//			}
-//			
-//			numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
-//			nextDestinationCoord = freewaySegment.getSegmentPath().get(nextPointNumber);
-//			DistanceToNextCheckpoint = distance (currentLocation.getLat(), currentLocation.getLon(), nextDestinationCoord.getLat(), nextDestinationCoord.getLon());
-//			StaysSameSegment(DistanceToNextCheckpoint, milesToTravel);
-//		}
-//		this.carMarker.setLat(currentLocation.getLat());
-//		this.carMarker.setLon(currentLocation.getLon());
-//		this.updateCarColor();
-	}
-	
-	
-	private boolean StaysSameSegment(double _DistanceToCheckpoint, double _milesToTravel)
-	{
-		double milesToTravel = _milesToTravel;// = hour_travelled*speed; //mph * h = m
-		
-		//SegmentList holds all the upcoming segment points
-		ArrayList<Coordinate> pathList = freewaySegment.getSegmentPath();
-		Coordinate dest = pathList.get(nextPointNumber);
-		System.out.println(dest.toString());
-		
-		numberOfSegmentPointsInThisPath = pathList.size();
-		double DistanceToNextCheckpoint = _DistanceToCheckpoint;
 
-		//This is saying if the distance to the checkpoint is within the miles capacity.
-		if (DistanceToNextCheckpoint - milesToTravel > 0)
-		{
-			//Create a latinc and loninc according to the remaining distance and setting a proportion of distance to go.
-			double latinc = (dest.getLat() - currentLocation.getLat()) * (milesToTravel/DistanceToNextCheckpoint);
-			double loninc = (dest.getLon() - currentLocation.getLon()) * (milesToTravel/DistanceToNextCheckpoint);
-			currentLocation.setLat(currentLocation.getLat() + latinc);
-			currentLocation.setLon(currentLocation.getLon() + loninc);
-			return true;
-		}
-		else if (DistanceToNextCheckpoint - milesToTravel <= 0 && (numberOfSegmentPointsInThisPath-1 > nextPointNumber))
-		{
-			//keep moving the base location until the miles remaining are within the distance to the next checkpoint.
-			//Otherwise, move to the next checkpoint.
-			Coordinate NewCheckpoint;
-			do
-			{
-				dest = pathList.get(nextPointNumber);
-				milesToTravel = milesToTravel - DistanceToNextCheckpoint;
-				nextPointNumber++;
-				NewCheckpoint = pathList.get(nextPointNumber);
-				DistanceToNextCheckpoint = distance (dest.getLat(), dest.getLon(), NewCheckpoint.getLat(), NewCheckpoint.getLon());
-			}
-			while(DistanceToNextCheckpoint - milesToTravel <= 0 && (numberOfSegmentPointsInThisPath-1 > nextPointNumber));
-
-			double latinc = (NewCheckpoint.getLat() - dest.getLat()) * (milesToTravel/DistanceToNextCheckpoint);
-			double loninc = (NewCheckpoint.getLon() - dest.getLon()) * (milesToTravel/DistanceToNextCheckpoint);
-			currentLocation.setLat(dest.getLat() + latinc);
-			currentLocation.setLon(dest.getLon() + loninc);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
-	
+		
 	private double distance(double lat1, double lon1, double lat2, double lon2) 
 	{
 		double theta = lon1 - lon2;
