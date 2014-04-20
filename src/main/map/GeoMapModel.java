@@ -117,9 +117,55 @@ public class GeoMapModel implements Runnable {
 	}
 
 	public FreewaySegment getNextFreewaySegment(FreewaySegment oldSegment) {
-		if (defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()) == null)
+		//Checks to see if there is a following segment after this ramp (End of the Freeway)
+		if ((defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()) != null
+				&& defaultDirectionFreewayNetwork.get(oldSegment.getStartRamp()) != null)
+				|| (oppositeDirectionFreewayNetwork.get(oldSegment.getEndRamp()) != null
+				&& oppositeDirectionFreewayNetwork.get(oldSegment.getStartRamp()) != null)
+				)
+		{
+			//Checks to see which direction the segment is facing (default vs. opposite)
+			if (oldSegment.getDirectionEW().equals(defaultDirectionFreewayNetwork.get(
+					oldSegment.
+					getStartRamp()).
+					get(0).getDirectionEW()) && 
+					oldSegment.getDirectionNS().equals(defaultDirectionFreewayNetwork.get(oldSegment.getStartRamp()).get(0).getDirectionNS()))
+			{
+				if(defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()) == null)
+					return null;
+				return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);
+			}
+			else if (oldSegment.getDirectionEW().equals(oppositeDirectionFreewayNetwork.get(oldSegment.getStartRamp()).get(0).getDirectionEW()) && 
+					oldSegment.getDirectionNS().equals(oppositeDirectionFreewayNetwork.get(oldSegment.getStartRamp()).get(0).getDirectionNS()))
+			{
+					if (oppositeDirectionFreewayNetwork.get(oldSegment.getEndRamp()) == null)
+						return null;
+					else
+						return oppositeDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);
+								
+			}
+			else //Old segment is not in the freeway network (bad data) THIS SHOULD NEVER EVER HAPPEN
+			{
+				System.out.println("THIS SHOULD NEVER EVER HAPPEN");
+				return null;
+			}
+		}
+		else
+		{
 			return null;
-		return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);
+		}
+		/*if (defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()) == null)
+		{
+			if (oppositeDirectionFreewayNetwork.get(oldSegment.getEndRamp()) == null)
+			{
+				return null;
+			}
+			else
+			{
+				return oppositeDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);
+			}
+		}	
+		return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).get(0);*/
 	}
 	
 	public void addAutomobileToNetwork(Automobile newAutomobile) {
