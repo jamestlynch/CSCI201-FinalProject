@@ -10,21 +10,26 @@ import javax.swing.JPanel;
 public class SetGraphPanel extends JPanel{
 	int width;
 	int height;
+	double timeinc;
+	double min = Double.MAX_VALUE;
+	double max = Double.MIN_VALUE;
 	ArrayList<Double> TimeVal;
+	int bottomCornery;
+	int topCornery = 10;
+	int bottomCornerx = 10;
+	int rightCornerx;
 	public SetGraphPanel(int width, int height)
 	{
 		this.width = width;
 		this.height = height;
+		bottomCornery = height/2;
+		rightCornerx = width - 10;
 		setOpaque(false);
 	}
 	public void setGraphValues(ArrayList<Double> TimeVal)
 	{
 		this.TimeVal = TimeVal;
-	}
-	protected void paintComponent(Graphics g)
-	{
-		double min = Double.MAX_VALUE;
-		double max = Double.MIN_VALUE;
+		
 		for (int i = 0 ; i < TimeVal.size();i++)
 		{
 			if (TimeVal.get(i) > max)
@@ -32,10 +37,14 @@ public class SetGraphPanel extends JPanel{
 			if (TimeVal.get(i) < min)
 				min = TimeVal.get(i);
 		}
+	}
+	protected void paintComponent(Graphics g)
+	{
+		
 		//Left Line
-		g.drawLine(10, 10, 10, height/2);
+		g.drawLine(bottomCornerx, topCornery, bottomCornerx, bottomCornery);
 		//Bottom Line
-		g.drawLine(10, height/2, width - 10, height/2);
+		g.drawLine(bottomCornerx, bottomCornery, rightCornerx, bottomCornery);
 		int inc = (width-20)/24;
 		//Increments along the bottom
 		for (int i = 0; i < 24; i++)
@@ -48,26 +57,33 @@ public class SetGraphPanel extends JPanel{
 			g.setFont(new Font("Arial", Font.PLAIN, 10));
 
 			g.drawString(y, inc*(i+1) + 5, height/2+14);
-			g.drawLine(10+(inc*(i+1)), height/2-5, 10 + (inc*(i+1)), height/2+5);
+			g.drawLine(bottomCornerx+(inc*(i+1)), bottomCornery-5, bottomCornerx+ (inc*(i+1)), bottomCornery+5);
 		}
-		//Increments along the left
-		int bottomCorner = (height/2);
-		inc = (bottomCorner - 10) / 24;
-		double timeinc = (max - min / 24);
-		for (int i = 0 ; i < 24 ; i++)
+		//Increments along the left along with dashes
+		bottomCornery = (height/2);
+		inc = (bottomCornery - 10) / 23;
+		double timeinc = (max - min) / 23;
+		for (int i = 0 ; i < 24; i++)
 		{
-			double currentVal = (min + (timeinc * i));
-			double nextVal = max;
+			double currentVal = (min + (timeinc * i));			
 			String y;
+			currentVal = (double)Math.round(currentVal* 10) / 10;
 			if (currentVal < 10)
-			{
 				y = " " + currentVal;
-			}
 			else
 				y = "" + currentVal;
-			g.drawString(y, 10, bottomCorner - (inc * i+1));
-				
+			g.drawString(y, -1, bottomCornery - (inc * i+1));
+			g.drawLine(5, bottomCornery - (inc * i+2), 15, bottomCornery - (inc * i+2));
+		}
+		
+		for (int i = 1 ; i < TimeVal.size(); i++)
+		{
+			determineLine();
+			//g.drawLine(x1, y1, x2, y2);
 		}
 	}
-	
+	public void determineLine()
+	{
+		
+	}
 }
