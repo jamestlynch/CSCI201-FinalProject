@@ -1,5 +1,7 @@
 package main.freeway;
 
+import main.map.GeoMapModel;
+
 public class FastestPath {
 	/*TODO
 	 * find the corresponding freeway for source
@@ -25,11 +27,13 @@ public class FastestPath {
 	public double path1speed = 0;
 	public double path2speed = 0;
 	
-	public double FastestPath(String start, String end){
+	public double FastestPath(String start, String end, GeoMapModel mapModel){
 		this.source = start;
 		this.destination = end;
 		
 //		findFreeways(source, destination);
+		mapModel.searchByRampName(source, true);
+		mapModel.searchByRampName(destination, false);
 		
 		//CASE 1: source and end are on same freeway
 		if(sourceFreeway == destinationFreeway){
