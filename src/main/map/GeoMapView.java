@@ -112,7 +112,7 @@ public class GeoMapView extends JPanel implements Runnable {
 		
 		for (int i = 0 ; i < mapViewer.getMapMarkerList().size(); i++)
 		{
-			System.out.println("[DRAW AUTOMOBILES] Drawing Car ID #" + geoMapModel.getAutomobilesInFreewayNetwork().get(i).getId());
+			if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Drawing Car ID #" + geoMapModel.getAutomobilesInFreewayNetwork().get(i).getId());
 			
 			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
 			{
