@@ -3,6 +3,7 @@ package main.GUI;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -34,7 +35,7 @@ public class UISidePanel extends JPanel {
 		
 		JButton jb = new JButton ("Calculate Route");
 		jb.setBounds(5, 500 - jb.getPreferredSize().height - 30, 400- 10, jb.getPreferredSize().height);
-		BtnListener activateRoute = new BtnListener(SetRoute, ThreeOpts, DisplayChart);
+		BtnListener activateRoute = new BtnListener(SetRoute, ThreeOpts, DisplayChart, DisplayGraph);
 		jb.addActionListener(activateRoute);
 		SetRoute.add(jb);
 		//add(new Map(600, 800), BorderLayout.EAST);
@@ -47,11 +48,13 @@ public class UISidePanel extends JPanel {
 		SetRoutePanel SetRoute;
 		JTabbedPane ThreeOpts;
 		SetChartPanel DisplayChart;
-		public BtnListener(SetRoutePanel SetRoute, JTabbedPane ThreeOpts, SetChartPanel DisplayChart)
+		SetGraphPanel DisplayGraph;
+		public BtnListener(SetRoutePanel SetRoute, JTabbedPane ThreeOpts, SetChartPanel DisplayChart, SetGraphPanel DisplayGraph)
 		{
 			this.SetRoute = SetRoute;
 			this.ThreeOpts = ThreeOpts;
 			this.DisplayChart = DisplayChart;
+			this.DisplayGraph = DisplayGraph;
 		}
 		public void actionPerformed(ActionEvent e) {
 			if (SetRoute.isValidEntry())
@@ -60,7 +63,14 @@ public class UISidePanel extends JPanel {
 				ThreeOpts.setEnabledAt(2, true);
 				BeginLocation = SetRoute.getBeginningLocation();
 				EndLocation = SetRoute.getEndingLocation();
-				DisplayChart.setLocations(BeginLocation, EndLocation);
+				
+				//Establish an ArrayList of Strings with all the time values.
+				ArrayList<Double> TimeVal = new ArrayList<Double>();
+				for (double i = 0; i < 24; i++)
+					TimeVal.add(i);
+				
+				DisplayChart.setLocations(BeginLocation, EndLocation, TimeVal);
+				DisplayGraph.setGraphValues(TimeVal);
 				
 			}
 		}
