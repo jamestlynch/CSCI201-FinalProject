@@ -30,7 +30,7 @@ public class FastestPath {
 		this.destination = end;
 		
 		//find a FreewaySegment that the source & destination belongs to
-		sourceFreewaySegment = mapModel.searchByRampName(source, true);
+		sourceFreewaySegment = mapModel.searchByRampName(source, true);		//TODO move this into CASE 1
 		destinationFreewaySegment = mapModel.searchByRampName(destination, true);
 		//read in freeway names
 		sourceFreewayName = sourceFreewaySegment.getFreewayName();
@@ -38,9 +38,10 @@ public class FastestPath {
 		
 		//CASE 1: source and end are on same freeway
 		if(sourceFreewayName == destinationFreewayName){
+			//Case a	TODO something that forces it to find path on same freeway
+			
 			currFreewaySegment = sourceFreewaySegment;
 			endRamp = currFreewaySegment.getEndRamp();
-			//Case a	TODO something that forces it to find path on same freeway
 			while(endRamp.getRampName() != destination){ 					//TODO PROBLEM: doesn't include last segment
 				path1time += currFreewaySegment.getAverageSpeed();
 				path1.add(currFreewaySegment);
@@ -60,9 +61,12 @@ public class FastestPath {
 		
 		//CASE 2: source and end are on different freeways
 		else{
-			/*if(sourceFreewayName == the 10)
-			 * case a:
-			 * 		go right until you hit a junction
+			if(sourceFreewayName == "10"){
+				//Case a:
+				sourceFreewaySegment = mapModel.searchByRampName(source, true);
+				destinationFreewaySegment = mapModel.searchByRampName(destination, true);
+			}
+			/* 		go right until you hit a junction
 			 * 		go down 101
 			 * 		if(destinationFreewayName == 101)
 			 * 			stop at destination
