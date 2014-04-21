@@ -38,8 +38,10 @@ public class JSONFileGetter implements Runnable
     	this.jfp = new JSONFileParser(parserMapModel);
     	this.geoMapView = geoMapView;
     	sqlDatabaseHandler = new SQLDatabaseHandler();
-    	sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
-    	System.out.println("Size: " + jfp.getGeoMapModel().returnAllSegment().size());
+     	System.out.println("Size: " + jfp.getGeoMapModel().returnAllSegment().size());
+     	sqlDatabaseHandler.insertListOfFreewaySegments(jfp.getGeoMapModel().returnAllSegment());
+    	//sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
+   
     	try
         {
         	System.out.println("Parsing file from: " + urlLink);
