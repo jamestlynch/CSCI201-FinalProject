@@ -131,6 +131,7 @@ public class GeoMapView extends JPanel implements Runnable {
 	
 	public void eraseAutomobiles()
 	{
+		geoMapModel.removeAutomobilesInFreewayNetwork();
 		mapViewer.removeAllMapMarkers();
 	}
 
