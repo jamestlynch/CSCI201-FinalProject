@@ -20,7 +20,6 @@ public class FastestPath {
 	 */
 	public static String source;
 	public static String destination;
-	public FreewaySegment freeway;
 	public String sourceFreeway = " ";
 	public String destinationFreeway = " ";
 	public double averageSpeeds = 0;
@@ -37,14 +36,135 @@ public class FastestPath {
 		
 		//CASE 1: source and end are on same freeway
 		if(sourceFreeway == destinationFreeway){
-			//iterate through list of segments in between points
+			//iterate through list of segments in between points on same freeway
 			path1speed += averageSpeeds;
+			//iterate through list of segments on the other freeways
+			path2speed += averageSpeeds;
 		}
 		
 		//CASE 2: source and end are on different freeways
 		else{
-			//figure out which freeways are connected 
-			path2speed = 55;
+			/*if(source is on the 10)
+			 * case a:
+			 * 		go right until you hit a junction
+			 * 		go down 101
+			 * 		if(destination is on 101)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go left on 105
+			 * 		if(destination is on 105)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go up 405
+			 * 		if(destination is on 405)
+			 * 			stop at destination
+			 * 		path1speed = sum of all average speeds of segments on path
+			 * case b:
+			 * 		go left until you hit a junction
+			 * 		go down 405
+			 * 		if(destination is on 405)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go right on 105
+			 * 		if(destination is on 105)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go up 101
+			 * 		if(destination is on 101)
+			 * 			stop at destination
+			 * 		path2speed = sum of all average speeds of segments on path
+			 * 
+			 * if(source is on the 105)
+			 * case a:
+			 * 		go right until you hit a junction
+			 * 		go up 101
+			 * 		if(destination is on 101)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go left on 10
+			 * 		if(destination is on 10)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go down 405
+			 * 		if(destination is on 405)
+			 * 			stop at destination
+			 * 		path1speed = sum of all average speeds of segments on path
+			 * case b:
+			 * 		go left until you hit a junction
+			 * 		go up 405
+			 * 		if(destination is on 405)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go right on 10
+			 * 		if(destination is on 10)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go down 101
+			 * 		if(destination is on 101)
+			 * 			stop at destination
+			 * 		path2speed = sum of all average speeds of segments on path
+			 * 
+			 * if(source is on the 101)
+			 * case a:
+			 * 		go up until you hit a junction
+			 * 		go left on 10
+			 * 		if(destination is on 10)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go down on 405
+			 * 		if(destination is on 405)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go right on 105
+			 * 		if(destination is on 105)
+			 * 			stop at destination
+			 * 		path1speed = sum of all average speeds of segments on path
+			 * case b:
+			 * 		go down until you hit a junction
+			 * 		go left on 105
+			 * 		if(destination is on 105)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go up on 405
+			 * 		if(destination is on 405)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go right on 10
+			 * 		if(destination is on 10)
+			 * 			stop at destination
+			 * 		path2speed = sum of all average speeds of segments on path
+			 * 
+			 *  if(source is on the 405)
+			 * case a:
+			 * 		go up until you hit a junction
+			 * 		go right on 10
+			 * 		if(destination is on 10)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go down on 101
+			 * 		if(destination is on 101)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go left on 105
+			 * 		if(destination is on 105)
+			 * 			stop at destination
+			 * 		path1speed = sum of all average speeds of segments on path
+			 * case b:
+			 * 		go down until you hit a junction
+			 * 		go right on 105
+			 * 		if(destination is on 105)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go up on 101
+			 * 		if(destination is on 101)
+			 * 			stop at destination
+			 * 		else go until you hit a junction
+			 * 		go left on 10
+			 * 		if(destination is on 10)
+			 * 			stop at destination
+			 * 		path2speed = sum of all average speeds of segments on path
+			 */
+			
 		}
 		
 		//Compare the 2 speeds
