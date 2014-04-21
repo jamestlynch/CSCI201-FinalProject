@@ -493,6 +493,10 @@ public class GeoMapModel implements Runnable {
 	}
 	
 	public int isJunction(FreewaySegment currentSegment){
+		/* 0 = end segment
+		 * 1 = regular segment
+		 * 2 = junction
+		 */
 		return defaultDirectionFreewayNetwork.get(currentSegment.getEndRamp()).size();
 	}
 
