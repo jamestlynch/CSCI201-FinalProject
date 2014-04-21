@@ -46,11 +46,7 @@ public class GeoMapModel implements Runnable {
 	private ArrayList<Automobile> automobilesInFreewayNetwork = new ArrayList<Automobile>();
 
 	private final File[] freewayXMLFiles = {
-			new File("./Freeway-10/Freeway10.xml"),
-			new File("./Freeway-10/Freeway10-1.xml"),
-			new File("./Freeway-10/Freeway10-2.xml"),
-			new File("./Freeway-10/Freeway10-J.xml"),
-			new File("./Freeway-10/Freeway10-J2.xml"),
+			new File("./Freeway-10/Freeway10Updated.xml"),
 			new File("./Freeway-101/Freeway101-1.xml"),
 			new File("./Freeway-101/Freeway101-J.xml"),
 			new File("./Freeway-105/Freeway105-1.xml"),
@@ -418,7 +414,7 @@ public class GeoMapModel implements Runnable {
 	/*
 	 * =========================================================================
 	 * FREEWAY NETWORK: Custom version of Java's HashMap that overrides the
-	 * put() method so that if multiple FreewaySegment's derive from the same
+	 * put() method so that if multiple FreewaySegments derive from the same
 	 * FreewayRamp, we store both.
 	 * =========================================================================
 	 */
@@ -551,7 +547,7 @@ public class GeoMapModel implements Runnable {
 						directionNS = FreewaySegment.Direction.SOUTH;
 					}
 
-					String segmentName = freewayName + "-0-" + segmentNumber;
+					String segmentName = "DF" + freewayName + "S" + segmentNumber;
 
 					FreewaySegment defaultFreewaySegment = new FreewaySegment(
 							segmentName,
@@ -591,7 +587,7 @@ public class GeoMapModel implements Runnable {
 						directionNS = FreewaySegment.Direction.SOUTH;
 					}
 
-					segmentName = freewayName + "-1-" + segmentNumber;
+					segmentName = "OF" + freewayName + "S" + segmentNumber;
 					Collections.reverse(segmentPoints);
 
 					FreewaySegment oppositeFreewaySegment = new FreewaySegment(
