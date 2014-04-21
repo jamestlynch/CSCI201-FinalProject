@@ -175,12 +175,14 @@ public class SQLDatabaseHandler {
 			   oldAverageSpeed = resultSet.getDouble(3);
 			   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed)/(dataCount+1);
 			   
-			   String query = "UPDATE " + fs.getSegmentName() + " SET AverageSpeed = ? where Time = ?";
+			   String query = "UPDATE " + fs.getSegmentName() + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
 			   PreparedStatement preparedStmt = conn.prepareStatement(query);
 			   preparedStmt.setDouble(1, newAverageSpeed);
-			   preparedStmt.setInt(2, time);
+			   preparedStmt.setInt(2, dataCount +1);
+			   preparedStmt.setInt(3, time);
 			   preparedStmt.executeUpdate();
 		   }
+		   System.out.println("UPDATED AVERAGE SPEED");
 	   }
 	   catch (SQLException ex) {
 		   System.out.println("Unable to update average speeds");
