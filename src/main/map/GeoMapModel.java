@@ -491,6 +491,10 @@ public class GeoMapModel implements Runnable {
 		}
 		return null; // If segment not found, return null
 	}
+	
+	public int isJunction(FreewaySegment currentSegment){
+		return defaultDirectionFreewayNetwork.get(currentSegment.getEndRamp()).size();
+	}
 
 	/*
 	 * =========================================================================
