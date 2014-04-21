@@ -31,7 +31,7 @@ public class GeoMapView extends JPanel implements Runnable {
 	
 	private boolean debuggingDrawPath = false;
 	private boolean debuggingDrawAutomobiles = false;
-	private boolean debuggingMapUpdateLock = false;
+	private boolean debuggingMapUpdateLock = true;
 	
 	public GeoMapView(int width, int height, GeoMapModel geoMapModel) 
 	{
