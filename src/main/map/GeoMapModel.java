@@ -124,11 +124,18 @@ public class GeoMapModel implements Runnable {
 		return orderedSegments101;
 	}
 
-	public FreewaySegment searchByRampName(String rampName, HashMap<FreewayRamp, ArrayList<FreewaySegment>> freewayNetwork) {
-		for (FreewayRamp ramps  :  freewayNetwork.keySet()) {
-			if (ramps.getRampName().equals(rampName)) {
-				System.out.println("******FOUND******");
-				return freewayNetwork.get(ramps).get(0);
+	public FreewaySegment searchByRampName(String rampName, boolean isDefaultDirection) {
+		if (isDefaultDirection) {
+			for (FreewayRamp ramps  :  defaultDirectionFreewayNetwork.keySet()) {
+				if (ramps.getRampName().equals(rampName)) {
+					return defaultDirectionFreewayNetwork.get(ramps).get(0);
+				}
+			}		
+		} else {
+			for (FreewayRamp ramps  :  oppositeDirectionFreewayNetwork.keySet()) {
+				if (ramps.getRampName().equals(rampName)) {
+					return oppositeDirectionFreewayNetwork.get(ramps).get(0);
+				}
 			}
 		}
 		return null;
@@ -137,72 +144,50 @@ public class GeoMapModel implements Runnable {
 	public FreewaySegment getNextFreewaySegment(FreewaySegment oldSegment) {
 		//Checks to see if there is a following segment after this ramp (End of the Freeway)
 		
-		System.out.println(
-			"[GET NEXT SEGMENT] DDN) oldSegment startRamp: " + oldSegment.getStartRamp().getRampName() + 
-			"\n\ton defaultDirectionFreewayNetwork.get(startRamp): " +
-			(searchByRampName(oldSegment.getStartRamp().getRampName(),  defaultDirectionFreewayNetwork) != null) +
-		  "\n[GET NEXT SEGMENT] DDN) oldSegment endRamp: " + oldSegment.getEndRamp().getRampName() + 
-		  "\n\tending segment on defaultDirectionFreewayNetwork.get(endRamp): " +
-		  	(searchByRampName(oldSegment.getEndRamp().getRampName(),    defaultDirectionFreewayNetwork) != null) +
-		  "\n[GET NEXT SEGMENT] ODN) oldSegment endRamp: " + oldSegment.getEndRamp().getRampName() + 
-		  "\n\ton oppositeDirectionFreewayNetwork.get(endRamp): " +
-		  		(oppositeDirectionFreewayNetwork.get(oldSegment.getEndRamp()) != null) +
-		  "\n[GET NEXT SEGMENT] ODN) oldSegment startRamp: " + oldSegment.getStartRamp().getRampName() + 
-		  "\n\tending segment on oppositeDirectionFreewayNetwork.get(startRamp): " +
-		  		(oppositeDirectionFreewayNetwork.get(oldSegment.getStartRamp()) != null)
-		);
-		
-		if ((searchByRampName(oldSegment.getStartRamp().getRampName(),  defaultDirectionFreewayNetwork) != null)  // If the oldSegment is in the defaultDirectionFreewayNetwork
-	    &&  (searchByRampName(oldSegment.getEndRamp().getRampName(),    defaultDirectionFreewayNetwork) != null)) // ...and there is a segment starting at its end location
+		if ((searchByRampName(oldSegment.getStartRamp().getRampName(),  /* isDefaultDirection */ true) != null)  // If the oldSegment is in the defaultDirectionFreewayNetwork
+	    &&  (searchByRampName(oldSegment.getEndRamp().getRampName(),    /* isDefaultDirection */ true) != null)) // ...and there is a segment starting at its end location
 		{ 
 			//Checks to see which direction the segment is facing (default vs. opposite)
 			if (oldSegment.getDirectionEW().equals(
-					(searchByRampName(oldSegment.getStartRamp().getRampName(),  defaultDirectionFreewayNetwork))
+					(searchByRampName(oldSegment.getStartRamp().getRampName(),  /* isDefaultDirection */ true))
 					.getDirectionEW()) 
 				||
 				oldSegment.getDirectionEW().equals(
-					(searchByRampName(oldSegment.getStartRamp().getRampName(),  defaultDirectionFreewayNetwork))
+					(searchByRampName(oldSegment.getStartRamp().getRampName(),  /* isDefaultDirection */ true))
 					.getDirectionEW())) 
 			{
-				if((searchByRampName(oldSegment.getEndRamp().getRampName(),  defaultDirectionFreewayNetwork)) != null)
+				if((searchByRampName(oldSegment.getEndRamp().getRampName(),  /* isDefaultDirection */ true)) != null)
 				{
-					return searchByRampName(oldSegment.getEndRamp().getRampName(),  defaultDirectionFreewayNetwork);
+					return searchByRampName(oldSegment.getEndRamp().getRampName(),  /* isDefaultDirection */ true);
 				} else {
 					System.out.println("[GET NEXT SEGMENT] Should mean it's at the end of a freeway.");
 					return null; // CHECK: Must be end of freeway??
 				}
 			}
 		} else 
-		if ((searchByRampName(oldSegment.getEndRamp().getRampName(),   oppositeDirectionFreewayNetwork) != null)
-		&&  (searchByRampName(oldSegment.getStartRamp().getRampName(), oppositeDirectionFreewayNetwork) != null)) 
+		if ((searchByRampName(oldSegment.getEndRamp().getRampName(),   /* isDefaultDirection */ false) != null)
+		&&  (searchByRampName(oldSegment.getStartRamp().getRampName(), /* isDefaultDirection */ false) != null)) 
 		{
 			//Checks to see which direction the segment is facing (default vs. opposite)
 			if (oldSegment.getDirectionEW().equals(
-					(searchByRampName(oldSegment.getStartRamp().getRampName(),  oppositeDirectionFreewayNetwork))
+					(searchByRampName(oldSegment.getStartRamp().getRampName(),  /* isDefaultDirection */ false))
 					.getDirectionEW()) 
 				||
 				oldSegment.getDirectionEW().equals(
-					(searchByRampName(oldSegment.getStartRamp().getRampName(),  oppositeDirectionFreewayNetwork))
+					(searchByRampName(oldSegment.getStartRamp().getRampName(),  /* isDefaultDirection */ false))
 					.getDirectionEW())) 
 			{
-				if((searchByRampName(oldSegment.getEndRamp().getRampName(),  oppositeDirectionFreewayNetwork)) != null)
+				if((searchByRampName(oldSegment.getEndRamp().getRampName(),  /* isDefaultDirection */ false)) != null)
 				{
-					return searchByRampName(oldSegment.getEndRamp().getRampName(),  oppositeDirectionFreewayNetwork);
+					return searchByRampName(oldSegment.getEndRamp().getRampName(),  /* isDefaultDirection */ false);
 				} else {
 					System.out.println("[GET NEXT SEGMENT] Should mean it's at the end of a freeway.");
 					return null; // CHECK: Must be end of freeway??
 				}
 			}
 		}	
-		else
-		{
-			System.out.println("[GET NEXT SEGMENT] Old Segment's Start Ramp: " + oldSegment.getStartRamp().getRampName() + 
-										"\t   End Ramp: " 	+ oldSegment.getEndRamp().getRampName() +
-										"\t   Freeway: " 	+ oldSegment.getFreewayName()
-										+"\t  Direction: <"  + oldSegment.getDirectionEW().toString() + ", " + oldSegment.getDirectionNS().toString() + ">");
-			System.out.println("[GET NEXT SEGMENT] Can't get a freeway beginning at " + oldSegment.getEndRamp().getRampName());
-			return null;
-		}
+
+		System.out.println("[GET NEXT SEGMENT] Can't get a freeway beginning at " + oldSegment.getEndRamp().getRampName());
 		return null;
 	}
 	
