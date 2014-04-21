@@ -24,7 +24,7 @@ public class JSONFileGetter implements Runnable
 	private String jsonFile;
 	private JSONFileParser jfp;
 	private GeoMapView geoMapView;
-	private SQLDatabaseHandler sqlDatabaseHandler;
+	//private SQLDatabaseHandler sqlDatabaseHandler;
 	
 	private boolean debuggingJSONFileGetter = false;
 	private boolean debuggingMapUpdateLock = false;
@@ -37,11 +37,9 @@ public class JSONFileGetter implements Runnable
     	System.out.println("Hour: " + cal.get(Calendar.HOUR_OF_DAY));
     	this.jfp = new JSONFileParser(parserMapModel);
     	this.geoMapView = geoMapView;
-    	sqlDatabaseHandler = new SQLDatabaseHandler();
-     	System.out.println("Size: " + jfp.getGeoMapModel().returnAllSegment().size());
-     	sqlDatabaseHandler.insertListOfFreewaySegments(jfp.getGeoMapModel().returnAllSegment());
+    	//sqlDatabaseHandler = new SQLDatabaseHandler();
     	//sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
-   
+    	System.out.println("Size: " + jfp.getGeoMapModel().returnAllSegment().size());
     	try
         {
         	System.out.println("Parsing file from: " + urlLink);
@@ -82,7 +80,7 @@ public class JSONFileGetter implements Runnable
     		java.util.Date date = new java.util.Date();
     		System.out.println("[JSONFileGetter] Last pulled from the server: " + new Timestamp(date.getTime()));
     		
-    		sqlDatabaseHandler.updateAverageSpeedOfSegments(jfp.getGeoMapModel().returnAllSegment(), cal.get(Calendar.HOUR_OF_DAY));
+    		//sqlDatabaseHandler.updateAverageSpeedOfSegments(jfp.getGeoMapModel().returnAllSegment(), cal.get(Calendar.HOUR_OF_DAY));
     		
     		
     		try {
