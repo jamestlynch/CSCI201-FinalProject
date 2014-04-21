@@ -20,8 +20,10 @@ public class FastestPath {
 	 */
 	public static String source;
 	public static String destination;
-	public String sourceFreeway = " ";
-	public String destinationFreeway = " ";
+	public FreewaySegment sourceFreeway;
+	public FreewaySegment destinationFreeway;
+	public String sourceFreewayName = " ";
+	public String destinationFreewayName = " ";
 	public double averageSpeeds = 0;
 	public double path1speed = 0;
 	public double path2speed = 0;
@@ -30,9 +32,12 @@ public class FastestPath {
 		this.source = start;
 		this.destination = end;
 		
-//		findFreeways(source, destination);
-		mapModel.searchByRampName(source, true);
-		mapModel.searchByRampName(destination, false);
+		//find the FreewaySegment that the source & destination belongs to
+		sourceFreeway = mapModel.searchByRampName(source, true);
+		destinationFreeway = mapModel.searchByRampName(destination, false);
+		//read in freeway names
+		sourceFreewayName = sourceFreeway.getFreewayName();
+		destinationFreewayName = destinationFreeway.getFreewayName();
 		
 		//CASE 1: source and end are on same freeway
 		if(sourceFreeway == destinationFreeway){
@@ -176,7 +181,8 @@ public class FastestPath {
 		}
 		
 	}
-	
+
+	/*
 	//finds which freeway the given location belongs to
 	public void findFreeways(FreewaySegment start, FreewaySegment end){
 		//search in list of ramps for match
@@ -184,7 +190,7 @@ public class FastestPath {
 		sourceFreeway = start.getFreewayName();
 		destinationFreeway = end.getFreewayName();
 	}
-	
+	*/
 	
 	public static void main(String args[]){
 		//Draw Fastest Path
