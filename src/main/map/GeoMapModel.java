@@ -418,7 +418,7 @@ public class GeoMapModel implements Runnable {
 	/*
 	 * =========================================================================
 	 * FREEWAY NETWORK: Custom version of Java's HashMap that overrides the
-	 * put() method so that if multiple FreewaySegment's derive from the same
+	 * put() method so that if multiple FreewaySegments derive from the same
 	 * FreewayRamp, we store both.
 	 * =========================================================================
 	 */
