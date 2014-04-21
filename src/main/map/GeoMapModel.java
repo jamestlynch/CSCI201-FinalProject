@@ -42,15 +42,14 @@ public class GeoMapModel implements Runnable {
 	private static ArrayList<FreewaySegment> orderedSegments105 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> orderedSegments10 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> orderedSegments101 = new ArrayList<FreewaySegment>();
-
+	private static ArrayList<FreewaySegment> reverseSegments405 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> reverseSegments105 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> reverseSegments10 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> reverseSegments101 = new ArrayList<FreewaySegment>();
 	private ArrayList<Automobile> automobilesInFreewayNetwork = new ArrayList<Automobile>();
 
 	private final File[] freewayXMLFiles = {
-			new File("./Freeway-10/Freeway10.xml"),
-			new File("./Freeway-10/Freeway10-1.xml"),
-			new File("./Freeway-10/Freeway10-2.xml"),
-			new File("./Freeway-10/Freeway10-J.xml"),
-			new File("./Freeway-10/Freeway10-J2.xml"),
+			new File("./Freeway-10/Freeway10Updated.xml"),
 			new File("./Freeway-101/Freeway101-1.xml"),
 			new File("./Freeway-101/Freeway101-J.xml"),
 			new File("./Freeway-105/Freeway105-1.xml"),
@@ -122,6 +121,22 @@ public class GeoMapModel implements Runnable {
 
 	public ArrayList<FreewaySegment> getListOf101Segments() {
 		return orderedSegments101;
+	}
+
+	public static ArrayList<FreewaySegment> getReverseSegments405() {
+		return reverseSegments405;
+	}
+
+	public static ArrayList<FreewaySegment> getReverseSegments105() {
+		return reverseSegments105;
+	}
+
+	public static ArrayList<FreewaySegment> getReverseSegments10() {
+		return reverseSegments10;
+	}
+
+	public static ArrayList<FreewaySegment> getReverseSegments101() {
+		return reverseSegments101;
 	}
 
 	public FreewaySegment searchByRampName(String rampName, boolean isDefaultDirection) {
@@ -427,7 +442,7 @@ public class GeoMapModel implements Runnable {
 	/*
 	 * =========================================================================
 	 * FREEWAY NETWORK: Custom version of Java's HashMap that overrides the
-	 * put() method so that if multiple FreewaySegment's derive from the same
+	 * put() method so that if multiple FreewaySegments derive from the same
 	 * FreewayRamp, we store both.
 	 * =========================================================================
 	 */
@@ -560,7 +575,7 @@ public class GeoMapModel implements Runnable {
 						directionNS = FreewaySegment.Direction.SOUTH;
 					}
 
-					String segmentName = freewayName + "-0-" + segmentNumber;
+					String segmentName = "DF" + freewayName + "S" + segmentNumber;
 
 					FreewaySegment defaultFreewaySegment = new FreewaySegment(
 							segmentName,
@@ -600,7 +615,7 @@ public class GeoMapModel implements Runnable {
 						directionNS = FreewaySegment.Direction.SOUTH;
 					}
 
-					segmentName = freewayName + "-1-" + segmentNumber;
+					segmentName = "OF" + freewayName + "S" + segmentNumber;
 					Collections.reverse(segmentPoints);
 
 					FreewaySegment oppositeFreewaySegment = new FreewaySegment(
@@ -620,13 +635,25 @@ public class GeoMapModel implements Runnable {
 							+ directionNS.toString() + ">");
 
 					if (freewayName.equals("405"))
+					{
 						orderedSegments405.add(defaultFreewaySegment);
+						reverseSegments405.add(0, defaultFreewaySegment);
+					}
 					else if (freewayName.equals("105"))
+					{
 						orderedSegments105.add(defaultFreewaySegment);
+						reverseSegments105.add(0, defaultFreewaySegment);
+					}
 					else if (freewayName.equals("10"))
+					{
 						orderedSegments10.add(defaultFreewaySegment);
+						reverseSegments10.add(0, defaultFreewaySegment);
+					}
 					else if (freewayName.equals("101"))
+					{
 						orderedSegments101.add(defaultFreewaySegment);
+						reverseSegments101.add(0, defaultFreewaySegment);
+					}
 					defaultDirectionFreewayNetwork.put(startRamp,
 							defaultFreewaySegment);
 					oppositeDirectionFreewayNetwork.put(endRamp,
