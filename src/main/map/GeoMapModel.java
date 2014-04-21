@@ -42,7 +42,10 @@ public class GeoMapModel implements Runnable {
 	private static ArrayList<FreewaySegment> orderedSegments105 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> orderedSegments10 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> orderedSegments101 = new ArrayList<FreewaySegment>();
-
+	private static ArrayList<FreewaySegment> reverseSegments405 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> reverseSegments105 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> reverseSegments10 = new ArrayList<FreewaySegment>();
+	private static ArrayList<FreewaySegment> reverseSegments101 = new ArrayList<FreewaySegment>();
 	private ArrayList<Automobile> automobilesInFreewayNetwork = new ArrayList<Automobile>();
 
 	private final File[] freewayXMLFiles = {
@@ -118,6 +121,22 @@ public class GeoMapModel implements Runnable {
 
 	public ArrayList<FreewaySegment> getListOf101Segments() {
 		return orderedSegments101;
+	}
+
+	public static ArrayList<FreewaySegment> getReverseSegments405() {
+		return reverseSegments405;
+	}
+
+	public static ArrayList<FreewaySegment> getReverseSegments105() {
+		return reverseSegments105;
+	}
+
+	public static ArrayList<FreewaySegment> getReverseSegments10() {
+		return reverseSegments10;
+	}
+
+	public static ArrayList<FreewaySegment> getReverseSegments101() {
+		return reverseSegments101;
 	}
 
 	public FreewaySegment searchByRampName(String rampName, boolean isDefaultDirection) {
@@ -607,13 +626,25 @@ public class GeoMapModel implements Runnable {
 							+ directionNS.toString() + ">");
 
 					if (freewayName.equals("405"))
+					{
 						orderedSegments405.add(defaultFreewaySegment);
+						reverseSegments405.add(0, defaultFreewaySegment);
+					}
 					else if (freewayName.equals("105"))
+					{
 						orderedSegments105.add(defaultFreewaySegment);
+						reverseSegments105.add(0, defaultFreewaySegment);
+					}
 					else if (freewayName.equals("10"))
+					{
 						orderedSegments10.add(defaultFreewaySegment);
+						reverseSegments10.add(0, defaultFreewaySegment);
+					}
 					else if (freewayName.equals("101"))
+					{
 						orderedSegments101.add(defaultFreewaySegment);
+						reverseSegments101.add(0, defaultFreewaySegment);
+					}
 					defaultDirectionFreewayNetwork.put(startRamp,
 							defaultFreewaySegment);
 					oppositeDirectionFreewayNetwork.put(endRamp,
