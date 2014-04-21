@@ -56,8 +56,8 @@ public class GeoMapModel implements Runnable {
 			new File("./Freeway-405/Freeway405.xml") };
 
 	private Calendar timeNow = Calendar.getInstance();
-	private long timeInMillisAfter;
-	private long timeInMillisBefore;
+	private long timeInSecondsAfter;
+	private long timeInSecondsBefore;
 	
 	private boolean debuggingSearch = false;
 	private boolean debuggingAutomobileMarkers = false;
@@ -231,6 +231,10 @@ public class GeoMapModel implements Runnable {
 		}
 	}
 	
+	public void removeAutomobilesInFreewayNetwork() {
+		automobilesInFreewayNetwork.removeAll(automobilesInFreewayNetwork);
+	}
+	
 	public void runAllAutomobileThreads() {
 		Semaphore automobileSemaphore = new Semaphore(10);
 		ExecutorService executor = Executors.newFixedThreadPool(automobilesInFreewayNetwork.size());
@@ -247,24 +251,29 @@ public class GeoMapModel implements Runnable {
 		}
 	}
 	
-	public void init() {		
+	public void init() {
 		CSCI201Maps.grabMapUpdateLock();
+		
+		// After structuring the network, initialize all of the car's destinations
+		for (int i = 0; i < automobilesInFreewayNetwork.size(); i++) {
+			automobilesInFreewayNetwork.get(i).initDestination();
+		}
 		
 		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model grabbed lock.");
 		
-		timeInMillisAfter = System.currentTimeMillis();
+		timeInSecondsAfter = System.currentTimeMillis() / 1000;
 		for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
 		{	
-			automobilesInFreewayNetwork.get(i).updateLocation(timeInMillisBefore - timeInMillisAfter);
+			automobilesInFreewayNetwork.get(i).updateLocation(timeInSecondsBefore - timeInSecondsAfter);
 		}
-		timeInMillisBefore = timeInMillisAfter;
+		timeInSecondsBefore = timeInSecondsAfter / 1000;
 		CSCI201Maps.giveUpMapUpdateLock();
 		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model gave up lock.");
 		CSCI201Maps.startMapViewThread();
 	}
 	
-	public void run() {		
-		timeInMillisBefore = System.currentTimeMillis();
+	public void run() {
+		timeInSecondsBefore = System.currentTimeMillis();
 		
 		this.init();
 		
@@ -275,13 +284,13 @@ public class GeoMapModel implements Runnable {
 				CSCI201Maps.grabMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model grabbed lock.");
 				
-				timeInMillisAfter = System.currentTimeMillis();
-				System.out.println("Time After: " + timeInMillisAfter + " Time Before: " + timeInMillisBefore);
+				timeInSecondsAfter = System.currentTimeMillis() / 1000;
+				System.out.println("Time After: " + timeInSecondsAfter + " Time Before: " + timeInSecondsBefore);
 				for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
 				{	
-					automobilesInFreewayNetwork.get(i).updateLocation(timeInMillisAfter - timeInMillisBefore);
+					automobilesInFreewayNetwork.get(i).updateLocation(timeInSecondsAfter - timeInSecondsBefore);
 				}
-				timeInMillisBefore = timeInMillisAfter;
+				timeInSecondsBefore = timeInSecondsAfter;
 				
 				CSCI201Maps.giveUpMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model gave up lock.");

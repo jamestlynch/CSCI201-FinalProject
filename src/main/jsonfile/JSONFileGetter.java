@@ -74,7 +74,6 @@ public class JSONFileGetter implements Runnable
     		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
     		CSCI201Maps.grabMapUpdateLock();
     		jfp.parseAutomobiles(jsonFile);
-    		geoMapView.eraseAutomobiles();
     		geoMapView.setAutomobileMarkers();
     		
     		java.util.Date date = new java.util.Date();
