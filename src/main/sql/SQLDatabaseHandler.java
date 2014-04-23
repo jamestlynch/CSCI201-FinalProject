@@ -17,14 +17,16 @@ public class SQLDatabaseHandler {
    static final String PASS = "";
    Connection conn = null;
    Statement stmt = null;
+   public boolean printErrors = false;
    
+   int cars=5;
    public SQLDatabaseHandler()
    {
 	   try{
 		   //Register JDBC driver
 		   Class.forName("com.mysql.jdbc.Driver");
 
-		   System.out.println("Connecting to database...");
+		   //connect to database
 		   conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
 		   //Create AllFreewaySegmentsTable
@@ -40,6 +42,17 @@ public class SQLDatabaseHandler {
 		   //Handle errors for Class.forName
 		   e.printStackTrace();
 	   }	    
+	   
+	   try {
+		   String createtable;
+		   String tablename = "carcounts";
+		   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + " (aaa INT, Cars INT) Engine=InnoDB";
+		   stmt.executeUpdate(createtable);
+
+
+	   } catch (SQLException ex) {
+		
+	   }
    }
    public ArrayList<Double> getAverageSpeeds(FreewaySegment fs)
    {
@@ -54,7 +67,7 @@ public class SQLDatabaseHandler {
 		
 	   }
 	   catch (SQLException ex) {
-		   System.out.println("[DATABASE] Couldn't get average speeds for " + fs.getSegmentName());
+		   if (printErrors) System.out.println("[DATABASE] Couldn't get average speeds for " + fs.getSegmentName());
 	   }
 	   return speedsByHour;
    }
@@ -72,13 +85,13 @@ public class SQLDatabaseHandler {
 			   pst = conn.prepareStatement("INSERT INTO " + tablename +" VALUES(?, ?, ?, ?)");
 			   pst.setInt(1,i);
 			   pst.setInt(2,0);
-			   pst.setDouble(3, 0);
+			   pst.setDouble(3, fs.getAverageSpeed());
 			   pst.setDouble(4, fs.getDistance());
 			   pst.executeUpdate();
 		   }
 
 	   } catch (SQLException ex) {
-		   System.out.println("[DATABASE] Unable to create FreewaySegmentTable for " + fs.getSegmentName());
+		   if (printErrors) System.out.println("[DATABASE] Unable to create FreewaySegmentTable for " + fs.getSegmentName());
 	   }
    }
    public void createFreewaySegmentTables(ArrayList<FreewaySegment> freewaysegments)
@@ -91,20 +104,20 @@ public class SQLDatabaseHandler {
 			   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + " (Time INT PRIMARY KEY, DataCount INT, AverageSpeed DOUBLE, Distance DOUBLE) Engine=InnoDB";
 			   stmt.executeUpdate(createtable);
 
-			   //initialize table--make one entry for each hour
+			   //initialize table--make one entry for each hour, set initial average speed to the speed limit
 			   for (int i=0; i<24; i++)
 			   {
 				   PreparedStatement pst;
 				   pst = conn.prepareStatement("INSERT INTO " + tablename +" VALUES(?, ?, ?, ?)");
 				   pst.setInt(1,i);
 				   pst.setInt(2,0);
-				   pst.setDouble(3, 0);
+				   pst.setDouble(3, freewaysegments.get(j).getAverageSpeed());
 				   pst.setDouble(4, freewaysegments.get(j).getDistance());
 				   pst.executeUpdate();
 			   }
 
 		   } catch (SQLException ex) {
-			   System.out.println("[DATABASE] Unable to create table for " + freewaysegments.get(j).getStartRamp().getRampName()+ j);
+			   if (printErrors) System.out.println("[DATABASE] Unable to create table for " + freewaysegments.get(j).getStartRamp().getRampName()+ j);
 		   }
 	   }
    }
@@ -121,7 +134,7 @@ public class SQLDatabaseHandler {
 		   pst.executeUpdate();
 
 	   } catch (SQLException ex) {
-		  System.out.println("Unable to insert freeway segment " + fs.getSegmentName() + "into AllFreewaySegments Table" );
+		  if (printErrors) System.out.println("Unable to insert freeway segment " + fs.getSegmentName() + "into AllFreewaySegments Table" );
 	   }
    }
    public void insertListOfFreewaySegments(ArrayList<FreewaySegment> freewaySegments)
@@ -144,7 +157,7 @@ public class SQLDatabaseHandler {
 			   pst.executeUpdate();
 
 		   } catch (SQLException ex) {
-			   System.out.println("[DATABASE] Unable to insert freeway segment " + fs.getSegmentName() + "into AllFreewaySegments Table" );
+			   if (printErrors) System.out.println("[DATABASE] Unable to insert freeway segment " + fs.getSegmentName() + "into AllFreewaySegments Table" );
 		   }
 	   }
    }
@@ -159,9 +172,13 @@ public class SQLDatabaseHandler {
 		   ResultSet resultSet = statement.executeQuery();
 		   while (resultSet.next())
 		   {		   
-			   dataCount = resultSet.getInt(2);
-			   oldAverageSpeed = resultSet.getDouble(3);
-			   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed)/(dataCount+1);
+			   //assumes that fs.getAverageSpeed() is returning the average speed that is ONLY based on the most recent json file data
+			   //ASK: are the automobiles being removed from segments at the end of each 3 minute cycle?
+			   //removeAutomobileFromSegment never called?
+			   dataCount = resultSet.getInt("DataCount");
+			   oldAverageSpeed = resultSet.getDouble("AverageSpeed");
+			   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed*fs.getAutomobilesOnSegment().size())/(dataCount+fs.getAutomobilesOnSegment().size());
+			   dataCount +=fs.getAutomobilesOnSegment().size();
 
 			   String query = "UPDATE " + fs.getSegmentName() + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
 			   PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -170,10 +187,18 @@ public class SQLDatabaseHandler {
 			   preparedStmt.setInt(3, hour);
 			   preparedStmt.executeUpdate();
 			   
+			   cars+=fs.getAutomobilesOnSegment().size();
+				 
+			   String query2 = "INSERT INTO carcounts VALUES(2, ?)";
+			   PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
+			   preparedStmt2.setInt(1, cars);
+			   preparedStmt2.executeUpdate();
+		
+			   
 		   }
 	   }
 	   catch (SQLException ex) {
-		   System.out.println("Unable to update average speed for " + fs.getSegmentName());
+		   if (printErrors) System.out.println("Unable to update average speed for " + fs.getSegmentName());
 	   }
 
    }
@@ -195,8 +220,8 @@ public class SQLDatabaseHandler {
 			   { 
 				   dataCount = resultSet.getInt("DataCount");
 				   oldAverageSpeed = resultSet.getDouble("AverageSpeed");
-				   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed)/(dataCount+1);
-				   dataCount++;
+				   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed*fs.getAutomobilesOnSegment().size())/(dataCount+fs.getAutomobilesOnSegment().size());
+				   dataCount +=fs.getAutomobilesOnSegment().size();
 
 				   String query = "UPDATE " + fs.getSegmentName() + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
 				   PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -204,12 +229,19 @@ public class SQLDatabaseHandler {
 				   preparedStmt.setInt(2, dataCount);
 				   preparedStmt.setInt(3, time);
 				   preparedStmt.executeUpdate();
+				   
+				   cars+=fs.getAutomobilesOnSegment().size();
+				 
+				   String query2 = "INSERT INTO carcounts VALUES(2, ?)";
+				   PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
+				   preparedStmt2.setInt(1, cars);
+				   preparedStmt2.executeUpdate();
 			   }
 		   }
 		
 	   }
 	   catch (SQLException ex) {
-		   System.out.println("[DATABASE] Unable to update average speeds");
+		   if (printErrors) System.out.println("[DATABASE] Unable to update average speeds");
 	   }
 
    }
@@ -259,8 +291,7 @@ public class SQLDatabaseHandler {
 	   SQLDatabaseHandler sqlhandler = new SQLDatabaseHandler();
 	  // GeoMapModel gmm = new GeoMapModel();
 	   //System.out.println("# Total Segments: " + gmm.returnAllSegment().size());
-	   
-	   
+	
 	   String createtable;
 	   String tablename = "aaa";
 	   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + " (Time INT, DataCount INT, AverageSpeed DOUBLE) Engine=InnoDB";

@@ -125,4 +125,8 @@ public class FreewaySegment {
 	public double getAverageSpeed() {
 		return averageSpeed;
 	}
+	public ArrayList<Automobile> getAutomobilesOnSegment()
+	{
+		return automobilesOnSegment;
+	}
 }

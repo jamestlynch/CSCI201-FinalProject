@@ -51,7 +51,7 @@ public class GeoMapModel implements Runnable {
 	private final File[] freewayXMLFiles = {
 			new File("./Freeway-10/Freeway10Updated.xml"),
 			new File("./Freeway-101/Freeway101-1.xml"),
-			new File("./Freeway-101/Freeway101-J.xml"),
+			//new File("./Freeway-101/Freeway101-J.xml"),
 			new File("./Freeway-105/Freeway105-1.xml"),
 			new File("./Freeway-405/Freeway405.xml") };
 

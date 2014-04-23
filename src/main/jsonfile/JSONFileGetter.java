@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import main.CSCI201Maps;
+import main.freeway.FreewaySegment;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
 import main.sql.SQLDatabaseHandler;
@@ -28,6 +29,8 @@ public class JSONFileGetter implements Runnable
 	
 	private boolean debuggingJSONFileGetter = false;
 	private boolean debuggingMapUpdateLock = false;
+	private boolean runningDatabase = false;
+	private boolean tablesCreated = false;
 	
 	private static Calendar cal;
 	
@@ -37,10 +40,16 @@ public class JSONFileGetter implements Runnable
     	System.out.println("Hour: " + cal.get(Calendar.HOUR_OF_DAY));
     	this.jfp = new JSONFileParser(parserMapModel);
     	this.geoMapView = geoMapView;
-    	sqlDatabaseHandler = new SQLDatabaseHandler();
-    	sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
-    	sqlDatabaseHandler.insertListOfFreewaySegments(jfp.getGeoMapModel().returnAllSegment());
-    	System.out.println("Size: " + jfp.getGeoMapModel().returnAllSegment().size());
+    	if (runningDatabase)
+    	{
+    		sqlDatabaseHandler = new SQLDatabaseHandler();
+    		if (!tablesCreated)
+    		{
+    			sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
+    			sqlDatabaseHandler.insertListOfFreewaySegments(jfp.getGeoMapModel().returnAllSegment());
+    		}
+    	}
+
     	try
         {
         	System.out.println("Parsing file from: " + urlLink);
@@ -75,13 +84,18 @@ public class JSONFileGetter implements Runnable
     		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
     		CSCI201Maps.grabMapUpdateLock();
     		jfp.parseAutomobiles(jsonFile);
+    		if (runningDatabase) 
+    		{
+    			for (FreewaySegment fs: jfp.getGeoMapModel().returnAllSegment())
+    				sqlDatabaseHandler.updateAverageSpeedOfSegment(fs, cal.get(Calendar.HOUR_OF_DAY));
+    		}
+    			
     		geoMapView.setAutomobileMarkers();
     		
     		java.util.Date date = new java.util.Date();
     		System.out.println("[JSONFileGetter] Last pulled from the server: " + new Timestamp(date.getTime()));
     		
-    		sqlDatabaseHandler.updateAverageSpeedOfSegments(jfp.getGeoMapModel().returnAllSegment(), cal.get(Calendar.HOUR_OF_DAY));
-    		
+    	
     		
     		try {
     			CSCI201Maps.giveUpMapUpdateLock();
