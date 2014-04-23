@@ -39,10 +39,75 @@ public class SQLDatabaseHandler {
 	   }catch(Exception e){
 		   //Handle errors for Class.forName
 		   e.printStackTrace();
-	   }
-		    
+	   }	    
    }
-   
+   public ArrayList<Double> getAverageSpeeds(FreewaySegment fs)
+   {
+	   ArrayList<Double> speedsByHour = new ArrayList<Double>();
+	   try{
+		   PreparedStatement pst = conn.prepareStatement("SELECT AverageSpeed from " + fs.getSegmentName());   
+		   ResultSet resultSet = pst.executeQuery();
+		   while (resultSet.next())
+		   {		   
+			  speedsByHour.add(resultSet.getDouble("AverageSpeed"));   
+		   }
+		
+	   }
+	   catch (SQLException ex) {
+		   System.out.println("[DATABASE] Couldn't get average speeds for " + fs.getSegmentName());
+	   }
+	   return speedsByHour;
+   }
+   public void createFreewaySegmentTable(FreewaySegment fs)
+   {
+	   try {
+		   String createtable;
+		   String tablename = fs.getSegmentName();
+		   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + "(Time INT PRIMARY KEY, DataCount INT, AverageSpeed DOUBLE, Distance DOUBLE) Engine=InnoDB";
+		   stmt.executeUpdate(createtable);
+		   //initialize table
+		   for (int i=0; i<24; i++)
+		   {
+			   PreparedStatement pst;
+			   pst = conn.prepareStatement("INSERT INTO " + tablename +" VALUES(?, ?, ?, ?)");
+			   pst.setInt(1,i);
+			   pst.setInt(2,0);
+			   pst.setDouble(3, 0);
+			   pst.setDouble(4, fs.getDistance());
+			   pst.executeUpdate();
+		   }
+
+	   } catch (SQLException ex) {
+		   System.out.println("[DATABASE] Unable to create FreewaySegmentTable for " + fs.getSegmentName());
+	   }
+   }
+   public void createFreewaySegmentTables(ArrayList<FreewaySegment> freewaysegments)
+   {
+	   for (int j = 0; j<freewaysegments.size(); j++)
+	   { 
+		   try {
+			   String createtable;
+			   String tablename = freewaysegments.get(j).getSegmentName();
+			   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + " (Time INT PRIMARY KEY, DataCount INT, AverageSpeed DOUBLE, Distance DOUBLE) Engine=InnoDB";
+			   stmt.executeUpdate(createtable);
+
+			   //initialize table--make one entry for each hour
+			   for (int i=0; i<24; i++)
+			   {
+				   PreparedStatement pst;
+				   pst = conn.prepareStatement("INSERT INTO " + tablename +" VALUES(?, ?, ?, ?)");
+				   pst.setInt(1,i);
+				   pst.setInt(2,0);
+				   pst.setDouble(3, 0);
+				   pst.setDouble(4, freewaysegments.get(j).getDistance());
+				   pst.executeUpdate();
+			   }
+
+		   } catch (SQLException ex) {
+			   System.out.println("[DATABASE] Unable to create table for " + freewaysegments.get(j).getStartRamp().getRampName()+ j);
+		   }
+	   }
+   }
    public void insertFreewaySegment(FreewaySegment fs)
    {
 	   try {
@@ -79,62 +144,10 @@ public class SQLDatabaseHandler {
 			   pst.executeUpdate();
 
 		   } catch (SQLException ex) {
-			   System.out.println("Unable to insert freeway segment " + fs.getSegmentName() + "into AllFreewaySegments Table" );
+			   System.out.println("[DATABASE] Unable to insert freeway segment " + fs.getSegmentName() + "into AllFreewaySegments Table" );
 		   }
 	   }
    }
-   public void createFreewaySegmentTable(FreewaySegment fs)
-   {
-	   try {
-		   String createtable;
-		   String tablename = fs.getSegmentName();
-		   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + "(Time INT PRIMARY KEY, DataCount INT, AverageSpeed DOUBLE, Distance DOUBLE) Engine=InnoDB";
-		   stmt.executeUpdate(createtable);
-		   //initialize table
-		   for (int i=0; i<24; i++)
-		   {
-			   PreparedStatement pst;
-			   pst = conn.prepareStatement("INSERT INTO " + tablename +" VALUES(?, ?, ?, ?)");
-			   pst.setInt(1,i);
-			   pst.setInt(2,0);
-			   pst.setDouble(3, 0);
-			   pst.setDouble(4, fs.getDistance());
-			   pst.executeUpdate();
-		   }
-
-	   } catch (SQLException ex) {
-		   System.out.println("Unable to create table for " + fs.getSegmentName());
-	   }
-   }
-   public void createFreewaySegmentTables(ArrayList<FreewaySegment> freewaysegments)
-   {
-	   for (int j = 0; j<freewaysegments.size(); j++)
-	   { 
-		   try {
-			   String createtable;
-			   String tablename = freewaysegments.get(j).getSegmentName();
-			   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + " (Time INT PRIMARY KEY, DataCount INT, AverageSpeed DOUBLE, Distance DOUBLE) Engine=InnoDB";
-			   stmt.executeUpdate(createtable);
-
-			   //initialize table--make one entry for each hour
-			   for (int i=0; i<24; i++)
-			   {
-				   PreparedStatement pst;
-				   pst = conn.prepareStatement("INSERT INTO " + tablename +" VALUES(?, ?, ?, ?)");
-				   pst.setInt(1,i);
-				   pst.setInt(2,0);
-				   pst.setDouble(3, 0);
-				   pst.setDouble(4, freewaysegments.get(j).getDistance());
-				   pst.executeUpdate();
-			   }
-
-		   } catch (SQLException ex) {
-			   System.out.println("Unable to create table for " + freewaysegments.get(j).getStartRamp().getRampName()+ j);
-		   }
-	   }
-   }
-
-
    public void updateAverageSpeedOfSegment(FreewaySegment fs, int hour)
    {
 	   try{
@@ -144,15 +157,20 @@ public class SQLDatabaseHandler {
 		   PreparedStatement statement = conn.prepareStatement("SELECT * from " + fs.getSegmentName() + " WHERE Time = ?");    
 		   statement.setInt(1, hour);    
 		   ResultSet resultSet = statement.executeQuery();
-		   dataCount = resultSet.getInt(2);
-		   oldAverageSpeed = resultSet.getDouble(3);
-		   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed)/(dataCount+1);
-		   
-		   String query = "UPDATE " + fs.getSegmentName() + " SET AverageSpeed = ? where Time = ?";
-		   PreparedStatement preparedStmt = conn.prepareStatement(query);
-		   preparedStmt.setDouble(1, newAverageSpeed);
-		   preparedStmt.setInt(2, hour);
-		   preparedStmt.executeUpdate();
+		   while (resultSet.next())
+		   {		   
+			   dataCount = resultSet.getInt(2);
+			   oldAverageSpeed = resultSet.getDouble(3);
+			   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed)/(dataCount+1);
+
+			   String query = "UPDATE " + fs.getSegmentName() + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
+			   PreparedStatement preparedStmt = conn.prepareStatement(query);
+			   preparedStmt.setDouble(1, newAverageSpeed);
+			   preparedStmt.setInt(2, dataCount);
+			   preparedStmt.setInt(3, hour);
+			   preparedStmt.executeUpdate();
+			   
+		   }
 	   }
 	   catch (SQLException ex) {
 		   System.out.println("Unable to update average speed for " + fs.getSegmentName());
@@ -188,10 +206,10 @@ public class SQLDatabaseHandler {
 				   preparedStmt.executeUpdate();
 			   }
 		   }
-		   System.out.println("UPDATED AVERAGE SPEED");
+		
 	   }
 	   catch (SQLException ex) {
-		   System.out.println("Unable to update average speeds");
+		   System.out.println("[DATABASE] Unable to update average speeds");
 	   }
 
    }
@@ -224,12 +242,10 @@ public class SQLDatabaseHandler {
 	   try {
 		   rs = stmt.executeQuery(sql);
 		   while(rs.next()){
-			   //get entry by column name
 			   int time = rs.getInt("Time");
 			   int dataCount = rs.getInt("DataCount");
 			   double speed = rs.getDouble("AverageSpeed");
 
-			   //Display values
 			   System.out.println("FreewaySegmentTableName: " + fs.getSegmentName() + " Time: " + time + " DataCount:  " + dataCount + " Speed: " + speed);
 		   }
 	   } catch (SQLException e) {
@@ -264,23 +280,19 @@ public class SQLDatabaseHandler {
 	   statement.setInt(1, 1);    
 	   ResultSet resultSet = statement.executeQuery();
 	   while (resultSet.next())
-	   {   int dataCount = resultSet.getInt("DataCount");
-	   double oldAverageSpeed = resultSet.getDouble("AverageSpeed");
-	   double newAverageSpeed = 5;
-	   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed)/(dataCount+1);
-	   String query = "UPDATE " + tablename + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
-	   PreparedStatement preparedStmt = sqlhandler.conn.prepareStatement(query);
-	   preparedStmt.setDouble(1, newAverageSpeed);
-	   preparedStmt.setInt(2, 5);
-	   preparedStmt.setInt(3, 1);
-	   preparedStmt.executeUpdate();
-	   
+	   {   
+		   int dataCount = resultSet.getInt("DataCount");
+		   double oldAverageSpeed = resultSet.getDouble("AverageSpeed");
+		   double newAverageSpeed = 5;
+		   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed)/(dataCount+1);
+		   String query = "UPDATE " + tablename + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
+		   PreparedStatement preparedStmt = sqlhandler.conn.prepareStatement(query);
+		   preparedStmt.setDouble(1, newAverageSpeed);
+		   preparedStmt.setInt(2, 5);
+		   preparedStmt.setInt(3, 1);
+		   preparedStmt.executeUpdate();
+
 	   }
-	   
-	   
-	   
-	   
-	
 	   //sqlhandler.insertListOfFreewaySegments(gmm.returnAllSegment());
 	  // sqlhandler.printAllFreewaySegmentsTableData();
 	   //sqlhandler.createFreewaySegmentTables(gmm.getListOf105Segments());
