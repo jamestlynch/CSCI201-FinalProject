@@ -142,7 +142,26 @@ public class FastestPath {
 		}//end 10 freeway case
 		
 		//CASE 2: Source is on the 105
-		
+		if(sourceFreewayName == "105"){
+			//TODO Case a: source is on left nubbin
+			currFreewaySegment = sourceFreewaySegment;
+			if(mapModel.isJunction(currFreewaySegment) == 0 && sourceFreewaySegment.getSegmentName() == " "){
+				//go right, continue with path
+				//go right, go up 405
+			}
+			
+			//TODO Case b: source is on right nubbin
+			else if(mapModel.isJunction(currFreewaySegment) == 0 && sourceFreewaySegment.getSegmentName() == " "){
+				//go left, continue with path
+				//go left, go up on 101
+			}
+			
+			//Case c: source is in the middle
+			else{
+				
+			}
+			
+		}//end 105 case
 			/*
 	
 			 * 
