@@ -42,11 +42,16 @@ public class Automobile implements Runnable
 	
 	private Coordinate currentLocation;
 	private Coordinate destination;
+	private FreewaySegment destinationSegment;
 	
 	private GeoMapModel geoMapModel;
 
 	private boolean debuggingAutomobileRunnable = false;
 	private boolean debuggingUpdateFunction = false;
+	private boolean debuggingSetNextDestination = false;
+	private boolean debuggingUpdateLocation = false;
+	private boolean debuggingInitDestination = false;
+	private boolean debuggingAutomobileUpdated = true;
 	
 	private final double milesPerHour_to_milesPerSeconds = 0.000277777778; // (1 / 60 / 60):  Used for converting for distance calculations with current time's milliseconds
 	
@@ -166,14 +171,14 @@ public class Automobile implements Runnable
 	}
 	
 	public void initDestination() {
-		System.out.println("[INIT DESTINATION] Initializing destination for car ID #" + id);
+		if (debuggingInitDestination) System.out.println("[INIT DESTINATION] Initializing destination for car ID #" + id);
 		
 		if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // -2 because that's the one right before last point on the segment
 			this.destination = freewaySegment.getSegmentPath().get(++ locationPointNumber); // Get next on same segment
 		} else if (geoMapModel.getNextFreewaySegment(freewaySegment) != null) { // If is next to last or last, set destination as next freeway
 			this.destination = geoMapModel.getNextFreewaySegment(freewaySegment).getStartRamp().getRampLocation();
 		} else { // CHECK: If it's at the end of a highway, 
-			System.out.println("[INIT DESTINATION] Could not find destination for car ID #" + id);
+			if (debuggingInitDestination) System.out.println("[INIT DESTINATION] Could not find destination for car ID #" + id);
 			this.destination = null;
 			return; // Keep the currentLocation the same
 		}
@@ -194,13 +199,25 @@ public class Automobile implements Runnable
 		} else if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // -2 because that's the one right before last point on the segment
 			this.currentLocation = this.destination; // Destination before update
 			this.destination = freewaySegment.getSegmentPath().get(++ locationPointNumber); // Get next on same segment
-		} else if (geoMapModel.getNextFreewaySegment(freewaySegment) != null) { // If is next to last or last, set destination as next freeway
+		} else if (geoMapModel.nextFreewaySegmentExists(freewaySegment)) { // If is next to last or last, set destination as next freeway
 			setFreewaySegmentToNextSegment(); // FreewaySegment = next freeway segment on network
 			this.currentLocation = this.destination; // Destination before update
 			
-			System.out.println("[SET NEXT DEST] does the next freeway segment exist? " + (geoMapModel.getNextFreewaySegment(freewaySegment) != null));
+			if (debuggingSetNextDestination) System.out.println("[SET NEXT DEST] does the next freeway segment exist? " + (geoMapModel.getNextFreewaySegment(freewaySegment) != null));
 			
-			this.destination = geoMapModel.getNextFreewaySegment(freewaySegment).getStartRamp().getRampLocation();
+			try {
+				destinationSegment = geoMapModel.getNextFreewaySegment(freewaySegment);
+				if (debuggingSetNextDestination) System.out.println("[SET NEXT DEST] Car ID #" + id + ": " + destinationSegment.toString());
+			} catch (NullPointerException npe) {
+				if (debuggingSetNextDestination) System.out.println("[SET NEXT DEST] NULLPOINTEREXCEPTION: Car ID #" + id + " could not get destination FREEWAY SEGMENT");
+			}
+			
+			
+			try {
+				destination = destinationSegment.getSegmentPath().get(0); // Get first point along segment path
+			} catch (NullPointerException npe) {
+				if (debuggingSetNextDestination) System.out.println("[SET NEXT DEST] NULLPOINTEREXCEPTION: Car ID #" + id + " could not get destination RAMP");
+			}
 		} else { // CHECK: If it's at the end of a highway, 
 			this.destination = null;
 			return; // Keep the currentLocation the same
@@ -231,33 +248,33 @@ public class Automobile implements Runnable
 		numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();	
 
 		while (timeRemaining > 0 && destination != null) { // Until the time runs out keep updating position while updating the speed at the same time
+			System.out.println("[UPDATE LOCATION] timeRemaining: " + timeRemaining);
+			
 			this.currentLocation = this.getCarMarker().getCoordinate();
 			
 			double distanceAlongPath = 0;
-			try {
-				distanceAlongPath = Math.sqrt(
-						Math.pow(currentLocation.getLat() - destination.getLat(), 2) // (x1 - x2)^2
+			
+			distanceAlongPath = Math.sqrt(
+					Math.pow(currentLocation.getLat() - destination.getLat(), 2) // (x1 - x2)^2
 					+	Math.pow(currentLocation.getLon() - destination.getLon(), 2) // (y1 - y2)^2
-					); 
-			} catch (NullPointerException npe) {
-				System.out.println(id);
-			}
+			); 
 			
 			double timeToCompleteSegment = distanceAlongPath  				// s = m / (m/s)
 					/ /*      ------------------------------------------ 	*/ 
 							  (speed * milesPerHour_to_milesPerSeconds); 	// Convert speed to m/millisecond
 			
-			System.out.println("CAR ID #" + id + " Difference in times: " + (timeRemaining - timeToCompleteSegment));
+			if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] CAR ID #" + id + " Difference in times: " + (timeRemaining - timeToCompleteSegment));
 
 			double distanceToTravel;
 			if (timeRemaining > timeToCompleteSegment) {
+				if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] Car ID #" + id + " Time Remaing (" + timeRemaining + ") is greater than Time to complete (" + timeToCompleteSegment + ") segment: " + (timeRemaining > timeToCompleteSegment));
 				distanceToTravel = distanceAlongPath; // Enough time to travel full path
 				timeRemaining = timeRemaining - timeToCompleteSegment; // Take away the timeToCompleteSegment from the total time remaining
 				
-				System.out.println("timeRemaining: " + timeRemaining);
+				if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] timeRemaining: " + timeRemaining);
 				this.setNextDestinationPoint(distanceToTravel, distanceAlongPath); // Set next destination point based on current location
 			} else { // Not enough time to go the full distance on the path, find where new location along path he should be at.
-				System.out.println("CAR ID #" + id + " !!!: " + timeRemaining);
+				if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] CAR ID #" + id + " !!!: " + timeRemaining);
 				distanceToTravel = timeRemaining * (speed * milesPerHour_to_milesPerSeconds); // Convert speed to m/millisecond
 				timeRemaining = 0; // No more time left to travel
 				this.setNextDestinationPoint(distanceToTravel, distanceAlongPath); // Only travel remainder of path
@@ -267,6 +284,8 @@ public class Automobile implements Runnable
 		this.updateCarColor();
 		this.carMarker.setLat(currentLocation.getLat());
 		this.carMarker.setLon(currentLocation.getLon());
+		
+		if (debuggingAutomobileUpdated && id % 100 == 0) System.out.println("[AUTOMOBILE UPDATED] Automobile #" + id + " was updated");
 	}
 
 	public void run() {
