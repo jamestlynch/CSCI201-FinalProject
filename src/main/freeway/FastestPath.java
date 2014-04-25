@@ -6,6 +6,16 @@ import main.map.GeoMapModel;
 import main.map.GeoMapView;
 
 public class FastestPath {
+	/*TODO
+	 * find the corresponding freeway for source
+	 * find the corresponding freeway for destination
+	 * find the junctions
+	 * 
+	 * FIND ACTUAL AVERAGE SPEED
+	 * add up the average speeds of all the segments from one path
+	 * add up the average speeds of all the segments from the alternate path
+	*/
+	
 	/*
 	 * =========================================================================
 	 * MEMBER VARIABLES
@@ -18,55 +28,39 @@ public class FastestPath {
 	public FreewaySegment currFreewaySegment;
 	public String sourceFreewayName = " ";
 	public String destinationFreewayName = " ";
-	public FreewayRamp endRamp;
 	private static ArrayList<FreewaySegment> path1 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> path2 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> fastestPath = new ArrayList<FreewaySegment>();
-	public double path1time = 0;
-	public double path2time = 0;
+	public double path1speed = 0;
+	public double path2speed = 0;
+	
+	public double averageSpeeds = 0;
 	
 	public double FastestPath(String start, String end, GeoMapModel mapModel){
 		this.source = start;
 		this.destination = end;
 		
-		//find a FreewaySegment that the source & destination belongs to
-		sourceFreewaySegment = mapModel.searchByRampName(source, true);		//TODO move this into CASE 1
-		destinationFreewaySegment = mapModel.searchByRampName(destination, true);
+		//find the FreewaySegment that the source & destination belongs to
+		sourceFreewaySegment = mapModel.searchByRampName(source, true);
+		destinationFreewaySegment = mapModel.searchByRampName(destination, false);
 		//read in freeway names
 		sourceFreewayName = sourceFreewaySegment.getFreewayName();
 		destinationFreewayName = destinationFreewaySegment.getFreewayName();
 		
 		//CASE 1: source and end are on same freeway
 		if(sourceFreewayName == destinationFreewayName){
-			//Case a	TODO something that forces it to find path on same freeway
-			
-			currFreewaySegment = sourceFreewaySegment;
-			endRamp = currFreewaySegment.getEndRamp();
-			while(endRamp.getRampName() != destination){ 					//TODO PROBLEM: doesn't include last segment
-				path1time += currFreewaySegment.getAverageSpeed();
-				path1.add(currFreewaySegment);
-				currFreewaySegment = mapModel.getNextFreewaySegment(currFreewaySegment);
-				endRamp = currFreewaySegment.getEndRamp();
-			}
-			//Case b- go the other way
-			sourceFreewaySegment = mapModel.searchByRampName(source, false);
-			destinationFreewaySegment = mapModel.searchByRampName(destination, false);
-			currFreewaySegment = sourceFreewaySegment;
-			//TODO path
-				path2time += currFreewaySegment.getAverageSpeed();
-				path2.add(currFreewaySegment);
-				currFreewaySegment = mapModel.getNextFreewaySegment(currFreewaySegment);
-			
+			//iterate through list of segments in between points on same freeway
+			mapModel.getNextFreewaySegment(sourceFreewaySegment);
+			path1speed += averageSpeeds;
+			//iterate through list of segments on the other freeways
+			path2speed += averageSpeeds;
 		}
 		
 		//CASE 2: source and end are on different freeways
 		else{
-			if(sourceFreewayName == "10"){
-				//Case a:
-				sourceFreewaySegment = mapModel.searchByRampName(source, true);
-				destinationFreewaySegment = mapModel.searchByRampName(destination, true);
-			}
-			/* 		go right until you hit a junction
+			/*if(sourceFreewayName == the 10)
+			 * case a:
+			 * 		go right until you hit a junction
 			 * 		go down 101
 			 * 		if(destinationFreewayName == 101)
 			 * 			stop at destination
@@ -188,11 +182,11 @@ public class FastestPath {
 		}
 		
 		//Compare the 2 speeds
-		if(path1time > path2time){
-			return path1time;
+		if(path1speed > path2speed){
+			return path1speed;
 		}
 		else{
-			return path2time;
+			return path2speed;
 		}
 		
 	}
@@ -209,7 +203,7 @@ public class FastestPath {
 	
 	public static void main(String args[]){
 		//Draw Fastest Path
-			//TODO
+		
 //		mapview.draw(fastestPath);
 	}
 }

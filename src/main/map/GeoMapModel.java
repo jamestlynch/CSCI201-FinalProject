@@ -16,9 +16,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import main.CSCI201Maps;
+import main.automobile.Automobile;
 import main.freeway.FreewayRamp;
 import main.freeway.FreewaySegment;
-import main.automobile.Automobile;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.w3c.dom.Document;
@@ -157,6 +157,12 @@ public class GeoMapModel implements Runnable {
 		}
 		return null;
 	}
+	public int isJunction(FreewaySegment oldSegment)
+	{
+		
+		return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).size();		
+			
+	}
 	
 	public boolean nextFreewaySegmentExists(FreewaySegment oldSegment) {
 		//Checks to see if there is a following segment after this ramp (End of the Freeway)
@@ -207,7 +213,6 @@ public class GeoMapModel implements Runnable {
 		if (debuggingGetNextSegment) System.out.println("[GET NEXT SEGMENT] Can't get a freeway beginning at " + oldSegment.getEndRamp().getRampName());
 		return false;
 	}
-	
 	public FreewaySegment getNextFreewaySegment(FreewaySegment oldSegment) {
 		//Checks to see if there is a following segment after this ramp (End of the Freeway)
 		
@@ -493,6 +498,10 @@ public class GeoMapModel implements Runnable {
 	}
 	
 	public int isJunction(FreewaySegment currentSegment){
+		/* 0 = end segment
+		 * 1 = regular segment
+		 * 2 = junction
+		 */
 		return defaultDirectionFreewayNetwork.get(currentSegment.getEndRamp()).size();
 	}
 
@@ -801,5 +810,6 @@ public class GeoMapModel implements Runnable {
 	 * in our HashMap that begins at the ramp passed in.
 	 * =========================================================================
 	 */
+
 
 }
