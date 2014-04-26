@@ -29,7 +29,7 @@ public class JSONFileGetter implements Runnable
 	
 	private boolean debuggingJSONFileGetter = false;
 	private boolean debuggingMapUpdateLock = false;
-	private boolean runningDatabase = false;
+	private boolean runningDatabase = true;
 	private boolean tablesCreated = false;
 	
 	private static Calendar cal;
@@ -76,6 +76,8 @@ public class JSONFileGetter implements Runnable
     {
     	if (debuggingJSONFileGetter) System.out.println("[JSONFileGetter] Thread woken up.");
 		geoMapView.eraseAutomobiles();
+		for (FreewaySegment fs: jfp.getGeoMapModel().returnAllSegment())
+			fs.clearAutomobilesFromLatestUpdate();
     }
     
     public void run()

@@ -186,6 +186,7 @@ public class JSONFileParser implements Runnable
 		{
 			Automobile OneCar = new Automobile(IDNum, SpeedNum, CarDirection, RampVal, FreewaySegmentVal, geoMapModel);
 			FreewaySegmentVal.addAutomobileToSegment(OneCar);
+			FreewaySegmentVal.addAutomobileToLatestUpdate(OneCar);
 			return OneCar;
 		}
 	}
