@@ -50,8 +50,6 @@ public class JSONFileParser implements Runnable
 			System.out.println(">> Number of autombiles deleted: " + numCarsDeleted);
 		numCarsDeleted = 0;
 		
-		geoMapModel.runAllAutomobileThreads();
-		
 		Thread.yield();
 	}
 
