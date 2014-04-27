@@ -31,7 +31,7 @@ public class SQLDatabaseHandler {
 
 		   //Create AllFreewaySegmentsTable
 		   stmt = conn.createStatement();
-		   String createtablequery="CREATE TABLE IF NOT EXISTS AllFreewaySegments(Id INT PRIMARY KEY AUTO_INCREMENT, FreewaySegmentTableName VARCHAR(20), StartRamp VARCHAR(120), EndRamp VARCHAR(120), Distance DOUBLE, PointsOnPath INT, StartLat DOUBLE, EndLat DOUBLE, StartLon DOUBLE, EndLon DOUBLE) Engine=InnoDB";
+		   String createtablequery="CREATE TABLE IF NOT EXISTS AllFreewaySegments(Id INT PRIMARY KEY AUTO_INCREMENT, FreewaySegmentTableName VARCHAR(20), StartRamp VARCHAR(120), EndRamp VARCHAR(120), Distance DOUBLE, PointsOnPath INT, StartLat DOUBLE, EndLat DOUBLE, StartLon DOUBLE, EndLon DOUBLE, DirectionEW VARCHAR(10), DirectionNS VARCHAR(10)) Engine=InnoDB";
 		   stmt.executeUpdate(createtablequery);
 		   System.out.println("Created AllFreewaySegments Table");
 
@@ -141,7 +141,7 @@ public class SQLDatabaseHandler {
    {
 	   PreparedStatement pst = null;
 	   try {
-		   pst = conn.prepareStatement("INSERT INTO AllFreewaySegments(Id, FreewaySegmentTableName, StartRamp, EndRamp, Distance, PointsOnPath, StartLat, EndLat, StartLon, EndLon) VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		   pst = conn.prepareStatement("INSERT INTO AllFreewaySegments(Id, FreewaySegmentTableName, StartRamp, EndRamp, Distance, PointsOnPath, StartLat, EndLat, StartLon, EndLon, DirectionEW, DirectionNS) VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	   } catch (SQLException e) {
 		   // TODO Auto-generated catch block
 		   e.printStackTrace();
@@ -159,6 +159,8 @@ public class SQLDatabaseHandler {
 			   pst.setDouble(7, fs.getSegmentPath().get(fs.getSegmentPath().size()-1).getLat());
 			   pst.setDouble(8, fs.getSegmentPath().get(0).getLon());
 			   pst.setDouble(9, fs.getSegmentPath().get(fs.getSegmentPath().size()-1).getLon());
+			   pst.setString(10,  fs.getStringDirectionEW());
+			   pst.setString(11,  fs.getStringDirectionNS());
 			   pst.executeUpdate();
 
 		   } catch (SQLException ex) {

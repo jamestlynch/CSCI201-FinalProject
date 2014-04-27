@@ -18,7 +18,6 @@ public class Automobile implements Runnable
 	FreewaySegment.Direction direction;
 	
 	String ramp;
-	//String freeway;
 	MapMarkerCircle carMarker;
 
 	FreewaySegment freewaySegment;
@@ -277,7 +276,7 @@ public class Automobile implements Runnable
 				if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] CAR ID #" + id + " !!!: " + timeRemaining);
 				distanceToTravel = timeRemaining * (speed * milesPerHour_to_milesPerSeconds); // Convert speed to m/millisecond
 				timeRemaining = 0; // No more time left to travel
-				this.setNextDestinationPoint(distanceToTravel, distanceAlongPath); // Only travel remainder of path
+				this.setNextDestinationPoint(distanceAlongPath, distanceToTravel); // Only travel remainder of path
 			}
 		}
 		
@@ -296,8 +295,9 @@ public class Automobile implements Runnable
 		  dist = dist * 60 * 1.1515;
 		  return (dist);
 	
-		}
-	private double deg2rad(double deg) {
+	}
+	private double deg2rad(double deg) 
+	{
 
 		return (deg * Math.PI / 180.0);
 
