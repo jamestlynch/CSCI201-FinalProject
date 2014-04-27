@@ -36,6 +36,12 @@ public class SetRoutePanel extends JPanel{
 	{
 		String endingFreewayRampString = (String)endingRampList.getSelectedItem();
 		String rampListString = (String)rampList.getSelectedItem();
+		String startFreewayName = (String)freewayList.getSelectedItem();
+		String endFreewayName = (String)endingFreeway.getSelectedItem();
+		if (startFreewayName.equals("105") && !endFreewayName.equals("105"))
+			return false;
+		if (!startFreewayName.equals("105") && endFreewayName.equals("105"))
+			return false;
 		if (rampListString != null && endingFreewayRampString != null &&
 				rampListString != endingFreewayRampString)
 		{
