@@ -1,9 +1,13 @@
 package main.automobile;
 
 import java.awt.Color;
-import java.util.Calendar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import main.CSCI201Maps;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+
 import main.freeway.FreewaySegment;
 import main.map.GeoMapModel;
 
@@ -53,9 +57,9 @@ public class Automobile
 	private boolean debuggingAutomobileUpdated = true;
 	
 	private final double milesPerHour_to_milesPerSeconds = 0.000277777778; // (1 / 60 / 60):  Used for converting for distance calculations with current time's milliseconds
-	
+
 	int repaintCount = 0;
-	
+
 	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway, GeoMapModel geoMapModel)
 	{	
 		this.freewaySegment = freeway;
@@ -68,6 +72,7 @@ public class Automobile
 		locationPointNumber = 0;
 		this.geoMapModel = geoMapModel;
 		carMarker = new MapMarkerCircle(currentLocation, carRadius);
+		carMarker.setName(id + "");
 		carMarker.setColor(Color.BLACK);
 		this.updateCarColor();
 		carMarker.setVisible(true);
@@ -299,16 +304,19 @@ public class Automobile
 		}
 		if (carMarker.getLat() == currentLocation.getLat() && carMarker.getLon() == currentLocation.getLon() && (destination != null))
 		{
-			System.out.println(id + "INVALID LOCATION: ");
+			System.out.println(id + "INVALID LOCATION: " + freewaySegment.getFreewayName() + ", " + freewaySegment.getStartRamp().getRampName() + " POINT NUMBER: " + nextPointNumber);
+			return;
 		}
 		if (destination == null)
 		{
+			System.out.println(id + "NULL LOCATION");
 			carMarker.setVisible(false);
 			carMarker.setBackColor(Color.BLACK);
 			carMarker.setLat(0);
 			carMarker.setLon(0);
 			return;
 		}
+		System.out.println(id + "A VALID LOCATION:" + carMarker.getLat() + ", " + carMarker.getLon() + " GOING TO " + currentLocation.getLat() + ", " + currentLocation.getLon());
 		this.updateCarColor();
 	
 		this.carMarker.setLat(currentLocation.getLat());
