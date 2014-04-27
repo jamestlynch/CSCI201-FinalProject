@@ -9,12 +9,17 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import main.freeway.FastestPath;
+import main.freeway.FreewaySegment;
 import main.map.GeoMapModel;
+import main.sql.SQLDatabaseHandler;
 
 public class UISidePanel extends JPanel {
 	GeoMapModel geoMapModel;
 	String BeginLocation;
 	String EndLocation;
+	SQLDatabaseHandler sql;
+	FastestPath calculateFastestPath;
 	public String getBeginLocation() {
 		return BeginLocation;
 	}
@@ -23,10 +28,10 @@ public class UISidePanel extends JPanel {
 		return EndLocation;
 	}
 
-	public UISidePanel(GeoMapModel geoMapModel)
+	public UISidePanel(GeoMapModel geoMapModel, SQLDatabaseHandler sql)
 	{
 		this.geoMapModel = geoMapModel;
-		
+		this.sql = sql;
 		JTabbedPane ThreeOpts = new JTabbedPane();
 		
 		SetRoutePanel SetRoute = new SetRoutePanel(400, 500, geoMapModel);
@@ -71,12 +76,29 @@ public class UISidePanel extends JPanel {
 				ThreeOpts.setEnabledAt(2, true);
 				BeginLocation = SetRoute.getBeginningLocation();
 				EndLocation = SetRoute.getEndingLocation();
-				
-				//Establish an ArrayList of Strings with all the time values.
+//				calculateFastestPath = new FastestPath(BeginLocation, EndLocation, geoMapModel);
+//				ArrayList<FreewaySegment> fastestPathSegments = new ArrayList<FreewaySegment>();// = calculateFastestPath.getFastestPath();
 				ArrayList<Double> TimeVal = new ArrayList<Double>();
-				for (double i = 0; i < 24; i++)
-					TimeVal.add(i);
-				
+//				for (int i = 0 ; i < 24; i++)
+//				{
+//					TimeVal.add(i, 0.0);
+//				}
+//				for (int i = 0; i < fastestPathSegments.size(); i++)
+//				{
+//					ArrayList<Double> speedsAtTimeI = sql.getAverageSpeeds(fastestPathSegments.get(i));
+//					for (int j = 0 ; j < 24; j++)
+//					{
+//						Double timeAtSegI = TimeVal.get(j) + speedsAtTimeI.get(j);
+//						TimeVal.set(i, timeAtSegI);
+//					}
+//					//fastestPathSegments.
+//				}
+//				//Establish an ArrayList of Strings with all the time values.
+//				
+				for (int i = 0; i < 24; i++)
+				{
+					TimeVal.add(i, Math.random());
+				}
 				DisplayChart.setLocations(BeginLocation, EndLocation, TimeVal);
 				DisplayGraph.setGraphValues(TimeVal);
 				
