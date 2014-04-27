@@ -47,7 +47,7 @@ public class Automobile
 
 	private boolean debuggingAutomobileRunnable = false;
 	private boolean debuggingUpdateFunction = false;
-	private boolean debuggingSetNextDestination = false;
+	private boolean debuggingSetNextDestination = true;
 	private boolean debuggingUpdateLocation = false;
 	private boolean debuggingInitDestination = false;
 	private boolean debuggingAutomobileUpdated = true;
@@ -191,6 +191,8 @@ public class Automobile
 	public void setNextDestinationPoint(double totalDistanceOnPath, double distanceToTravel) 
 	{
 		if (distanceToTravel < totalDistanceOnPath) {
+			if (debuggingUpdateLocation && id % 100 == 0) System.out.println("Partial Distance for CAR ID #" + id + "...");
+			
 			double portionOfPath = distanceToTravel / totalDistanceOnPath;
 			
 			// Changes of position
@@ -199,10 +201,13 @@ public class Automobile
 			
 			this.currentLocation = new Coordinate(currentLocation.getLat() + dLatitude,
 												  currentLocation.getLon() + dLongitude); 
+			
+			System.out.println("Partial path");
 			// Keep the destination the same, still on same path
 		} else if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // -2 because that's the one right before last point on the segment
 			this.currentLocation = this.destination; // Destination before update
-			this.destination = freewaySegment.getSegmentPath().get(++locationPointNumber); // Get next on same segment
+			this.destination = freewaySegment.getSegmentPath().get(++ locationPointNumber); // Get next on same segment
+			System.out.println("Same path but full distance");
 		} else if (geoMapModel.nextFreewaySegmentExists(freewaySegment)) { // If is next to last or last, set destination as next freeway
 			setFreewaySegmentToNextSegment(); // FreewaySegment = next freeway segment on network
 			this.currentLocation = this.destination; // Destination before update
@@ -223,6 +228,9 @@ public class Automobile
 				if (debuggingSetNextDestination) System.out.println("[SET NEXT DEST] NULLPOINTEREXCEPTION: Car ID #" + id + " could not get destination RAMP");
 			}
 		} else { // CHECK: If it's at the end of a highway, 
+			System.out.println("!!! [UPDATE LOCATION] " + freewaySegment.getSegmentName() + " " + 
+					freewaySegment.getStartRamp().getRampName() + " does not have a next segment.");
+			
 			this.destination = null;
 			return; // Keep the currentLocation the same
 		}
@@ -248,32 +256,39 @@ public class Automobile
 	 */
 	public void updateLocation(double timeElapsedInMilliseconds)
 	{		
-		double timeRemaining = timeElapsedInMilliseconds / 1000; //3.6 million milliseconds per hour
+		System.out.println(id);
+		System.out.println(timeElapsedInMilliseconds);
+		
+		double timeRemaining = timeElapsedInMilliseconds / 1000; // milliseconds to seconds
 		numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();	
 
+		if (debuggingUpdateLocation && id % 100 == 0) System.out.println("[UPDATE LOCATION] Preparing to update car #" + id + "...");
+		
 		while (timeRemaining > 0 && destination != null) { // Until the time runs out keep updating position while updating the speed at the same time
-			if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] timeRemaining: " + timeRemaining);
+			if (debuggingUpdateLocation && id % 100 == 0) System.out.println("[UPDATE LOCATION] timeRemaining: " + timeRemaining);
 			
 			this.currentLocation = this.getCarMarker().getCoordinate();
 			
+
 			double distanceAlongPath = 0; 
+
 			distanceAlongPath = coordinatesToMiles(currentLocation.getLat(), currentLocation.getLon(), destination.getLat(), destination.getLon());
 			double timeToCompleteSegment = distanceAlongPath  				// s = m / (m/s)
 					/ /*      ------------------------------------------ 	*/ 
 							  (speed * milesPerHour_to_milesPerSeconds); 	// Convert speed to m/millisecond
 			
-			if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] CAR ID #" + id + " Difference in times: " + (timeRemaining - timeToCompleteSegment));
+			if (debuggingUpdateLocation && id % 100 == 0) System.out.println("[UPDATE LOCATION] CAR ID #" + id + " Difference in times: " + (timeRemaining - timeToCompleteSegment) + " Distance: " + distanceAlongPath);
 
 			double distanceToTravel;
-			if (timeRemaining > timeToCompleteSegment) {
-				if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] Car ID #" + id + " Time Remaing (" + timeRemaining + ") is greater than Time to complete (" + timeToCompleteSegment + ") segment: " + (timeRemaining > timeToCompleteSegment));
+			if ((timeRemaining - timeToCompleteSegment) > 0) {
+				
+				if (debuggingUpdateLocation && id % 100 == 0) System.out.println("[UPDATE LOCATION] CAR ID #" + id + " has extra time.");
+				
 				distanceToTravel = distanceAlongPath; // Enough time to travel full path
 				timeRemaining = timeRemaining - timeToCompleteSegment; // Take away the timeToCompleteSegment from the total time remaining
 				
-				if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] timeRemaining: " + timeRemaining);
 				this.setNextDestinationPoint(distanceAlongPath, distanceToTravel); // Set next destination point based on current location
 			} else { // Not enough time to go the full distance on the path, find where new location along path he should be at.
-				if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] CAR ID #" + id + " !!!: " + timeRemaining);
 				distanceToTravel = timeRemaining * (speed * milesPerHour_to_milesPerSeconds); // Convert speed to m/millisecond
 				timeRemaining = 0; // No more time left to travel
 				this.setNextDestinationPoint(distanceAlongPath, distanceToTravel); // Only travel remainder of path
@@ -298,6 +313,7 @@ public class Automobile
 		
 		if (debuggingAutomobileUpdated && id % 100 == 0) System.out.println("[AUTOMOBILE UPDATED] Automobile #" + id + " was updated");
 	}
+	
 	private double coordinatesToMiles(double lat1, double lon1, double lat2, double lon2) 
 	{
 		//source: http://www.geodatasource.com/developers/java
@@ -307,17 +323,15 @@ public class Automobile
 		  dist = rad2deg(dist);
 		  dist = dist * 60 * 1.1515;
 		  return (dist);
-	
 	}
+	
 	private double deg2rad(double deg) 
 	{
-
 		return (deg * Math.PI / 180.0);
-
 	}
+	
 	private double rad2deg(double rad) 
 	{
 		return (rad * 180 / Math.PI);
 	}
-
 }
