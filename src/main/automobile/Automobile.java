@@ -1,9 +1,13 @@
 package main.automobile;
 
 import java.awt.Color;
-import java.util.Calendar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import main.CSCI201Maps;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+
 import main.freeway.FreewaySegment;
 import main.map.GeoMapModel;
 
@@ -26,7 +30,7 @@ public class Automobile
 	int nextPointNumber = 1;
 	int numberOfSegmentPointsInThisPath;
 	private int locationPointNumber;
-	final double carRadius = 0.001;
+	/*final*/ double carRadius = 0.001;
 	
 	Color darkGreen = new Color(0x0B610B);
 	Color green = new Color(0x04B404);
@@ -47,15 +51,15 @@ public class Automobile
 
 	private boolean debuggingAutomobileRunnable = false;
 	private boolean debuggingUpdateFunction = false;
-	private boolean debuggingSetNextDestination = true;
+	private boolean debuggingSetNextDestination = false;
 	private boolean debuggingUpdateLocation = false;
 	private boolean debuggingInitDestination = false;
-	private boolean debuggingAutomobileUpdated = true;
+	private boolean debuggingAutomobileUpdated = false;
 	
 	private final double milesPerHour_to_milesPerSeconds = 0.000277777778; // (1 / 60 / 60):  Used for converting for distance calculations with current time's milliseconds
-	
+
 	int repaintCount = 0;
-	
+
 	public Automobile(int id, double speed, FreewaySegment.Direction direction, String ramp, FreewaySegment freeway, GeoMapModel geoMapModel)
 	{	
 		this.freewaySegment = freeway;
@@ -68,6 +72,7 @@ public class Automobile
 		locationPointNumber = 0;
 		this.geoMapModel = geoMapModel;
 		carMarker = new MapMarkerCircle(currentLocation, carRadius);
+		//carMarker.setName(id + " ");
 		carMarker.setColor(Color.BLACK);
 		this.updateCarColor();
 		carMarker.setVisible(true);
@@ -180,6 +185,8 @@ public class Automobile
 			this.destination = freewaySegment.getSegmentPath().get(locationPointNumber + 1); // Get next on same segment
 			destinationSegment = freewaySegment;
 		} else if (geoMapModel.getNextFreewaySegment(freewaySegment) != null) { // If is next to last or last, set destination as next freeway
+			this.carMarker.setName("$$$");
+			
 			this.destination = geoMapModel.getNextFreewaySegment(freewaySegment).getStartRamp().getRampLocation();
 			destinationSegment = geoMapModel.getNextFreewaySegment(freewaySegment);
 		} else { // CHECK: If it's at the end of a highway, 
@@ -192,6 +199,7 @@ public class Automobile
 	public void setNextDestinationPoint(double totalDistanceOnPath, double distanceToTravel) 
 	{
 		if (distanceToTravel < totalDistanceOnPath) {
+			if (id == 761) System.out.println(id + ": Partial distance along path.");
 			if (debuggingUpdateLocation && id % 100 == 0) System.out.println("Partial Distance for CAR ID #" + id + "...");
 			
 			double portionOfPath = distanceToTravel / totalDistanceOnPath;
@@ -203,8 +211,8 @@ public class Automobile
 			this.currentLocation = new Coordinate(currentLocation.getLat() + dLatitude,
 												  currentLocation.getLon() + dLongitude); 
 			
-			System.out.println("Partial path");
 			// Keep the destination the same, still on same path
+
 		}
 		else if (locationPointNumber < numberOfSegmentPointsInThisPath - 3 )
 		{
@@ -233,11 +241,21 @@ public class Automobile
 		}
 		
 		/*
-		else if (locationPointNumber < numberOfSegmentPointsInThisPath - 3) { // -2 because that's the one right before last point on the segment
+
+		} else if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // -2 because that's the one right before last point on the segment
+			if (id == 761) System.out.println(id + ": New point on same segment.");
+			this.carMarker.setColor(Color.BLACK);
+			this.carMarker.setName("!!!");
+			
 			this.currentLocation = this.destination; // Destination before update
+
 			this.destination = freewaySegment.getSegmentPath().get(++locationPointNumber); // Get next on same segment
 			System.out.println("Same path but full distance");
+
 		} else if (geoMapModel.nextFreewaySegmentExists(freewaySegment)) { // If is next to last or last, set destination as next freeway
+			if (id == 761) System.out.println(id + ": Next freeway segment.");
+			carRadius = 1;
+			
 			setFreewaySegmentToNextSegment(); // FreewaySegment = next freeway segment on network
 			this.currentLocation = this.destination; // Destination before update
 			
@@ -257,8 +275,12 @@ public class Automobile
 				if (debuggingSetNextDestination) System.out.println("[SET NEXT DEST] NULLPOINTEREXCEPTION: Car ID #" + id + " could not get destination RAMP");
 			}
 		} else { // CHECK: If it's at the end of a highway, 
-			System.out.println("!!! [UPDATE LOCATION] " + freewaySegment.getSegmentName() + " " + 
+			if (debuggingSetNextDestination) 
+				System.out.println("!!! [UPDATE LOCATION] " + freewaySegment.getSegmentName() + " " + 
 					freewaySegment.getStartRamp().getRampName() + " does not have a next segment.");
+			
+			if (id == 761) System.out.println(id + ": Destination is null.");
+			carRadius = 1;
 			
 			this.destination = null;
 			return; // Keep the currentLocation the same
@@ -274,7 +296,11 @@ public class Automobile
 		numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();
 		locationPointNumber = 0;
 
+		this.speed = this.freewaySegment.getAverageSpeed();
+		
 		this.updateCarColor();
+		
+		//carMarker.setName(id + " " + speed + " " + freewaySegment.getEndRamp().getRampName());
 	}
 	
 	/**updateLocation updates the current location according to three different test cases
@@ -286,9 +312,6 @@ public class Automobile
 	 */
 	public void updateLocation(double timeElapsedInMilliseconds)
 	{		
-		System.out.println(id);
-		System.out.println(timeElapsedInMilliseconds);
-		
 		double timeRemaining = timeElapsedInMilliseconds / 1000; // milliseconds to seconds
 		numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();	
 
@@ -325,18 +348,13 @@ public class Automobile
 				this.setNextDestinationPoint(distanceAlongPath, distanceToTravel); // Only travel remainder of path
 			}
 		}
+		
 		if (carMarker.getLat() == currentLocation.getLat() && carMarker.getLon() == currentLocation.getLon() && (destination != null))
 		{
-			System.out.println(id + "INVALID LOCATION: ");
-		}
-		if (destination == null)
-		{
-			carMarker.setVisible(false);
-			carMarker.setBackColor(Color.BLACK);
-			carMarker.setLat(0);
-			carMarker.setLon(0);
+			if (debuggingUpdateLocation) System.out.println(id + ": INVALID LOCATION: " + freewaySegment.getFreewayName() + ", " + freewaySegment.getStartRamp().getRampName() + " POINT NUMBER: " + nextPointNumber);
 			return;
 		}
+		if(debuggingUpdateLocation) System.out.println(id + ": VALID LOCATION:" + carMarker.getLat() + ", " + carMarker.getLon() + " GOING TO " + currentLocation.getLat() + ", " + currentLocation.getLon());
 		this.updateCarColor();
 	
 		this.carMarker.setLat(currentLocation.getLat());

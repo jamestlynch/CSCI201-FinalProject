@@ -15,6 +15,14 @@ public class UISidePanel extends JPanel {
 	GeoMapModel geoMapModel;
 	String BeginLocation;
 	String EndLocation;
+	public String getBeginLocation() {
+		return BeginLocation;
+	}
+
+	public String getEndLocation() {
+		return EndLocation;
+	}
+
 	public UISidePanel(GeoMapModel geoMapModel)
 	{
 		this.geoMapModel = geoMapModel;
@@ -76,5 +84,5 @@ public class UISidePanel extends JPanel {
 		}
 		
 	}
-
+	
 }
