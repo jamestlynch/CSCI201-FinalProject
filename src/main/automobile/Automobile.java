@@ -11,7 +11,7 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
 
 
-public class Automobile implements Runnable
+public class Automobile
 {
 	int id;
 	double speed;
@@ -99,6 +99,10 @@ public class Automobile implements Runnable
 		return speed;
 	}
 	
+	public Coordinate getDestination() {
+		return destination;
+	}
+
 	public void setId(int id)
 	{
 		this.id = id;
@@ -173,8 +177,8 @@ public class Automobile implements Runnable
 		if (debuggingInitDestination) System.out.println("[INIT DESTINATION] Initializing destination for car ID #" + id);
 		
 		if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // -2 because that's the one right before last point on the segment
-			//SHOULDN'T LOCATIONPOINTNUMBER NOT BE INCREMENTED HERE??
-			this.destination = freewaySegment.getSegmentPath().get(locationPointNumber+1); // Get next on same segment
+			this.destination = freewaySegment.getSegmentPath().get(++ locationPointNumber); // Get next on same segment
+			destinationSegment = freewaySegment;
 		} else if (geoMapModel.getNextFreewaySegment(freewaySegment) != null) { // If is next to last or last, set destination as next freeway
 			this.destination = geoMapModel.getNextFreewaySegment(freewaySegment).getStartRamp().getRampLocation();
 		} else { // CHECK: If it's at the end of a highway, 
@@ -280,8 +284,20 @@ public class Automobile implements Runnable
 				this.setNextDestinationPoint(distanceAlongPath, distanceToTravel); // Only travel remainder of path
 			}
 		}
-		
+		if (carMarker.getLat() == currentLocation.getLat() && carMarker.getLon() == currentLocation.getLon() && (destination != null))
+		{
+			System.out.println(id + "INVALID LOCATION: ");
+		}
+		if (destination == null)
+		{
+			carMarker.setVisible(false);
+			carMarker.setBackColor(Color.BLACK);
+			carMarker.setLat(0);
+			carMarker.setLon(0);
+			return;
+		}
 		this.updateCarColor();
+	
 		this.carMarker.setLat(currentLocation.getLat());
 		this.carMarker.setLon(currentLocation.getLon());
 		
@@ -309,29 +325,4 @@ public class Automobile implements Runnable
 		return (rad * 180 / Math.PI);
 	}
 
-
-	public void run() {
-		try
-		{
-			Calendar now = Calendar.getInstance();
-			long timeBefore = now.get(Calendar.MILLISECOND);
-			long timeAfter;
-			while(true)
-			{
-				if (debuggingAutomobileRunnable) System.out.println("[AUTOMOBILE RUN] Car #" + id + "'s thread is run");
-				
-				carMarker.setLat(currentLocation.getLat());
-				carMarker.setLon(currentLocation.getLon());
-				now = Calendar.getInstance();
-				timeAfter = now.get(Calendar.MILLISECOND);
-				updateLocation(timeBefore - timeAfter);
-				timeBefore = timeAfter;
-				Thread.sleep(CSCI201Maps.automobileUpdateRate);
-			}
-		}
-		catch(InterruptedException ie)
-		{
-			System.out.println ("INTERUPTED EXCEPTION: " + ie.getMessage());
-		}
-	}
 }
