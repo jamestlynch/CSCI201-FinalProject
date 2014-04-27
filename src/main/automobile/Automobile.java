@@ -177,7 +177,7 @@ public class Automobile
 		if (debuggingInitDestination) System.out.println("[INIT DESTINATION] Initializing destination for car ID #" + id);
 		
 		if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // -2 because that's the one right before last point on the segment
-			this.destination = freewaySegment.getSegmentPath().get(++ locationPointNumber); // Get next on same segment
+			this.destination = freewaySegment.getSegmentPath().get(locationPointNumber + 1); // Get next on same segment
 			destinationSegment = freewaySegment;
 		} else if (geoMapModel.getNextFreewaySegment(freewaySegment) != null) { // If is next to last or last, set destination as next freeway
 			this.destination = geoMapModel.getNextFreewaySegment(freewaySegment).getStartRamp().getRampLocation();
@@ -256,13 +256,8 @@ public class Automobile
 			
 			this.currentLocation = this.getCarMarker().getCoordinate();
 			
-			double distanceAlongPath = 0;
-			
-//			distanceAlongPath = Math.sqrt(
-//					Math.pow(currentLocation.getLat() - destination.getLat(), 2) // (x1 - x2)^2
-//					+	Math.pow(currentLocation.getLon() - destination.getLon(), 2) // (y1 - y2)^2
-//					); 
-			distanceAlongPath=coordinatesToMiles(currentLocation.getLat(), currentLocation.getLon(), destination.getLat(), destination.getLon());
+			double distanceAlongPath = 0; 
+			distanceAlongPath = coordinatesToMiles(currentLocation.getLat(), currentLocation.getLon(), destination.getLat(), destination.getLon());
 			double timeToCompleteSegment = distanceAlongPath  				// s = m / (m/s)
 					/ /*      ------------------------------------------ 	*/ 
 							  (speed * milesPerHour_to_milesPerSeconds); 	// Convert speed to m/millisecond
