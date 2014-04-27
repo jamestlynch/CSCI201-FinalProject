@@ -162,9 +162,12 @@ public class GeoMapModel implements Runnable {
 	public boolean existsInFreewayNetwork(FreewaySegment segmentToCheck, boolean isDefaultNetwork) {
 		String startRampName = segmentToCheck.getStartRamp().getRampName();
 		String endRampName = segmentToCheck.getEndRamp().getRampName();
+		String freewayName = segmentToCheck.getFreewayName();
+		
 		boolean segmentBeginningAtSegmentsStartRamp = false;
 		boolean segmentBeginningAtSegmentsEndRamp = false;
 		boolean segmentGoingInSameDirection = false;
+		boolean segmentOnSameFreeway = false;
 		
 		if (isDefaultNetwork)
 		{
@@ -178,6 +181,11 @@ public class GeoMapModel implements Runnable {
 					||  segmentToCheck.getDirectionNS().equals(defaultDirectionFreewayNetwork.get(ramp).get(0).getDirectionNS())) 
 					{
 						segmentGoingInSameDirection = true;
+					}
+					
+					if (freewayName.equals(defaultDirectionFreewayNetwork.get(ramp).get(0).getFreewayName())) 
+					{
+						segmentOnSameFreeway = true;
 					}
 				} if (ramp.getRampName().equals(endRampName)) 
 				{
@@ -197,6 +205,10 @@ public class GeoMapModel implements Runnable {
 					{
 						segmentGoingInSameDirection = true;
 					}
+					if (freewayName.equals(oppositeDirectionFreewayNetwork.get(ramp).get(0).getFreewayName())) 
+					{
+						segmentOnSameFreeway = true;
+					}
 				} if (ramp.getRampName().equals(endRampName)) 
 				{
 					segmentBeginningAtSegmentsEndRamp = true;
@@ -204,7 +216,7 @@ public class GeoMapModel implements Runnable {
 			}
 		}
 		
-		return segmentBeginningAtSegmentsStartRamp && segmentBeginningAtSegmentsEndRamp && segmentGoingInSameDirection;
+		return segmentBeginningAtSegmentsStartRamp && segmentBeginningAtSegmentsEndRamp && segmentGoingInSameDirection && segmentOnSameFreeway;
 	}
 		
 	public boolean nextFreewaySegmentExists(FreewaySegment oldSegment) {
