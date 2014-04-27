@@ -157,12 +157,6 @@ public class GeoMapModel implements Runnable {
 		}
 		return null;
 	}
-	public int isJunction(FreewaySegment oldSegment)
-	{
-		
-		return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).size();		
-			
-	}
 	
 	public boolean nextFreewaySegmentExists(FreewaySegment oldSegment) {
 		//Checks to see if there is a following segment after this ramp (End of the Freeway)
