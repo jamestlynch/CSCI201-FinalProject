@@ -254,11 +254,11 @@ public class Automobile implements Runnable
 			
 			double distanceAlongPath = 0;
 			
-			distanceAlongPath = Math.sqrt(
-					Math.pow(currentLocation.getLat() - destination.getLat(), 2) // (x1 - x2)^2
-					+	Math.pow(currentLocation.getLon() - destination.getLon(), 2) // (y1 - y2)^2
-			); 
-			
+//			distanceAlongPath = Math.sqrt(
+//					Math.pow(currentLocation.getLat() - destination.getLat(), 2) // (x1 - x2)^2
+//					+	Math.pow(currentLocation.getLon() - destination.getLon(), 2) // (y1 - y2)^2
+//					); 
+			distanceAlongPath=coordinatesToMiles(currentLocation.getLat(), currentLocation.getLon(), destination.getLat(), destination.getLon());
 			double timeToCompleteSegment = distanceAlongPath  				// s = m / (m/s)
 					/ /*      ------------------------------------------ 	*/ 
 							  (speed * milesPerHour_to_milesPerSeconds); 	// Convert speed to m/millisecond
@@ -287,6 +287,26 @@ public class Automobile implements Runnable
 		
 		if (debuggingAutomobileUpdated && id % 100 == 0) System.out.println("[AUTOMOBILE UPDATED] Automobile #" + id + " was updated");
 	}
+	private double coordinatesToMiles(double lat1, double lon1, double lat2, double lon2) 
+	{
+		  double theta = lon1 - lon2;
+		  double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+		  dist = Math.acos(dist);
+		  dist = rad2deg(dist);
+		  dist = dist * 60 * 1.1515;
+		  return (dist);
+	
+		}
+	private double deg2rad(double deg) {
+
+		return (deg * Math.PI / 180.0);
+
+	}
+	private double rad2deg(double rad) 
+	{
+		return (rad * 180 / Math.PI);
+	}
+
 
 	public void run() {
 		try
