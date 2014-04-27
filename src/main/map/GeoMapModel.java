@@ -158,12 +158,7 @@ public class GeoMapModel implements Runnable {
 		}
 		return null;
 	}
-	public int isJunction(FreewaySegment oldSegment)
-	{
-		
-		return defaultDirectionFreewayNetwork.get(oldSegment.getEndRamp()).size();		
-			
-	}
+
 	
 	public boolean nextFreewaySegmentExists(FreewaySegment oldSegment) {
 		//Checks to see if there is a following segment after this ramp (End of the Freeway)
@@ -294,21 +289,18 @@ public class GeoMapModel implements Runnable {
 		//automobilesInFreewayNetwork.removeAll(automobilesInFreewayNetwork);
 		automobilesInFreewayNetwork.clear();
 	}
-	
-	public void runAllAutomobileThreads() {
-		Semaphore automobileSemaphore = new Semaphore(10);
-		ExecutorService executor = Executors.newFixedThreadPool(automobilesInFreewayNetwork.size());
-		
-		for (int i = 0; i < 10/*automobilesInFreewayNetwork.size()*/; i++)
-		{	
-			try {
-				automobileSemaphore.acquire(1);
-				executor.execute(automobilesInFreewayNetwork.get(i));
-				automobileSemaphore.release(1);
-			} catch (InterruptedException ie) {
-				ie.printStackTrace();
+	public void removeDeadAutomobilesInFreewayNetwork()
+	{
+		for (int i = 0 ; i < automobilesInFreewayNetwork.size(); i++)
+		{
+			if (automobilesInFreewayNetwork.get(i).getDestination() == null)
+			{
+				System.out.println("[REMOVING NULL AUTOMOBILE] NULL CAR'S IDNUM:" + i);
+				//automobilesInFreewayNetwork.get(i).getCarMarker().setVisible(false);
+				automobilesInFreewayNetwork.remove(i);
 			}
 		}
+		
 	}
 	
 	public void init() {
@@ -352,7 +344,7 @@ public class GeoMapModel implements Runnable {
 					automobilesInFreewayNetwork.get(i).updateLocation(timeInSecondsAfter - timeInSecondsBefore);
 				}
 				timeInSecondsBefore = timeInSecondsAfter;
-				
+				removeDeadAutomobilesInFreewayNetwork();
 				CSCI201Maps.giveUpMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model gave up lock.");
 			} catch (InterruptedException ie) {
