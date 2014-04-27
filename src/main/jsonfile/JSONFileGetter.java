@@ -45,7 +45,7 @@ public class JSONFileGetter implements Runnable
     		sqlDatabaseHandler = new SQLDatabaseHandler();
     		if (!tablesCreated)
     		{
-    			sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
+    			//sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
     			sqlDatabaseHandler.insertListOfFreewaySegments(jfp.getGeoMapModel().returnAllSegment());
     		}
     	}
