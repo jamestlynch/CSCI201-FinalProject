@@ -181,6 +181,7 @@ public class Automobile
 			destinationSegment = freewaySegment;
 		} else if (geoMapModel.getNextFreewaySegment(freewaySegment) != null) { // If is next to last or last, set destination as next freeway
 			this.destination = geoMapModel.getNextFreewaySegment(freewaySegment).getStartRamp().getRampLocation();
+			destinationSegment = geoMapModel.getNextFreewaySegment(freewaySegment);
 		} else { // CHECK: If it's at the end of a highway, 
 			if (debuggingInitDestination) System.out.println("[INIT DESTINATION] Could not find destination for car ID #" + id);
 			this.destination = null;
@@ -204,9 +205,37 @@ public class Automobile
 			
 			System.out.println("Partial path");
 			// Keep the destination the same, still on same path
-		} else if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // -2 because that's the one right before last point on the segment
+		}
+		else if (locationPointNumber < numberOfSegmentPointsInThisPath - 3 )
+		{
+			this.currentLocation = this.destination;
+			locationPointNumber++;
+			this.destination = this.freewaySegment.getSegmentPath().get(locationPointNumber+1);
+			destinationSegment = freewaySegment;
+		}
+		else if (locationPointNumber == numberOfSegmentPointsInThisPath -3)
+		{
+			this.currentLocation = this.destination;
+			locationPointNumber++;
+			destinationSegment = geoMapModel.getNextFreewaySegment(freewaySegment);
+			this.destination = geoMapModel.getNextFreewaySegment(freewaySegment).getSegmentPath().get(0);
+		}
+		else if (locationPointNumber >= numberOfSegmentPointsInThisPath - 2)
+		{
+			this.currentLocation = this.destination;
+			locationPointNumber = 0;
+			freewaySegment = destinationSegment;
+			numberOfSegmentPointsInThisPath = destinationSegment.getSegmentPath().size();
+			destinationSegment = freewaySegment;
+			this.destination = freewaySegment.getSegmentPath().get(locationPointNumber + 1);
+			this.speed = freewaySegment.getAverageSpeed();
+			this.updateCarColor();
+		}
+		
+		/*
+		else if (locationPointNumber < numberOfSegmentPointsInThisPath - 3) { // -2 because that's the one right before last point on the segment
 			this.currentLocation = this.destination; // Destination before update
-			this.destination = freewaySegment.getSegmentPath().get(++ locationPointNumber); // Get next on same segment
+			this.destination = freewaySegment.getSegmentPath().get(++locationPointNumber); // Get next on same segment
 			System.out.println("Same path but full distance");
 		} else if (geoMapModel.nextFreewaySegmentExists(freewaySegment)) { // If is next to last or last, set destination as next freeway
 			setFreewaySegmentToNextSegment(); // FreewaySegment = next freeway segment on network
@@ -234,6 +263,7 @@ public class Automobile
 			this.destination = null;
 			return; // Keep the currentLocation the same
 		}
+		*/
 	}
 
 	public void setFreewaySegmentToNextSegment() {
@@ -288,6 +318,7 @@ public class Automobile
 				timeRemaining = timeRemaining - timeToCompleteSegment; // Take away the timeToCompleteSegment from the total time remaining
 				
 				this.setNextDestinationPoint(distanceAlongPath, distanceToTravel); // Set next destination point based on current location
+				
 			} else { // Not enough time to go the full distance on the path, find where new location along path he should be at.
 				distanceToTravel = timeRemaining * (speed * milesPerHour_to_milesPerSeconds); // Convert speed to m/millisecond
 				timeRemaining = 0; // No more time left to travel
