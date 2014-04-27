@@ -159,4 +159,24 @@ public class FreewaySegment {
 		this.automobilesFromLatestUpdate.clear();
 		this.latestAverageSpeed = 0;
 	}
+	public String getStringDirectionEW()
+	{
+		if (this.directionEW==Direction.EAST)
+			return "East";
+		else if (this.directionEW == Direction.WEST)
+			return "West";
+		else 
+			return "Invalid";
+			
+	}
+	public String getStringDirectionNS()
+	{
+		if (this.directionNS==Direction.NORTH)
+			return "North";
+		else if (this.directionNS == Direction.SOUTH)
+			return "South";
+		else 
+			return "Invalid";
+			
+	}
 }

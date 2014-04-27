@@ -25,6 +25,7 @@ public class JSONFileGetter implements Runnable
 	private String jsonFile;
 	private JSONFileParser jfp;
 	private GeoMapView geoMapView;
+	private GeoMapModel geoMapModel;
 	private SQLDatabaseHandler sqlDatabaseHandler;
 	
 	private boolean debuggingJSONFileGetter = false;
@@ -39,13 +40,14 @@ public class JSONFileGetter implements Runnable
     	cal = Calendar.getInstance();
     	System.out.println("Hour: " + cal.get(Calendar.HOUR_OF_DAY));
     	this.jfp = new JSONFileParser(parserMapModel);
+    	geoMapModel = parserMapModel;
     	this.geoMapView = geoMapView;
     	if (runningDatabase)
     	{
     		sqlDatabaseHandler = new SQLDatabaseHandler();
     		if (!tablesCreated)
     		{
-    			sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
+    			//sqlDatabaseHandler.createFreewaySegmentTables(jfp.getGeoMapModel().returnAllSegment());
     			sqlDatabaseHandler.insertListOfFreewaySegments(jfp.getGeoMapModel().returnAllSegment());
     		}
     	}
@@ -87,7 +89,7 @@ public class JSONFileGetter implements Runnable
     		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
     		CSCI201Maps.grabMapUpdateLock();
     		jfp.parseAutomobiles(jsonFile);
-    	
+    		geoMapModel.removeDeadAutomobilesInFreewayNetwork();
     		if (runningDatabase) 
     		{
     			for (FreewaySegment fs: jfp.getGeoMapModel().returnAllSegment())

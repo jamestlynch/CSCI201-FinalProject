@@ -18,7 +18,6 @@ public class Automobile
 	FreewaySegment.Direction direction;
 	
 	String ramp;
-	//String freeway;
 	MapMarkerCircle carMarker;
 
 	FreewaySegment freewaySegment;
@@ -51,7 +50,7 @@ public class Automobile
 	private boolean debuggingSetNextDestination = true;
 	private boolean debuggingUpdateLocation = false;
 	private boolean debuggingInitDestination = false;
-	private boolean debuggingAutomobileUpdated = false;
+	private boolean debuggingAutomobileUpdated = true;
 	
 	private final double milesPerHour_to_milesPerSeconds = 0.000277777778; // (1 / 60 / 60):  Used for converting for distance calculations with current time's milliseconds
 	
@@ -100,6 +99,10 @@ public class Automobile
 		return speed;
 	}
 	
+	public Coordinate getDestination() {
+		return destination;
+	}
+
 	public void setId(int id)
 	{
 		this.id = id;
@@ -175,6 +178,7 @@ public class Automobile
 		
 		if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // -2 because that's the one right before last point on the segment
 			this.destination = freewaySegment.getSegmentPath().get(++ locationPointNumber); // Get next on same segment
+			destinationSegment = freewaySegment;
 		} else if (geoMapModel.getNextFreewaySegment(freewaySegment) != null) { // If is next to last or last, set destination as next freeway
 			this.destination = geoMapModel.getNextFreewaySegment(freewaySegment).getStartRamp().getRampLocation();
 		} else { // CHECK: If it's at the end of a highway, 
@@ -218,7 +222,7 @@ public class Automobile
 			}
 			
 			
-			try {
+			try {//CHANGE SOMETHING HERE?
 				destination = destinationSegment.getSegmentPath().get(0); // Get first point along segment path
 			} catch (NullPointerException npe) {
 				if (debuggingSetNextDestination) System.out.println("[SET NEXT DEST] NULLPOINTEREXCEPTION: Car ID #" + id + " could not get destination RAMP");
@@ -293,8 +297,20 @@ public class Automobile
 				this.setNextDestinationPoint(distanceAlongPath, distanceToTravel); // Only travel remainder of path
 			}
 		}
-		
+		if (carMarker.getLat() == currentLocation.getLat() && carMarker.getLon() == currentLocation.getLon() && (destination != null))
+		{
+			System.out.println(id + "INVALID LOCATION: ");
+		}
+		if (destination == null)
+		{
+			carMarker.setVisible(false);
+			carMarker.setBackColor(Color.BLACK);
+			carMarker.setLat(0);
+			carMarker.setLon(0);
+			return;
+		}
 		this.updateCarColor();
+	
 		this.carMarker.setLat(currentLocation.getLat());
 		this.carMarker.setLon(currentLocation.getLon());
 		
@@ -303,19 +319,18 @@ public class Automobile
 	
 	private double coordinatesToMiles(double lat1, double lon1, double lat2, double lon2) 
 	{
+		//source: http://www.geodatasource.com/developers/java
 		  double theta = lon1 - lon2;
 		  double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
 		  dist = Math.acos(dist);
 		  dist = rad2deg(dist);
 		  dist = dist * 60 * 1.1515;
 		  return (dist);
+	}
 	
-		}
-	
-	private double deg2rad(double deg) {
-
+	private double deg2rad(double deg) 
+	{
 		return (deg * Math.PI / 180.0);
-
 	}
 	
 	private double rad2deg(double rad) 

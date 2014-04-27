@@ -5,7 +5,7 @@ import main.freeway.FreewaySegment;
 import main.map.FreewaySegmentNotFoundException;
 import main.map.GeoMapModel;
 
-public class JSONFileParser implements Runnable
+public class JSONFileParser
 {
 	private GeoMapModel geoMapModel;
 	private int numCarsDeleted = 0;
@@ -187,9 +187,5 @@ public class JSONFileParser implements Runnable
 			FreewaySegmentVal.addAutomobileToLatestUpdate(OneCar);
 			return OneCar;
 		}
-	}
-
-	public void run() {
-		
 	}
 }

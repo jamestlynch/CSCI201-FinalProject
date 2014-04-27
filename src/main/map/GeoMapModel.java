@@ -302,6 +302,20 @@ public class GeoMapModel implements Runnable {
 		automobilesInFreewayNetwork.clear();
 	}
 	
+	public void removeDeadAutomobilesInFreewayNetwork()
+	{
+		for (int i = 0 ; i < automobilesInFreewayNetwork.size(); i++)
+		{
+			if (automobilesInFreewayNetwork.get(i).getDestination() == null)
+			{
+				System.out.println("[REMOVING NULL AUTOMOBILE] NULL CAR'S IDNUM:" + i);
+				//automobilesInFreewayNetwork.get(i).getCarMarker().setVisible(false);
+				automobilesInFreewayNetwork.remove(i);
+			}
+		}
+		
+	}
+	
 	public void init() {
 		CSCI201Maps.grabMapUpdateLock();
 		
@@ -343,7 +357,7 @@ public class GeoMapModel implements Runnable {
 					automobilesInFreewayNetwork.get(i).updateLocation(timeInSecondsAfter - timeInSecondsBefore);
 				}
 				timeInSecondsBefore = timeInSecondsAfter;
-				
+				removeDeadAutomobilesInFreewayNetwork();
 				CSCI201Maps.giveUpMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model gave up lock.");
 			} catch (InterruptedException ie) {
@@ -591,7 +605,6 @@ public class GeoMapModel implements Runnable {
 
 
 					// Loop through each <point> DOM object and add the coordinates to the Segment's path
-					// Changed order that points were added in (decrement instead of increment through list)
 					for (int pointNumber = 0; pointNumber < pointNodeList.getLength(); pointNumber++) {
 						Coordinate point = new Coordinate(
 								Double.parseDouble(((Element) pointNodeList
@@ -616,21 +629,21 @@ public class GeoMapModel implements Runnable {
 					// NORTH
 					double latitudeDifference = segmentPoints.get(0).getLat()
 							- segmentPoints.get(segmentPoints.size() - 1)
-							.getLat();
-					double longitudeDifference = segmentPoints.get(0).getLat()
+									.getLat();
+					double longitudeDifference = segmentPoints.get(0).getLon()
 							- segmentPoints.get(segmentPoints.size() - 1)
-							.getLat();
+									.getLon();
 
 					FreewaySegment.Direction directionEW;
 					FreewaySegment.Direction directionNS;
 
-					if (latitudeDifference < 0) {
+					if (longitudeDifference < 0) {
 						directionEW = FreewaySegment.Direction.EAST;
 					} else {
 						directionEW = FreewaySegment.Direction.WEST;
 					}
 
-					if (longitudeDifference < 0) {
+					if (latitudeDifference < 0) {
 						directionNS = FreewaySegment.Direction.NORTH;
 					} else {
 						directionNS = FreewaySegment.Direction.SOUTH;
@@ -661,16 +674,16 @@ public class GeoMapModel implements Runnable {
 							segmentPoints.size() - 1).getLat()
 							- segmentPoints.get(0).getLat();
 					longitudeDifference = segmentPoints.get(
-							segmentPoints.size() - 1).getLat()
-							- segmentPoints.get(0).getLat();
+							segmentPoints.size() - 1).getLon()
+							- segmentPoints.get(0).getLon();
 
-					if (latitudeDifference < 0) {
+					if (longitudeDifference < 0) {
 						directionEW = FreewaySegment.Direction.EAST;
 					} else {
 						directionEW = FreewaySegment.Direction.WEST;
 					}
 
-					if (longitudeDifference < 0) {
+					if (latitudeDifference < 0) {
 						directionNS = FreewaySegment.Direction.NORTH;
 					} else {
 						directionNS = FreewaySegment.Direction.SOUTH;
