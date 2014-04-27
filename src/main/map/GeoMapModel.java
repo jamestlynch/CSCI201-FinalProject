@@ -169,50 +169,28 @@ public class GeoMapModel implements Runnable {
 		boolean segmentGoingInSameDirection = false;
 		boolean segmentOnSameFreeway = false;
 		
-		if (isDefaultNetwork)
+		HashMap<FreewayRamp, ArrayList<FreewaySegment>> freewayNetwork = 
+				isDefaultNetwork ? defaultDirectionFreewayNetwork : oppositeDirectionFreewayNetwork;
+		
+		for (FreewayRamp ramp  :  freewayNetwork.keySet()) 
 		{
-			for (FreewayRamp ramp  :  defaultDirectionFreewayNetwork.keySet()) 
+			if (ramp.getRampName().equals(startRampName)) 
 			{
-				if (ramp.getRampName().equals(startRampName)) 
-				{
-					segmentBeginningAtSegmentsStartRamp = true;
+				segmentBeginningAtSegmentsStartRamp = true;
 
-					if (segmentToCheck.getDirectionEW().equals(defaultDirectionFreewayNetwork.get(ramp).get(0).getDirectionEW())
-					||  segmentToCheck.getDirectionNS().equals(defaultDirectionFreewayNetwork.get(ramp).get(0).getDirectionNS())) 
-					{
-						segmentGoingInSameDirection = true;
-					}
-					
-					if (freewayName.equals(defaultDirectionFreewayNetwork.get(ramp).get(0).getFreewayName())) 
-					{
-						segmentOnSameFreeway = true;
-					}
-				} if (ramp.getRampName().equals(endRampName)) 
+				if (segmentToCheck.getDirectionEW().equals(freewayNetwork.get(ramp).get(0).getDirectionEW())
+						||  segmentToCheck.getDirectionNS().equals(freewayNetwork.get(ramp).get(0).getDirectionNS())) 
 				{
-					segmentBeginningAtSegmentsEndRamp = true;
+					segmentGoingInSameDirection = true;
 				}
-			}
-		} else // OPPOSITE FREEWAY NETWORK
-		{
-			for (FreewayRamp ramp  :  oppositeDirectionFreewayNetwork.keySet()) 
+
+				if (freewayName.equals(freewayNetwork.get(ramp).get(0).getFreewayName())) 
+				{
+					segmentOnSameFreeway = true;
+				}
+			} if (ramp.getRampName().equals(endRampName)) 
 			{
-				if (ramp.getRampName().equals(startRampName)) 
-				{
-					segmentBeginningAtSegmentsStartRamp = true;
-
-					if (segmentToCheck.getDirectionEW().equals(oppositeDirectionFreewayNetwork.get(ramp).get(0).getDirectionEW())
-					||  segmentToCheck.getDirectionNS().equals(oppositeDirectionFreewayNetwork.get(ramp).get(0).getDirectionNS())) 
-					{
-						segmentGoingInSameDirection = true;
-					}
-					if (freewayName.equals(oppositeDirectionFreewayNetwork.get(ramp).get(0).getFreewayName())) 
-					{
-						segmentOnSameFreeway = true;
-					}
-				} if (ramp.getRampName().equals(endRampName)) 
-				{
-					segmentBeginningAtSegmentsEndRamp = true;
-				}
+				segmentBeginningAtSegmentsEndRamp = true;
 			}
 		}
 		
