@@ -31,7 +31,7 @@ public class SQLDatabaseHandler {
 
 		   //Create AllFreewaySegmentsTable
 		   stmt = conn.createStatement();
-		   String createtablequery="CREATE TABLE IF NOT EXISTS AllFreewaySegments(Id INT PRIMARY KEY AUTO_INCREMENT, FreewaySegmentTableName VARCHAR(20), StartRamp VARCHAR(120), EndRamp VARCHAR(120), Distance DOUBLE) Engine=InnoDB";
+		   String createtablequery="CREATE TABLE IF NOT EXISTS AllFreewaySegments(Id INT PRIMARY KEY AUTO_INCREMENT, FreewaySegmentTableName VARCHAR(20), StartRamp VARCHAR(120), EndRamp VARCHAR(120), Distance DOUBLE, PointsOnPath INT, StartLat DOUBLE, EndLat DOUBLE, StartLon DOUBLE, EndLon DOUBLE) Engine=InnoDB";
 		   stmt.executeUpdate(createtablequery);
 		   System.out.println("Created AllFreewaySegments Table");
 
@@ -141,7 +141,7 @@ public class SQLDatabaseHandler {
    {
 	   PreparedStatement pst = null;
 	   try {
-		   pst = conn.prepareStatement("INSERT INTO AllFreewaySegments(Id, FreewaySegmentTableName, StartRamp, EndRamp, Distance) VALUES(default, ?, ?, ?, ?)");
+		   pst = conn.prepareStatement("INSERT INTO AllFreewaySegments(Id, FreewaySegmentTableName, StartRamp, EndRamp, Distance, PointsOnPath, StartLat, EndLat, StartLon, EndLon) VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	   } catch (SQLException e) {
 		   // TODO Auto-generated catch block
 		   e.printStackTrace();
@@ -154,6 +154,11 @@ public class SQLDatabaseHandler {
 			   pst.setString(2, fs.getStartRamp().getRampName());
 			   pst.setString(3, fs.getEndRamp().getRampName());
 			   pst.setDouble(4, fs.getDistance());
+			   pst.setInt(5, fs.getSegmentPath().size());
+			   pst.setDouble(6, fs.getSegmentPath().get(0).getLat());
+			   pst.setDouble(7, fs.getSegmentPath().get(fs.getSegmentPath().size()-1).getLat());
+			   pst.setDouble(8, fs.getSegmentPath().get(0).getLon());
+			   pst.setDouble(9, fs.getSegmentPath().get(fs.getSegmentPath().size()-1).getLon());
 			   pst.executeUpdate();
 
 		   } catch (SQLException ex) {
@@ -217,14 +222,8 @@ public class SQLDatabaseHandler {
 			   preparedStmt.setInt(2, dataCount);
 			   preparedStmt.setInt(3, hour);
 			   preparedStmt.executeUpdate();
-			   
-			   cars+=fs.getAutomobilesFromLatestUpdate().size();
-				 
-			   String query2 = "INSERT INTO carcounts VALUES(2, ?)";
-			   PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
-			   preparedStmt2.setInt(1, cars);
-			   preparedStmt2.executeUpdate();
-	   }
+			
+		   }
 	   }
 	   catch (SQLException ex) {
 		   if (printErrors) System.out.println("Unable to update average speed for " + fs.getSegmentName());

@@ -51,7 +51,7 @@ public class Automobile implements Runnable
 	private boolean debuggingSetNextDestination = false;
 	private boolean debuggingUpdateLocation = false;
 	private boolean debuggingInitDestination = false;
-	private boolean debuggingAutomobileUpdated = true;
+	private boolean debuggingAutomobileUpdated = false;
 	
 	private final double milesPerHour_to_milesPerSeconds = 0.000277777778; // (1 / 60 / 60):  Used for converting for distance calculations with current time's milliseconds
 	
@@ -248,7 +248,7 @@ public class Automobile implements Runnable
 		numberOfSegmentPointsInThisPath = freewaySegment.getSegmentPath().size();	
 
 		while (timeRemaining > 0 && destination != null) { // Until the time runs out keep updating position while updating the speed at the same time
-			System.out.println("[UPDATE LOCATION] timeRemaining: " + timeRemaining);
+			if (debuggingUpdateLocation) System.out.println("[UPDATE LOCATION] timeRemaining: " + timeRemaining);
 			
 			this.currentLocation = this.getCarMarker().getCoordinate();
 			

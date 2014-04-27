@@ -30,7 +30,7 @@ public class JSONFileGetter implements Runnable
 	private boolean debuggingJSONFileGetter = false;
 	private boolean debuggingMapUpdateLock = false;
 	private boolean runningDatabase = false;
-	private boolean tablesCreated = false;
+	private boolean tablesCreated = true;
 	
 	private static Calendar cal;
 	

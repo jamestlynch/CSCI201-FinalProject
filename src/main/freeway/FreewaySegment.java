@@ -18,7 +18,7 @@ public class FreewaySegment {
 	private Direction directionNS;
 	private double distance;
 	private int speedLimit;
-	private ArrayList<Coordinate> segmentPath;
+	private ArrayList<Coordinate> segmentPath = new ArrayList<Coordinate>();
 	private ArrayList<FreewaySegment> adjacentSections;
 	private FreewayRamp startRamp = null;
 	private FreewayRamp endRamp = null;
