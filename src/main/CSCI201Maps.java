@@ -43,8 +43,8 @@ public class CSCI201Maps {
 	
 	private static Semaphore mapUpdateSemaphore = new Semaphore(1);
 	
-	public static final long automobileUpdateRate = 5000; // 13 milliseconds to wait between updates
-	public static final long automobilePaintDelay = 5000; // 13 milliseconds to fully paint
+	public static final long automobileUpdateRate = 13; // 13 milliseconds to wait between updates
+	public static final long automobilePaintDelay = 13; // 13 milliseconds to fully paint
 	public static final long jsonFileFetchingDelay = 3 * 60 * 1000; // 3 minutes to wait between grabbing JSON file
 	
 	// Call the user interface
@@ -52,8 +52,9 @@ public class CSCI201Maps {
 	public CSCI201Maps() {
 		ExecutorService configurationExecutor = Executors.newFixedThreadPool(1);
 		
+		
 		geoMapModel = new GeoMapModel();
-		geoMapView = new GeoMapView(500, 500, geoMapModel);
+		geoMapView = new GeoMapView(800, 800, geoMapModel);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		
 		ArrayList<FreewaySegment> segments405 = new ArrayList<FreewaySegment>();
@@ -80,7 +81,7 @@ public class CSCI201Maps {
 		
 		geoMapView.drawPath(segments105);
 		geoMapView.drawPath(segments101);
-		//geoMapView.drawPath(segments10);
+		geoMapView.drawPath(segments10);
 		geoMapView.drawPath(segments405);
 		// Instantiate the GUI
 		//new UICSCI201Maps();

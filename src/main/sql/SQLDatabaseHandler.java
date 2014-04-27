@@ -31,7 +31,7 @@ public class SQLDatabaseHandler {
 
 		   //Create AllFreewaySegmentsTable
 		   stmt = conn.createStatement();
-		   String createtablequery="CREATE TABLE IF NOT EXISTS AllFreewaySegments(Id INT PRIMARY KEY AUTO_INCREMENT, FreewaySegmentTableName VARCHAR(20), StartRamp VARCHAR(120), EndRamp VARCHAR(120), Distance DOUBLE) Engine=InnoDB";
+		   String createtablequery="CREATE TABLE IF NOT EXISTS AllFreewaySegments(Id INT PRIMARY KEY AUTO_INCREMENT, FreewaySegmentTableName VARCHAR(20), StartRamp VARCHAR(120), EndRamp VARCHAR(120), Distance DOUBLE, PointsOnPath INT, StartLat DOUBLE, EndLat DOUBLE, StartLon DOUBLE, EndLon DOUBLE) Engine=InnoDB";
 		   stmt.executeUpdate(createtablequery);
 		   System.out.println("Created AllFreewaySegments Table");
 
@@ -141,7 +141,7 @@ public class SQLDatabaseHandler {
    {
 	   PreparedStatement pst = null;
 	   try {
-		   pst = conn.prepareStatement("INSERT INTO AllFreewaySegments(Id, FreewaySegmentTableName, StartRamp, EndRamp, Distance) VALUES(default, ?, ?, ?, ?)");
+		   pst = conn.prepareStatement("INSERT INTO AllFreewaySegments(Id, FreewaySegmentTableName, StartRamp, EndRamp, Distance, PointsOnPath, StartLat, EndLat, StartLon, EndLon) VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	   } catch (SQLException e) {
 		   // TODO Auto-generated catch block
 		   e.printStackTrace();
@@ -154,6 +154,11 @@ public class SQLDatabaseHandler {
 			   pst.setString(2, fs.getStartRamp().getRampName());
 			   pst.setString(3, fs.getEndRamp().getRampName());
 			   pst.setDouble(4, fs.getDistance());
+			   pst.setInt(5, fs.getSegmentPath().size());
+			   pst.setDouble(6, fs.getSegmentPath().get(0).getLat());
+			   pst.setDouble(7, fs.getSegmentPath().get(fs.getSegmentPath().size()-1).getLat());
+			   pst.setDouble(8, fs.getSegmentPath().get(0).getLon());
+			   pst.setDouble(9, fs.getSegmentPath().get(fs.getSegmentPath().size()-1).getLon());
 			   pst.executeUpdate();
 
 		   } catch (SQLException ex) {
@@ -163,8 +168,41 @@ public class SQLDatabaseHandler {
    }
    public void updateAverageSpeedOfSegment(FreewaySegment fs, int hour)
    {
+//	   try{
+//		   double newAverageSpeed = fs.getAverageSpeed();
+//		   double oldAverageSpeed;
+//		   int dataCount;
+//		   PreparedStatement statement = conn.prepareStatement("SELECT * from " + fs.getSegmentName() + " WHERE Time = ?");    
+//		   statement.setInt(1, hour);    
+//		   ResultSet resultSet = statement.executeQuery();
+//		   while (resultSet.next())
+//		   {		   
+//			   //assumes that fs.getAverageSpeed() is returning the average speed that is ONLY based on the most recent json file data
+//			   //ASK: are the automobiles being removed from segments at the end of each 3 minute cycle?
+//			   //removeAutomobileFromSegment never called?
+//			   dataCount = resultSet.getInt("DataCount");
+//			   oldAverageSpeed = resultSet.getDouble("AverageSpeed");
+//			   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed*fs.getAutomobilesOnSegment().size())/(dataCount+fs.getAutomobilesOnSegment().size());
+//			   dataCount +=fs.getAutomobilesOnSegment().size();
+//
+//			   String query = "UPDATE " + fs.getSegmentName() + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
+//			   PreparedStatement preparedStmt = conn.prepareStatement(query);
+//			   preparedStmt.setDouble(1, newAverageSpeed);
+//			   preparedStmt.setInt(2, dataCount);
+//			   preparedStmt.setInt(3, hour);
+//			   preparedStmt.executeUpdate();
+//			   
+//			   cars+=fs.getAutomobilesOnSegment().size();
+//				 
+//			   String query2 = "INSERT INTO carcounts VALUES(2, ?)";
+//			   PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
+//			   preparedStmt2.setInt(1, cars);
+//			   preparedStmt2.executeUpdate();
+//		
+//			   
+//		   }
 	   try{
-		   double newAverageSpeed = fs.getAverageSpeed();
+		   double newAverageSpeed = fs.getLatestAverageSpeed();
 		   double oldAverageSpeed;
 		   int dataCount;
 		   PreparedStatement statement = conn.prepareStatement("SELECT * from " + fs.getSegmentName() + " WHERE Time = ?");    
@@ -172,13 +210,11 @@ public class SQLDatabaseHandler {
 		   ResultSet resultSet = statement.executeQuery();
 		   while (resultSet.next())
 		   {		   
-			   //assumes that fs.getAverageSpeed() is returning the average speed that is ONLY based on the most recent json file data
-			   //ASK: are the automobiles being removed from segments at the end of each 3 minute cycle?
-			   //removeAutomobileFromSegment never called?
+			   //assumes that fs.getLatestAverageSpeed() is returning the average speed that is ONLY based on the most recent json file data
 			   dataCount = resultSet.getInt("DataCount");
 			   oldAverageSpeed = resultSet.getDouble("AverageSpeed");
-			   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed*fs.getAutomobilesOnSegment().size())/(dataCount+fs.getAutomobilesOnSegment().size());
-			   dataCount +=fs.getAutomobilesOnSegment().size();
+			   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed*fs.getAutomobilesFromLatestUpdate().size())/(dataCount+fs.getAutomobilesFromLatestUpdate().size());
+			   dataCount +=fs.getAutomobilesFromLatestUpdate().size();
 
 			   String query = "UPDATE " + fs.getSegmentName() + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
 			   PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -186,15 +222,7 @@ public class SQLDatabaseHandler {
 			   preparedStmt.setInt(2, dataCount);
 			   preparedStmt.setInt(3, hour);
 			   preparedStmt.executeUpdate();
-			   
-			   cars+=fs.getAutomobilesOnSegment().size();
-				 
-			   String query2 = "INSERT INTO carcounts VALUES(2, ?)";
-			   PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
-			   preparedStmt2.setInt(1, cars);
-			   preparedStmt2.executeUpdate();
-		
-			   
+			
 		   }
 	   }
 	   catch (SQLException ex) {

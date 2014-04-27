@@ -18,12 +18,15 @@ public class FreewaySegment {
 	private Direction directionNS;
 	private double distance;
 	private int speedLimit;
-	private ArrayList<Coordinate> segmentPath;
+	private ArrayList<Coordinate> segmentPath = new ArrayList<Coordinate>();
 	private ArrayList<FreewaySegment> adjacentSections;
 	private FreewayRamp startRamp = null;
 	private FreewayRamp endRamp = null;
 	
 	private ArrayList<Automobile> automobilesOnSegment = new ArrayList<Automobile>();
+	private ArrayList<Automobile> automobilesFromLatestUpdate = new ArrayList<Automobile>();
+	private double latestAverageSpeed;
+	
 	private double averageSpeed;
 	
 	private boolean debuggingAverageSpeed = false;
@@ -128,5 +131,32 @@ public class FreewaySegment {
 	public ArrayList<Automobile> getAutomobilesOnSegment()
 	{
 		return automobilesOnSegment;
+	}
+
+	public ArrayList<Automobile> getAutomobilesFromLatestUpdate() {
+		return automobilesFromLatestUpdate;
+	}
+
+	public void setAutomobilesFromLatestUpdate(
+			ArrayList<Automobile> automobilesFromLatestUpdate) {
+		this.automobilesFromLatestUpdate = automobilesFromLatestUpdate;
+	}
+
+	public double getLatestAverageSpeed() {
+		return latestAverageSpeed;
+	}
+
+	public void setLatestAverageSpeed(double latestAverageSpeed) {
+		this.latestAverageSpeed = latestAverageSpeed;
+	}
+	public void addAutomobileToLatestUpdate(Automobile auto)
+	{
+		this.automobilesFromLatestUpdate.add(auto);
+		this.latestAverageSpeed += (auto.getSpeed() - latestAverageSpeed)/(automobilesFromLatestUpdate.size());
+	}
+	public void clearAutomobilesFromLatestUpdate()
+	{
+		this.automobilesFromLatestUpdate.clear();
+		this.latestAverageSpeed = 0;
 	}
 }

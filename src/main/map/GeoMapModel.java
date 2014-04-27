@@ -61,9 +61,10 @@ public class GeoMapModel implements Runnable {
 	
 	private boolean debuggingSearch = false;
 	private boolean debuggingAutomobileMarkers = false;
-	private boolean debuggingMapUpdateLock = true;
+	private boolean debuggingMapUpdateLock = false;
 	private boolean debuggingGetNextSegment = false;
 	private boolean debuggingMapModelInit = false;
+	private boolean debuggingMapModelRun = false;
 	
 	/*
 	 * =========================================================================
@@ -283,7 +284,9 @@ public class GeoMapModel implements Runnable {
 	}
 	
 	public void removeAutomobilesInFreewayNetwork() {
-		automobilesInFreewayNetwork.removeAll(automobilesInFreewayNetwork);
+	
+		//automobilesInFreewayNetwork.removeAll(automobilesInFreewayNetwork);
+		automobilesInFreewayNetwork.clear();
 	}
 	
 	public void runAllAutomobileThreads() {
@@ -339,7 +342,7 @@ public class GeoMapModel implements Runnable {
 				timeInSecondsAfter = System.currentTimeMillis() / 1000;
 				for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
 				{	
-					System.out.println("[MAPMODEL RUN] Time Before (in sec): " + timeInSecondsBefore + " Time After (in sec): " + timeInSecondsAfter);
+					if (debuggingMapModelRun)System.out.println("[MAPMODEL RUN] Time Before (in sec): " + timeInSecondsBefore + " Time After (in sec): " + timeInSecondsAfter);
 					automobilesInFreewayNetwork.get(i).updateLocation(timeInSecondsAfter - timeInSecondsBefore);
 				}
 				timeInSecondsBefore = timeInSecondsAfter;
@@ -581,6 +584,7 @@ public class GeoMapModel implements Runnable {
 							.getElementsByTagName("speed-limit").item(0);
 
 					ArrayList<Coordinate> segmentPoints = new ArrayList<Coordinate>();
+					ArrayList<Coordinate> reversedSegmentPoints = new ArrayList<Coordinate>();
 					// Only one points object in DOM (houses all point objects);
 					// Grab the point node list from the single <points> DOM
 					// object
@@ -591,7 +595,7 @@ public class GeoMapModel implements Runnable {
 
 					// Loop through each <point> DOM object and add the coordinates to the Segment's path
 					// Changed order that points were added in (decrement instead of increment through list)
-					for (int pointNumber = pointNodeList.getLength()-1; pointNumber >= 0; pointNumber--) {
+					for (int pointNumber = 0; pointNumber < pointNodeList.getLength(); pointNumber++) {
 						Coordinate point = new Coordinate(
 								Double.parseDouble(((Element) pointNodeList
 										.item(pointNumber)).getAttribute("x")),
@@ -676,7 +680,10 @@ public class GeoMapModel implements Runnable {
 					}
 
 					segmentName = "OF" + freewayName + "S" + segmentNumber;
-					Collections.reverse(segmentPoints);
+					//Collections.reverse(segmentPoints);
+					for (int i=segmentPoints.size()-1; i > -1; i--)
+						reversedSegmentPoints.add(segmentPoints.get(i));
+					
 
 					FreewaySegment oppositeFreewaySegment = new FreewaySegment(
 							segmentName,
@@ -684,7 +691,7 @@ public class GeoMapModel implements Runnable {
 							Double.parseDouble(distanceElement
 									.getAttribute("d")),
 							Integer.parseInt(speedLimitElement.getTextContent()),
-							directionEW, directionNS, segmentPoints, endRamp,
+							directionEW, directionNS, reversedSegmentPoints, endRamp,
 							startRamp);
 
 					if (debuggingFreewayLoader) System.out.println(" +  Creating " + segmentName
