@@ -158,7 +158,46 @@ public class FastestPath {
 			
 			//Case c: source is in the middle
 			else{
-				
+				//Start by going right
+				sourceFreewaySegment = mapModel.searchByRampName(source, true);
+				destinationFreewaySegment = mapModel.searchByRampName(destination, true);
+				currFreewaySegment = sourceFreewaySegment;
+				startRamp = currFreewaySegment.getStartRamp();
+				while (startRamp.getRampName() != destination){
+					//Reaches a junction
+					if(mapModel.isJunction(currFreewaySegment) == 2){
+						path1time += currFreewaySegment.getAverageSpeed();
+						path1.add(currFreewaySegment);
+						//TODO set getNextFreewaySegment to the 101 segment
+							//PROBLEM: does this have to be hard coded every time for each junction?
+						continue;
+					}
+					
+					path1time += currFreewaySegment.getAverageSpeed();
+					path1.add(currFreewaySegment);
+					currFreewaySegment = mapModel.getNextFreewaySegment(currFreewaySegment);
+					startRamp = currFreewaySegment.getStartRamp();
+				}
+				//Start by going left
+				sourceFreewaySegment = mapModel.searchByRampName(source, false);
+				destinationFreewaySegment = mapModel.searchByRampName(destination, false);
+				currFreewaySegment = sourceFreewaySegment;
+				startRamp = currFreewaySegment.getStartRamp();
+				while (startRamp.getRampName() != destination){
+					//Reaches a junction
+					if(mapModel.isJunction(currFreewaySegment) == 2){
+						path1time += currFreewaySegment.getAverageSpeed();
+						path1.add(currFreewaySegment);
+						//TODO set getNextFreewaySegment to the 405 segment
+							//PROBLEM: does this have to be hard coded every time for each junction?
+						continue;
+					}
+					
+					path2time += currFreewaySegment.getAverageSpeed();
+					path2.add(currFreewaySegment);
+					currFreewaySegment = mapModel.getNextFreewaySegment(currFreewaySegment);
+					startRamp = currFreewaySegment.getStartRamp();
+				}
 			}
 			
 		}//end 105 case
