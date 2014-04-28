@@ -305,28 +305,9 @@ public class GeoMapModel implements Runnable {
 			if (ramp.getRampName().equals(endRampName)) // If the ramp is the same as the next ramp's start (current endRamp)
 			{
 				for (int i = 0; i < freewayNetwork.get(ramp).size(); i++) // Loop through all different segments in the ArrayList
-				{
-					if (debuggingSearchBySegment) {
-						if (isDefaultNetwork) System.out.print("[DEFAULT] ");
-						else System.out.print("[OPPOSITE] ");
-						System.out.println("Do the directions match? <" + 
-							segmentToCheck.getDirectionEW().toString() + ", " + segmentToCheck.getDirectionNS().toString() + "> <" +
-							freewayNetwork.get(ramp).get(i).getDirectionEW().toString() + ", " + 
-							freewayNetwork.get(ramp).get(i).getDirectionNS().toString() + "> " +
-							(segmentToCheck.getDirectionEW().equals(freewayNetwork.get(ramp).get(i).getDirectionEW())
-						  || segmentToCheck.getDirectionNS().equals(freewayNetwork.get(ramp).get(i).getDirectionNS())));
-					}
-					
-					if (debuggingSearchBySegment) {
-						if (isDefaultNetwork) System.out.print("[DEFAULT] ");
-						else System.out.print("[OPPOSITE] ");
-						System.out.println("Do the freeway names match? <" + 
-							freewayName + "> <" + freewayNetwork.get(ramp).get(i).getFreewayName() + "> " +
-							(freewayName.equals(freewayNetwork.get(ramp).get(i).getFreewayName())));
-					}
-					
-					if (segmentToCheck.getDirectionEW().equals(freewayNetwork.get(ramp).get(i).getDirectionEW())
-					 || segmentToCheck.getDirectionNS().equals(freewayNetwork.get(ramp).get(i).getDirectionNS())
+				{	
+					if ((segmentToCheck.getDirectionEW().equals(freewayNetwork.get(ramp).get(i).getDirectionEW())
+					 || segmentToCheck.getDirectionNS().equals(freewayNetwork.get(ramp).get(i).getDirectionNS()))
 					 && freewayName.equals(freewayNetwork.get(ramp).get(i).getFreewayName())) 
 					{
 						return freewayNetwork.get(ramp).get(i);
@@ -335,7 +316,7 @@ public class GeoMapModel implements Runnable {
 			}
 		}
 		
-		System.out.println("Returning null anyways...");
+		if (debuggingSearchBySegment) System.out.println("Returning null anyways...");
 		return null; // If we were unable to find a segment beginning at our current endRamp with the correct directions and freeway
 	}
 	
@@ -359,7 +340,7 @@ public class GeoMapModel implements Runnable {
 				segmentBeginningAtSegmentsStartRamp = true;
 
 				if (segmentToCheck.getDirectionEW().equals(freewayNetwork.get(ramp).get(0).getDirectionEW())
-						||  segmentToCheck.getDirectionNS().equals(freewayNetwork.get(ramp).get(0).getDirectionNS())) 
+				||  segmentToCheck.getDirectionNS().equals(freewayNetwork.get(ramp).get(0).getDirectionNS())) 
 				{
 					segmentGoingInSameDirection = true;
 				}
