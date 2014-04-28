@@ -97,7 +97,7 @@ public class UISidePanel extends JPanel {
 //				
 				for (int i = 0; i < 24; i++)
 				{
-					TimeVal.add(i, Math.random());
+					TimeVal.add(i, 30+Math.random()*50);
 				}
 				DisplayChart.setLocations(BeginLocation, EndLocation, TimeVal);
 				DisplayGraph.setGraphValues(TimeVal);
