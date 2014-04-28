@@ -28,6 +28,10 @@ public class JSONFileGetter implements Runnable
 	private GeoMapModel geoMapModel;
 	private SQLDatabaseHandler sqlDatabaseHandler;
 	
+	public SQLDatabaseHandler getSqlDatabaseHandler() {
+		return sqlDatabaseHandler;
+	}
+
 	private boolean debuggingJSONFileGetter = false;
 	private boolean debuggingMapUpdateLock = false;
 	private boolean runningDatabase = true;

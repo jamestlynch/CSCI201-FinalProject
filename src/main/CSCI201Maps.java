@@ -66,9 +66,8 @@ public class CSCI201Maps {
 		segments105 = geoMapModel.getListOf105Segments();
 		segments10  = geoMapModel.getListOf10Segments();
 		segments101 = geoMapModel.getListOf101Segments();
-		
-		jsonGetterThread = new Thread(
-			(new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json", geoMapModel, geoMapView)));
+		JSONFileGetter JSONfg = new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json", geoMapModel, geoMapView);
+		jsonGetterThread = new Thread(JSONfg);
 		jsonGetterThread.setPriority(Thread.MAX_PRIORITY);
 		jsonGetterThread.start();
 		
@@ -89,7 +88,7 @@ public class CSCI201Maps {
 		entireFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		entireFrame.setSize(1000,  600);
 		entireFrame.setResizable(false);
-		entireFrame.add(new UISidePanel(geoMapModel), BorderLayout.EAST);
+		entireFrame.add(new UISidePanel(geoMapModel, JSONfg.getSqlDatabaseHandler()), BorderLayout.EAST);
 		entireFrame.add(geoMapView, BorderLayout.CENTER);
 		
 		entireFrame.setVisible(true);
