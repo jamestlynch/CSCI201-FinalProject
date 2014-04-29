@@ -29,10 +29,10 @@ public class FastestPath {
 	public double path3time = 0;
 	public double fastestPathTime = 0;
 	
-	public ArrayList<FreewaySegment> findFastestPath(String startRamp, String endRamp, String startFreewayName, String endFreewayName, GeoMapModel mapModel){
+	public ArrayList<FreewaySegment> findFastestPath(String sourceRamp, String destinationRamp, String startFreewayName, String endFreewayName, GeoMapModel mapModel){
 		//Initialize variables
-		this.source = startRamp;
-		this.destination = endRamp;
+		this.source = sourceRamp;
+		this.destination = destinationRamp;
 		this.sourceFreewayName = startFreewayName;
 		this.destinationFreewayName = endFreewayName;
 		//find a FreewaySegment that the source & destination belongs to (arbitrarily chosen boolean)
@@ -41,7 +41,15 @@ public class FastestPath {
 		
 		//Hard coding for case where source & destination are on same freeway
 		if(sourceFreewayName == destinationFreewayName){
-			
+			currFreewaySegment = sourceFreewaySegment;
+			endRamp = currFreewaySegment.getEndRamp();
+			while(endRamp.getRampName() != destination){
+				path1time += currFreewaySegment.getAverageSpeed();
+				path1.add(currFreewaySegment);
+				currFreewaySegment = mapModel.getNextFreewaySegment(currFreewaySegment);
+				endRamp = currFreewaySegment.getEndRamp();
+			}
+	
 		}
 		else{	
 			//Path 1
