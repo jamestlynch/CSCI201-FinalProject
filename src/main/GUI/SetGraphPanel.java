@@ -19,6 +19,7 @@ public class SetGraphPanel extends JPanel{
 	int rightCornerx;
 	int leftDashfirst;
 	int leftDashlast;
+	boolean firstTime = true;
 	int inc; //This defines the increase in pixels when analyzing the next point.
 	double timeinc; //This represents the amount of time in between each y axis point
 	public SetGraphPanel(int width, int height)
@@ -32,7 +33,8 @@ public class SetGraphPanel extends JPanel{
 	public void setGraphValues(ArrayList<Double> TimeVal)
 	{
 		this.TimeVal = TimeVal;
-		
+		max = 0;
+		min = 999;
 		for (int i = 0 ; i < TimeVal.size();i++)
 		{
 			if (TimeVal.get(i) > max)
@@ -40,6 +42,7 @@ public class SetGraphPanel extends JPanel{
 			if (TimeVal.get(i) < min)
 				min = TimeVal.get(i);
 		}
+		
 	}
 	protected void paintComponent(Graphics g)
 	{
