@@ -236,7 +236,6 @@ public class Automobile
 				System.out.println("!!! [UPDATE LOCATION] " + freewaySegment.getSegmentName() + " " + 
 					freewaySegment.getStartRamp().getRampName() + " does not have a next segment.");
 			
-			this.carMarker.setName(geoMapModel.nextFreewaySegmentExists(freewaySegment) + "");
 			this.destination = null;
 			return; // Keep the currentLocation the same
 		}

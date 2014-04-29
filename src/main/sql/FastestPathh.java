@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import main.freeway.FreewaySegment;
 import main.freeway.FreewayRamp;
 import main.map.GeoMapModel;
+import main.map.GeoMapView;
 public class FastestPathh {
 
 	GeoMapModel gmm;
+	GeoMapView geoMapView;
 	ArrayList<FreewaySegment> segments101;
 	ArrayList<FreewaySegment> segments105;
 	ArrayList<FreewaySegment> segments405;
 	ArrayList<FreewaySegment> segments10;
 	
-	public FastestPathh(GeoMapModel geomapmodel)
+	public FastestPathh(GeoMapModel geoMapModel, GeoMapView geoMapView)
 	{
-		this.gmm = geomapmodel;
+		this.gmm = geoMapModel;
+		this.geoMapView = geoMapView;
 		segments101 = gmm.getListOf101Segments();
 		segments105 = gmm.getListOf105Segments();
 		segments405 = gmm.getListOf405Segments();
@@ -650,7 +653,11 @@ public class FastestPathh {
 		System.out.println("Start INDEX: " + startIndex);
 		System.out.println("End INDEX" + endIndex);
 		System.out.println("size: " + fastestPathSegments.size());
+		
+		geoMapView.drawFastestPath(fastestPathSegments);
+		
 		return fastestPathSegments;
+		
 	}
 	
 	public double getCurrentSpeedTimeToTravel(ArrayList<FreewaySegment> fps)

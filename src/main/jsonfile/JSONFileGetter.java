@@ -32,7 +32,7 @@ public class JSONFileGetter implements Runnable
 		return sqlDatabaseHandler;
 	}
 	
-	private boolean runningDatabase = true;
+	private boolean runningDatabase = false;
 	private boolean tablesCreated = true;
 	private static boolean justGrabbedFromServer = false;
 
