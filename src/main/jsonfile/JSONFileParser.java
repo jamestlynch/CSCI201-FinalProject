@@ -171,16 +171,14 @@ public class JSONFileParser
 
 		FreewaySegmentVal = geoMapModel.searchByRampName(RampVal, FreewayVal, CarDirection);
 		
-		if (FreewaySegmentVal == null)
-		{
-			return null;
-		}
-		else
+		if (FreewaySegmentVal != null)
 		{
 			Automobile OneCar = new Automobile(IDNum, SpeedNum, CarDirection, RampVal, FreewaySegmentVal, geoMapModel);
 			FreewaySegmentVal.addAutomobileToSegment(OneCar);
 			FreewaySegmentVal.addAutomobileToLatestUpdate(OneCar);
 			return OneCar;
 		}
+		
+		return null;
 	}
 }
