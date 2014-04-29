@@ -32,6 +32,7 @@ public class FastestPathh {
 					return fr;
 				}
 			}
+			return segments105.get(segments105.size()-1).getEndRamp();
 		}
 		else if (freewayName.equals("405")){
 			for (int i=0; i<segments405.size(); i++){
@@ -40,6 +41,7 @@ public class FastestPathh {
 					return fr;
 				}
 			}
+			return segments405.get(segments405.size()-1).getEndRamp();
 		}
 		else if (freewayName.equals("10")){
 			for (int i=0; i<segments10.size(); i++){
@@ -48,6 +50,7 @@ public class FastestPathh {
 					return fr;
 				}
 			}
+			return segments10.get(segments10.size()-1).getEndRamp();
 		}
 		else{// if (freewayName.equals("101"))
 			for (int i=0; i<segments101.size(); i++){
@@ -56,6 +59,7 @@ public class FastestPathh {
 					return fr;
 				}
 			}
+			fr= segments101.get(segments101.size()-1).getEndRamp();	
 		}
 		return fr;
 				
@@ -93,8 +97,17 @@ public class FastestPathh {
 					endIndex = i;
 				}
 			}
-			for (int j = startIndex; j < endIndex+1; j++){
-				fastestPathSegments.add(listToCheck.get(j));
+			if (startIndex < endIndex)
+			{
+				for (int j = startIndex; j < endIndex+1; j++){
+					fastestPathSegments.add(listToCheck.get(j));
+				}
+			}
+			else
+			{
+				for (int j = startIndex; j >= endIndex; j--){
+					fastestPathSegments.add(listToCheck.get(j));
+					}
 			}
 
 		}
@@ -117,8 +130,17 @@ public class FastestPathh {
 					endIndex = i;
 				}
 			}
-			for (int j = startIndex; j < endIndex+1; j++){
+			if (startIndex<endIndex)
+			{
+				for (int j = startIndex; j < endIndex+1; j++){
 				fastestPathSegments.add(listToCheck.get(j));
+				}
+			}
+			else
+			{
+				for (int j = startIndex; j >= endIndex; j--){
+					fastestPathSegments.add(listToCheck.get(j));
+					}
 			}
 			
 		}
@@ -141,15 +163,24 @@ public class FastestPathh {
 					endIndex = i;
 				}
 			}
-			for (int j = startIndex; j < endIndex+1; j++){
+			if (startIndex < endIndex)
+			{
+				for (int j = startIndex; j < endIndex+1; j++){
 				fastestPathSegments.add(listToCheck.get(j));
+				}
+			}
+			else
+			{
+				for (int j = startIndex; j >= endIndex; j--){
+					fastestPathSegments.add(listToCheck.get(j));
+					}
 			}
 			
 		}
 		else if (sourceFreewayName.equals("10") && destFreewayName.equals("10"))
 		{
 			//direct path
-			if (sourceRamp.getRampLocation().getLon() < destRamp.getRampLocation().getLon()){//destination is east of source
+			if (sourceRamp.getRampLocation().getLon() <= destRamp.getRampLocation().getLon()){//destination is east of source
 				listToCheck = gmm.getListOf10Segments();	
 			}
 			else {//destination is west of source (default direction)
@@ -162,9 +193,19 @@ public class FastestPathh {
 				else if (listToCheck.get(i).getEndRamp().getRampName().equals(destRamp.getRampName())){
 					endIndex = i;}
 			}
-			for (int j = startIndex; j < endIndex+1; j++){
-				fastestPathSegments.add(listToCheck.get(j));
+			if (startIndex < endIndex)
+			{
+				for (int j = startIndex; j < endIndex+1; j++){
+					fastestPathSegments.add(listToCheck.get(j));
+				}
 			}
+			else
+			{
+				for (int j = startIndex; j >= endIndex; j--){
+					fastestPathSegments.add(listToCheck.get(j));
+				}
+			}
+			
 			
 		}
 		else if (sourceFreewayName.equals("10") && destFreewayName.equals("405"))
@@ -608,6 +649,7 @@ public class FastestPathh {
 		}
 		System.out.println("Start INDEX: " + startIndex);
 		System.out.println("End INDEX" + endIndex);
+		System.out.println("size: " + fastestPathSegments.size());
 		return fastestPathSegments;
 	}
 	
