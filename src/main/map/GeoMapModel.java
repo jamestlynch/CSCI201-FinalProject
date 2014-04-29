@@ -69,7 +69,8 @@ public class GeoMapModel implements Runnable {
 	private boolean debuggingNextFreewaySegmentExists = false;
 	private boolean debuggingSearchBySegment = false;
 	private boolean debuggingPostJSONGrabbing = true;
-	
+	private boolean debuggingRemoveDeadAutomobile = false;
+
 	/*
 	 * =========================================================================
 	 * CONSTRUCTORS
@@ -298,7 +299,28 @@ public class GeoMapModel implements Runnable {
 		 */
 		return defaultDirectionFreewayNetwork.get(currentSegment.getEndRamp()).size();
 	}
-
+	public boolean isJunctionRamp(FreewayRamp currentRamp)
+	{
+		if (defaultDirectionFreewayNetwork.get(currentRamp).size() > 1)
+			return true;
+		else
+			return false;
+	}
+	/**This takes the junction ramp and returns the junction segment
+	 * 
+	 * @param junctionRamp
+	 * @return junction segment between 2 freeways. If it isn't a junction ramp, then it returns null
+	 */
+	//This function takes the freeway segment and returns a freeway
+	public FreewaySegment getJunction(FreewayRamp junctionRamp)
+	{
+		if (isJunctionRamp(junctionRamp))
+		{
+			return defaultDirectionFreewayNetwork.get(junctionRamp).get(1);
+		}
+		else
+			return null;
+	}
 	
 	public FreewaySegment searchBySegment(FreewaySegment segmentToCheck, boolean isDefaultNetwork) {
 		String endRampName = segmentToCheck.getEndRamp().getRampName();
@@ -462,7 +484,7 @@ public class GeoMapModel implements Runnable {
 		{
 			if (automobilesInFreewayNetwork.get(i).getDestination() == null)
 			{
-				System.out.println("[REMOVING NULL AUTOMOBILE] NULL CAR'S IDNUM:" + i);
+				if (debuggingRemoveDeadAutomobile) System.out.println("[REMOVING NULL AUTOMOBILE] NULL CAR'S IDNUM:" + i);
 				//automobilesInFreewayNetwork.get(i).getCarMarker().setVisible(false);
 				automobilesInFreewayNetwork.remove(i);
 			}

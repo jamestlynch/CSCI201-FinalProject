@@ -34,9 +34,11 @@ public class SetChartPanel extends JPanel{
 		beginAndEnd.setLayout(new BorderLayout());
 		beginAndEnd.add(begin, BorderLayout.WEST);
 		beginAndEnd.add(end, BorderLayout.SOUTH);
+		
 		for (int i = 1; i < tables.getRowCount(); i++)
 		{
-			tables.setValueAt(TimeValues.get(i-1) +" minutes", i, 1);
+			String y = String.format("%.3g%n", TimeValues.get(i-1));
+			tables.setValueAt(y, i, 1);
 		}
 		//begin.setBounds(10, 0, begin.getWidth(), begin.getHeight());
 		//end.setBounds(5, 5+begin.getHeight(), end.getWidth(), end.getHeight());
@@ -96,7 +98,7 @@ public class SetChartPanel extends JPanel{
 			PrintWriter pw = new PrintWriter(fw);
 			pw.println(BeginLocation + "," + EndLocation);
 			for (int i = 0 ; i < tables.getRowCount(); i++)
-				pw.println(tables.getValueAt(i, 0)+",");
+				pw.println(tables.getValueAt(i, 0)+"," +tables.getValueAt(i,1));
 			pw.close();
 		}
 		catch(IOException ioe)
