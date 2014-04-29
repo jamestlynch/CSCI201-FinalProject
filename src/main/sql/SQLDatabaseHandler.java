@@ -18,8 +18,7 @@ public class SQLDatabaseHandler {
    Connection conn = null;
    Statement stmt = null;
    public boolean printErrors = false;
-   
-   int cars=5;
+
    public SQLDatabaseHandler()
    {
 	   try{
@@ -43,16 +42,6 @@ public class SQLDatabaseHandler {
 		   e.printStackTrace();
 	   }	    
 	   
-	   try {
-		   String createtable;
-		   String tablename = "carcounts";
-		   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + " (aaa INT, Cars INT) Engine=InnoDB";
-		   stmt.executeUpdate(createtable);
-
-
-	   } catch (SQLException ex) {
-		
-	   }
    }
    public ArrayList<Double> getAverageSpeeds(FreewaySegment fs)
    {
@@ -170,39 +159,6 @@ public class SQLDatabaseHandler {
    }
    public void updateAverageSpeedOfSegment(FreewaySegment fs, int hour)
    {
-//	   try{
-//		   double newAverageSpeed = fs.getAverageSpeed();
-//		   double oldAverageSpeed;
-//		   int dataCount;
-//		   PreparedStatement statement = conn.prepareStatement("SELECT * from " + fs.getSegmentName() + " WHERE Time = ?");    
-//		   statement.setInt(1, hour);    
-//		   ResultSet resultSet = statement.executeQuery();
-//		   while (resultSet.next())
-//		   {		   
-//			   //assumes that fs.getAverageSpeed() is returning the average speed that is ONLY based on the most recent json file data
-//			   //ASK: are the automobiles being removed from segments at the end of each 3 minute cycle?
-//			   //removeAutomobileFromSegment never called?
-//			   dataCount = resultSet.getInt("DataCount");
-//			   oldAverageSpeed = resultSet.getDouble("AverageSpeed");
-//			   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed*fs.getAutomobilesOnSegment().size())/(dataCount+fs.getAutomobilesOnSegment().size());
-//			   dataCount +=fs.getAutomobilesOnSegment().size();
-//
-//			   String query = "UPDATE " + fs.getSegmentName() + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
-//			   PreparedStatement preparedStmt = conn.prepareStatement(query);
-//			   preparedStmt.setDouble(1, newAverageSpeed);
-//			   preparedStmt.setInt(2, dataCount);
-//			   preparedStmt.setInt(3, hour);
-//			   preparedStmt.executeUpdate();
-//			   
-//			   cars+=fs.getAutomobilesOnSegment().size();
-//				 
-//			   String query2 = "INSERT INTO carcounts VALUES(2, ?)";
-//			   PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
-//			   preparedStmt2.setInt(1, cars);
-//			   preparedStmt2.executeUpdate();
-//		
-//			   
-//		   }
 	   try{
 		   double newAverageSpeed = fs.getLatestAverageSpeed();
 		   double oldAverageSpeed;
@@ -238,7 +194,7 @@ public class SQLDatabaseHandler {
 		   for (FreewaySegment fs: freewaySegments)
 		   {
 			   //Pull old data to calculate new average speed
-			   double newAverageSpeed = fs.getAverageSpeed();
+			   double newAverageSpeed = fs.getLatestAverageSpeed();
 			   double oldAverageSpeed;
 			   int dataCount;
 			   
@@ -260,12 +216,6 @@ public class SQLDatabaseHandler {
 				   preparedStmt.setInt(3, time);
 				   preparedStmt.executeUpdate();
 				   
-				   cars+=fs.getAutomobilesOnSegment().size();
-				 
-				   String query2 = "INSERT INTO carcounts VALUES(2, ?)";
-				   PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
-				   preparedStmt2.setInt(1, cars);
-				   preparedStmt2.executeUpdate();
 			   }
 		   }
 		
@@ -319,10 +269,31 @@ public class SQLDatabaseHandler {
    public static void main(String[] args) throws SQLException 
    {
 	   SQLDatabaseHandler sqlhandler = new SQLDatabaseHandler();
-	  // GeoMapModel gmm = new GeoMapModel();
-	   //System.out.println("# Total Segments: " + gmm.returnAllSegment().size());
+	   GeoMapModel gmm = new GeoMapModel();
+	   System.out.println("# Total Segments: " + gmm.returnAllSegment().size());
+	   FastestPathh fp = new FastestPathh(gmm);
+	   ArrayList <FreewaySegment> fps = fp.calculateFastestPath("nashstreetlaxairport", "bellflowerboulevard", "105", "105");
+	   for (int i=0; i<fps.size(); i++)
+	   {
+		   System.out.println(i + " " + fps.get(i).getStartRamp().getRampName());
+	   }
+	   System.out.println("TIMEE: " + fp.getSpeedLimitTimeToTravel(fps));
+	   fps = fp.calculateFastestPath("euclidavenue", "rinaldistreetmissionhills", "101", "405");
+	   for (int i=0; i<fps.size(); i++)
+	   {
+		   System.out.println(i + " " + fps.get(i).getStartRamp().getRampName());
+	   }
+	   System.out.println("TIMEE: " + fp.getSpeedLimitTimeToTravel(fps));
+	   fps = fp.calculateFastestPath("montanaavenue","euclidavenue", "405", "101");
+	   for (int i=0; i<fps.size(); i++)
+	   {
+		   System.out.println(i + " " + fps.get(i).getStartRamp().getRampName());
+	   }
+	   System.out.println("TIMEE: " + fp.getSpeedLimitTimeToTravel(fps));
 	
-	   String createtable;
+	   
+	   
+	   /*String createtable;
 	   String tablename = "aaa";
 	   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + " (Time INT, DataCount INT, AverageSpeed DOUBLE) Engine=InnoDB";
 	   sqlhandler.stmt.executeUpdate(createtable);
@@ -353,7 +324,7 @@ public class SQLDatabaseHandler {
 		   preparedStmt.setInt(3, 1);
 		   preparedStmt.executeUpdate();
 
-	   }
+	   }*/
 	   //sqlhandler.insertListOfFreewaySegments(gmm.returnAllSegment());
 	  // sqlhandler.printAllFreewaySegmentsTableData();
 	   //sqlhandler.createFreewaySegmentTables(gmm.getListOf105Segments());
