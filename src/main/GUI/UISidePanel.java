@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import main.freeway.FastestPath;
+//import main.freeway.FastestPath;
 import main.freeway.FreewaySegment;
 import main.map.GeoMapModel;
 import main.sql.SQLDatabaseHandler;
@@ -19,7 +19,7 @@ public class UISidePanel extends JPanel {
 	String BeginLocation;
 	String EndLocation;
 	SQLDatabaseHandler sql;
-	FastestPath calculateFastestPath;
+//	FastestPath calculateFastestPath;
 	public String getBeginLocation() {
 		return BeginLocation;
 	}
