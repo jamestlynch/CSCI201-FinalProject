@@ -19,6 +19,7 @@ public class FastestPath {
 	public FreewaySegment destinationFreewaySegment;
 	public FreewaySegment currFreewaySegment;
 	public FreewayRamp startRamp;
+	public FreewayRamp endRamp;
 	private static ArrayList<FreewaySegment> path1 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> path2 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> path3 = new ArrayList<FreewaySegment>();
@@ -35,18 +36,24 @@ public class FastestPath {
 		this.sourceFreewayName = startFreewayName;
 		this.destinationFreewayName = endFreewayName;
 		//find a FreewaySegment that the source & destination belongs to (arbitrarily chosen boolean)
-		sourceFreewaySegment = mapModel.searchByRampName(source, sourceFreewayName, true);	
-		destinationFreewaySegment = mapModel.searchByRampName(destination, destinationFreewaySegment, true);
+		sourceFreewaySegment = mapModel.searchByRampNameAndFreewayName(source, sourceFreewayName, true);	
+		destinationFreewaySegment = mapModel.searchByRampNameAndFreewayName(destination, destinationFreewayName, true);
 		
-		//Path 1
-		currFreewaySegment = sourceFreewaySegment;
-		MoveAlongSection(currFreewaySegment, path1time, path1, mapModel);
-		
-		//Path 2
-		sourceFreewaySegment = mapModel.searchByRampName(source, false);
-		currFreewaySegment = sourceFreewaySegment;
-		MoveAlongSection(currFreewaySegment, path2time, path2, mapModel);
-		
+		//Hard coding for case where source & destination are on same freeway
+		if(sourceFreewayName == destinationFreewayName){
+			
+		}
+		else{	
+			//Path 1
+			currFreewaySegment = sourceFreewaySegment;
+			MoveAlongSection(currFreewaySegment, path1time, path1, mapModel);
+			
+			//Path 2
+			sourceFreewaySegment = mapModel.searchByRampNameAndFreewayName(source, sourceFreewayName, false);
+			currFreewaySegment = sourceFreewaySegment;
+			MoveAlongSection(currFreewaySegment, path2time, path2, mapModel);
+		}
+			
 		/*TODO Possible logic problem: destination segment may not be the right one, since it's boolean doesn't correspond to source boolean. This would cause
 				the startRampName to be incorrect and path could be 1 segment off
 		  TODO Possible logic problem: not sure if passing in pathtime & path to MoveAlongSection method actually updates public variables (e.g. path1time, path1)
@@ -87,7 +94,9 @@ public class FastestPath {
 		startRamp = currSegment.getStartRamp();
 		//Goes until destination or junction is reached
 		while(startRamp.getRampName() != destination){
-			if(mapModel.isJunction((mapModel.getNextFreewaySegment(currSegment))) == 2){
+			endRamp = currSegment.getEndRamp();
+			if(endRamp == junction.getStartRamp() || endRamp == junction.getEndRamp()){
+//			if(mapModel.isJunction((mapModel.getNextFreewaySegment(currSegment))) == 2){
 //				break;
 				NavigateJunction(currSegment, pathTime, path, mapModel);
 			}
@@ -111,7 +120,7 @@ public class FastestPath {
 				while(startRamp.getRampName() != destination){
 					//If the destination is not found
 					if(mapModel.isJunction(currSegment) == 0){
-						
+						//check if destination is there
 					}
 				}
 			}
