@@ -88,7 +88,7 @@ public class CSCI201Maps {
 		entireFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		entireFrame.setSize(1000,  600);
 		entireFrame.setResizable(false);
-		entireFrame.add(new UISidePanel(geoMapModel, JSONfg.getSqlDatabaseHandler()), BorderLayout.EAST);
+		entireFrame.add(new UISidePanel(geoMapModel, geoMapView, JSONfg.getSqlDatabaseHandler()), BorderLayout.EAST);
 		entireFrame.add(geoMapView, BorderLayout.CENTER);
 		
 		entireFrame.setVisible(true);

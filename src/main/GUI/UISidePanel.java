@@ -10,20 +10,26 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 
+
 //import main.freeway.FastestPath;
 import main.freeway.FreewaySegment;
 import main.map.GeoMapModel;
+import main.map.GeoMapView;
 import main.sql.FastestPathh;
 import main.sql.SQLDatabaseHandler;
 
 public class UISidePanel extends JPanel {
 	GeoMapModel geoMapModel;
+	GeoMapView geoMapView;
 	String BeginLocation;
 	String EndLocation;
 	String BeginFreeway;
 	String EndFreeway;
 	SQLDatabaseHandler sql;
 	FastestPathh fp;
+	
+	private boolean runningDatabase;
+	
 //	FastestPath calculateFastestPath;
 	public String getBeginLocation() {
 		return BeginLocation;
@@ -33,9 +39,10 @@ public class UISidePanel extends JPanel {
 		return EndLocation;
 	}
 
-	public UISidePanel(GeoMapModel geoMapModel, SQLDatabaseHandler sql)
+	public UISidePanel(GeoMapModel geoMapModel, GeoMapView geoMapView, SQLDatabaseHandler sql)
 	{
 		this.geoMapModel = geoMapModel;
+		this.geoMapView = geoMapView;
 		this.sql = sql;
 		JTabbedPane ThreeOpts = new JTabbedPane();
 		
@@ -67,6 +74,7 @@ public class UISidePanel extends JPanel {
 		JTabbedPane ThreeOpts;
 		SetChartPanel DisplayChart;
 		SetGraphPanel DisplayGraph;
+		
 		public BtnListener(SetRoutePanel SetRoute, JTabbedPane ThreeOpts, SetChartPanel DisplayChart, SetGraphPanel DisplayGraph)
 		{
 			this.SetRoute = SetRoute;
@@ -83,7 +91,7 @@ public class UISidePanel extends JPanel {
 				EndLocation = SetRoute.getEndingLocation();
 				BeginFreeway = SetRoute.getBeginFreeway();
 				EndFreeway = SetRoute.getEndFreeway();
-				fp = new FastestPathh(geoMapModel);
+				fp = new FastestPathh(geoMapModel, geoMapView);
 				ArrayList<FreewaySegment> fastestPathSegs = fp.calculateFastestPath(BeginLocation, EndLocation, BeginFreeway, EndFreeway);
 				double SpeedLimitTimeToTravel = fp.getSpeedLimitTimeToTravel(fastestPathSegs);
 //				calculateFastestPath = new FastestPath(BeginLocation, EndLocation, geoMapModel);
@@ -93,15 +101,18 @@ public class UISidePanel extends JPanel {
 				{
 					TimeVal.add(i, 0.0);
 				}
-				for (int i = 0; i < fastestPathSegs.size(); i++)
+				if (runningDatabase) 
 				{
-					ArrayList<Double> speedsAtTimeI = sql.getAverageSpeeds(fastestPathSegs.get(i));
-					for (int j = 0 ; j < 24; j++)
+					for (int i = 0; i < fastestPathSegs.size(); i++)
 					{
-						Double timeAtSegI = TimeVal.get(j) + (fastestPathSegs.get(i).getDistance()*60/speedsAtTimeI.get(j));
-						TimeVal.set(j, timeAtSegI);
+						ArrayList<Double> speedsAtTimeI = sql.getAverageSpeeds(fastestPathSegs.get(i));
+						for (int j = 0 ; j < 24; j++)
+						{
+							Double timeAtSegI = TimeVal.get(j) + (fastestPathSegs.get(i).getDistance()*60/speedsAtTimeI.get(j));
+							TimeVal.set(j, timeAtSegI);
+						}
+						//fastestPathSegments.
 					}
-					//fastestPathSegments.
 				}
 //				//Establish an ArrayList of Strings with all the time values.
 //				

@@ -223,7 +223,7 @@ public class GeoMapModel implements Runnable {
 		return segmentToReturn;
 	}
 		
-	public FreewaySegment searchByRampAndFreewayName(String startRampName, String freewayName, boolean isDefaultNetwork) {
+	public FreewaySegment searchByRampNameAndFreewayName(String startRampName, String freewayName, boolean isDefaultNetwork) {
 		HashMap<FreewayRamp, ArrayList<FreewaySegment>> freewayNetwork = 
 				isDefaultNetwork ? defaultDirectionFreewayNetwork : oppositeDirectionFreewayNetwork;
 		

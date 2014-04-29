@@ -27,6 +27,7 @@ public class GeoMapView extends JPanel implements Runnable {
 	private int startZoom = 12;
 	
 	private ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>();//can move to inside of drawPath method if you want a new path to be drawn every time
+	private ArrayList<MapPolygon> fastestPathToDraw = new ArrayList<MapPolygon>();
 	
 	private GeoMapModel geoMapModel;
 	
@@ -36,6 +37,8 @@ public class GeoMapView extends JPanel implements Runnable {
 	private boolean debuggingSetAutomobileMarkers = false;
 	private boolean debuggingDrawAutomobiles = false;
 	private boolean debuggingMapUpdateLock = true;
+	
+	private boolean fastestPathDrawnBefore = false;
 	
 	public GeoMapView(int width, int height, GeoMapModel geoMapModel) 
 	{
@@ -94,6 +97,11 @@ public class GeoMapView extends JPanel implements Runnable {
 	}
 	public void drawFastestPath(ArrayList<FreewaySegment> freewaysegments)
 	{
+		if (fastestPathDrawnBefore) 
+		{
+			polygonsToDraw.remove(polygonsToDraw.size() - 1); // Remove last path drawn
+		}
+		
 		ArrayList<Coordinate> pathToDraw = new ArrayList<Coordinate>();
 		for (int i = 0; i < freewaysegments.size(); i++)
 		{
@@ -108,9 +116,6 @@ public class GeoMapView extends JPanel implements Runnable {
 			pathToDraw.add(new Coordinate(pathToDraw.get(i).getLat(), pathToDraw.get(i).getLon()));
 		}
 
-		if (debuggingDrawPath) System.out.println("[DRAW PATH] Number freeway segments: " + freewaysegments.size());
-		if (debuggingDrawPath) System.out.println("[DRAW PATH] Number of points on pathToDraw: " + pathToDraw.size());
-		
 		//ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>(); 
 		MapPolygonImpl polygon = new MapPolygonImpl(pathToDraw);
 		polygon.setColor(Color.BLUE);
@@ -128,6 +133,8 @@ public class GeoMapView extends JPanel implements Runnable {
 			ie.printStackTrace();
 			System.out.println("[MAP VIEWER LOCK] Lock interrupted.");
 		}
+		
+		fastestPathDrawnBefore = true;
 	}
 	
 	public void setAutomobileMarkers()
