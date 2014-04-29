@@ -125,6 +125,9 @@ public class UISidePanel extends JPanel {
 				SetRoute.displayTotalTime(currentSpeedTime, speedLimitTime);
 				DisplayChart.setLocations(BeginLocation, EndLocation, TimeVal);
 				DisplayGraph.setGraphValues(TimeVal);
+				DisplayGraph.repaint();
+				
+				//DisplayGraph
 				
 			}
 		}
