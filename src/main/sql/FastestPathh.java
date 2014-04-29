@@ -64,14 +64,11 @@ public class FastestPathh {
 	public ArrayList<FreewaySegment> calculateFastestPath(String sourceRampName, String destRampName, String sourceFreewayName, String destFreewayName)
 	{
 		
-		boolean defaultDirection;
 		FreewayRamp sourceRamp;
 		FreewayRamp destRamp;
 		int startIndex=0;
 		int endIndex=0;
-		boolean startIndexFound = false;
 		ArrayList<FreewaySegment> listToCheck;
-	
 		ArrayList<FreewaySegment> fastestPathSegments = new ArrayList<FreewaySegment>();
 		ArrayList<FreewaySegment> altFastestPathSegments = new ArrayList<FreewaySegment>();
 		

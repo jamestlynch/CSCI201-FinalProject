@@ -653,22 +653,22 @@ public class GeoMapModel implements Runnable {
 					if (freewayName.equals("405"))
 					{
 						orderedSegments405.add(defaultFreewaySegment);
-						reverseSegments405.add(0, defaultFreewaySegment);
+						reverseSegments405.add(oppositeFreewaySegment);
 					}
 					else if (freewayName.equals("105"))
 					{
 						orderedSegments105.add(defaultFreewaySegment);
-						reverseSegments105.add(0, defaultFreewaySegment);
+						reverseSegments105.add(oppositeFreewaySegment);
 					}
 					else if (freewayName.equals("10"))
 					{
 						orderedSegments10.add(defaultFreewaySegment);
-						reverseSegments10.add(0, defaultFreewaySegment);
+						reverseSegments10.add(oppositeFreewaySegment);
 					}
 					else if (freewayName.equals("101"))
 					{
 						orderedSegments101.add(defaultFreewaySegment);
-						reverseSegments101.add(0, defaultFreewaySegment);
+						reverseSegments101.add(oppositeFreewaySegment);
 					}
 					defaultDirectionFreewayNetwork.put(startRamp,
 							defaultFreewaySegment);

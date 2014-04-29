@@ -49,7 +49,7 @@ public class FreewaySegment {
 		this.directionEW = directionEW;
 		this.directionNS = directionNS;
 		this.distance = distance;
-		this.speedLimit = speedLimit;
+		this.setSpeedLimit(speedLimit);
 		this.averageSpeed = speedLimit;
 		this.startRamp = start;
 		this.endRamp = end;
@@ -178,5 +178,13 @@ public class FreewaySegment {
 		else 
 			return "Invalid";
 			
+	}
+
+	public int getSpeedLimit() {
+		return speedLimit;
+	}
+
+	public void setSpeedLimit(int speedLimit) {
+		this.speedLimit = speedLimit;
 	}
 }
