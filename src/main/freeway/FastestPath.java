@@ -119,7 +119,7 @@ public class FastestPath {
 				path.add(currSegment);
 				currSegment = mapModel.getNextFreewaySegment(currSegment);
 				startRamp = currSegment.getStartRamp();
-				//TODO Does the while loop automatically stop when it reaches the end?
+				//TODO Does the while loop automaticazlly stop when it reaches the end?
 			}
 		}
 	}
@@ -136,6 +136,11 @@ public class FastestPath {
 					if(mapModel.isJunction(currSegment) == 0){
 						//check if destination is there
 					}
+					else{
+						path.add(currSegment);
+						pathTime += currSegment.getAverageSpeed();
+						currSegment = mapModel.getNextFreewaySegment(currSegment);
+					}
 				}
 			}
 			//Otherwise, keep going along the section
@@ -144,7 +149,7 @@ public class FastestPath {
 			}
 		
 		//Case B: Either go onto middle section or end segment
-			currSegment = mapModel.getNextFreewaySegment(currSegment).get(1);
+			currSegment = mapModel.getNextFreewaySegment(currSegment).z(1);
 			//If it's an end segment, check for destination. If it's not there, ignore this case
 			if(mapModel.isJunction(currSegment) == 0){
 				for(list of next segments ){
