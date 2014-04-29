@@ -26,7 +26,26 @@ public class FastestPath_ {
 	public double path2time = 0;
 	public double fastestPathTime = 0;
 	
-	public ArrayList<FreewaySegment> FastestPath_(){
+	public ArrayList<FreewaySegment> findFastestPath(String start, String end, GeoMapModel mapModel){
+		//Initialize variables
+		this.source = start;
+		this.destination = end;
+		//find a FreewaySegment that the source & destination belongs to (arbitrarily chosen boolean)
+		sourceFreewaySegment = mapModel.searchByRampName(source, true);	
+		destinationFreewaySegment = mapModel.searchByRampName(destination, true);
+		//read in freeway names
+		sourceFreewayName = sourceFreewaySegment.getFreewayName();
+		destinationFreewayName = destinationFreewaySegment.getFreewayName();
+		
+		//Path 1
+		currFreewaySegment = sourceFreewaySegment;
+		MoveAlongSection(currFreewaySegment, path1time, path1, mapModel);
+		
+		//Path 2
+		sourceFreewaySegment = mapModel.searchByRampName(source, false);
+		currFreewaySegment = sourceFreewaySegment;
+		MoveAlongSection(currFreewaySegment, path2time, path2, mapModel);
+		
 		
 		//Compare the 2 speeds
 		if(path1time > path2time){
@@ -38,7 +57,7 @@ public class FastestPath_ {
 		return fastestPath;
 	}
 
-	//Travels along end segment until it reaches a junction
+/*	//Travels along end segment until it reaches a junction
 	public void MoveAlongEndSection(FreewaySegment currSegment, double pathTime, ArrayList<FreewaySegment> path, GeoMapModel mapModel){
 		startRamp = currSegment.getStartRamp();
 		//Stops when destination is reached
@@ -55,10 +74,10 @@ public class FastestPath_ {
 			currSegment = mapModel.getNextFreewaySegment(currSegment);
 			MoveAlongEndSection(currSegment, pathTime, path, mapModel);
 		}
-	}
+	}*/
 	
 	//Travels along middle section until it reaches a junction
-	public void MoveAlongMidSection(FreewaySegment currSegment, double pathTime, ArrayList<FreewaySegment> path, GeoMapModel mapModel){
+	public void MoveAlongSection(FreewaySegment currSegment, double pathTime, ArrayList<FreewaySegment> path, GeoMapModel mapModel){
 		startRamp = currSegment.getStartRamp();
 		//Goes until destination or junction is reached
 		while(startRamp.getRampName() != destination){
@@ -70,6 +89,7 @@ public class FastestPath_ {
 				pathTime += currSegment.getAverageSpeed();
 				path.add(currSegment);
 				currSegment = mapModel.getNextFreewaySegment(currSegment);
+				startRamp = currSegment.getStartRamp();
 			}
 		}
 	}
