@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
 
-public class FastestPath_ {
+public class FastestPath {
 	/*
 	 * =========================================================================
 	 * MEMBER VARIABLES
@@ -13,12 +13,13 @@ public class FastestPath_ {
 	 */
 	public static String source;
 	public static String destination;
+	public String sourceFreewayName;
+	public String destinationFreewayName;
 	public FreewaySegment sourceFreewaySegment;
 	public FreewaySegment destinationFreewaySegment;
 	public FreewaySegment currFreewaySegment;
-	public String sourceFreewayName = " ";
-	public String destinationFreewayName = " ";
 	public FreewayRamp startRamp;
+	public FreewayRamp endRamp;
 	private static ArrayList<FreewaySegment> path1 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> path2 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> path3 = new ArrayList<FreewaySegment>();
@@ -28,26 +29,39 @@ public class FastestPath_ {
 	public double path3time = 0;
 	public double fastestPathTime = 0;
 	
-	public ArrayList<FreewaySegment> findFastestPath(String start, String end, GeoMapModel mapModel){
+	public ArrayList<FreewaySegment> findFastestPath(String sourceRamp, String destinationRamp, String startFreewayName, String endFreewayName, GeoMapModel mapModel){
 		//Initialize variables
-		this.source = start;
-		this.destination = end;
+		this.source = sourceRamp;
+		this.destination = destinationRamp;
+		this.sourceFreewayName = startFreewayName;
+		this.destinationFreewayName = endFreewayName;
 		//find a FreewaySegment that the source & destination belongs to (arbitrarily chosen boolean)
-		sourceFreewaySegment = mapModel.searchByRampName(source, true);	
-		destinationFreewaySegment = mapModel.searchByRampName(destination, true);
-		//read in freeway names
-		sourceFreewayName = sourceFreewaySegment.getFreewayName();
-		destinationFreewayName = destinationFreewaySegment.getFreewayName();
+		sourceFreewaySegment = mapModel.searchByRampNameAndFreewayName(source, sourceFreewayName, true);	
+		destinationFreewaySegment = mapModel.searchByRampNameAndFreewayName(destination, destinationFreewayName, true);
 		
-		//Path 1
-		currFreewaySegment = sourceFreewaySegment;
-		MoveAlongSection(currFreewaySegment, path1time, path1, mapModel);
-		
-		//Path 2
-		sourceFreewaySegment = mapModel.searchByRampName(source, false);
-		currFreewaySegment = sourceFreewaySegment;
-		MoveAlongSection(currFreewaySegment, path2time, path2, mapModel);
-		
+		//Hard coding for case where source & destination are on same freeway
+		if(sourceFreewayName == destinationFreewayName){
+			currFreewaySegment = sourceFreewaySegment;
+			endRamp = currFreewaySegment.getEndRamp();
+			while(endRamp.getRampName() != destination){
+				path1time += currFreewaySegment.getAverageSpeed();
+				path1.add(currFreewaySegment);
+				currFreewaySegment = mapModel.getNextFreewaySegment(currFreewaySegment);
+				endRamp = currFreewaySegment.getEndRamp();
+			}
+	
+		}
+		else{	
+			//Path 1
+			currFreewaySegment = sourceFreewaySegment;
+			MoveAlongSection(currFreewaySegment, path1time, path1, mapModel);
+			
+			//Path 2
+			sourceFreewaySegment = mapModel.searchByRampNameAndFreewayName(source, sourceFreewayName, false);
+			currFreewaySegment = sourceFreewaySegment;
+			MoveAlongSection(currFreewaySegment, path2time, path2, mapModel);
+		}
+			
 		/*TODO Possible logic problem: destination segment may not be the right one, since it's boolean doesn't correspond to source boolean. This would cause
 				the startRampName to be incorrect and path could be 1 segment off
 		  TODO Possible logic problem: not sure if passing in pathtime & path to MoveAlongSection method actually updates public variables (e.g. path1time, path1)
@@ -88,7 +102,15 @@ public class FastestPath_ {
 		startRamp = currSegment.getStartRamp();
 		//Goes until destination or junction is reached
 		while(startRamp.getRampName() != destination){
-			if(mapModel.isJunction((mapModel.getNextFreewaySegment(currSegment))) == 2){
+			endRamp = currSegment.getEndRamp();
+			if(endRamp.getRampName() == "I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach" || 
+				endRamp.getRampName() == "I-10 (Santa Monica Freeway)   Santa Monica, Los Angeles" ||
+				endRamp.getRampName() == "US 101 north (Santa Ana Freeway via San Bernardino Freeway) Los Angeles, Hollywood" ||
+				endRamp.getRampName() == "I-10 east (San Bernardino Freeway) San Bernardino" ||
+				endRamp.getRampName() == "I-405 (San Diego Freeway) Santa Monica, Sacramento" ||
+				endRamp.getRampName() == "US 101 (Ventura Freeway)   Ventura, Los Angeles")
+			{
+//			if(mapModel.isJunction((mapModel.getNextFreewaySegment(currSegment))) == 2){
 //				break;
 				NavigateJunction(currSegment, pathTime, path, mapModel);
 			}
@@ -97,6 +119,7 @@ public class FastestPath_ {
 				path.add(currSegment);
 				currSegment = mapModel.getNextFreewaySegment(currSegment);
 				startRamp = currSegment.getStartRamp();
+				//TODO Does the while loop automaticazlly stop when it reaches the end?
 			}
 		}
 	}
@@ -108,9 +131,15 @@ public class FastestPath_ {
 			currSegment = mapModel.getNextFreewaySegment(currSegment);
 			//If it's an end segment, check for destination. If it's not there, ignore this case
 			if(mapModel.isJunction(currSegment) == 0){
-				for(list of next segments ){
-					if(startRamp.getRampName() == destination){
-						
+				while(startRamp.getRampName() != destination){
+					//If the destination is not found
+					if(mapModel.isJunction(currSegment) == 0){
+						//check if destination is there
+					}
+					else{
+						path.add(currSegment);
+						pathTime += currSegment.getAverageSpeed();
+						currSegment = mapModel.getNextFreewaySegment(currSegment);
 					}
 				}
 			}
@@ -120,7 +149,7 @@ public class FastestPath_ {
 			}
 		
 		//Case B: Either go onto middle section or end segment
-			currSegment = mapModel.getNextFreewaySegment(currSegment).get(1);
+			currSegment = mapModel.getNextFreewaySegment(currSegment).z(1);
 			//If it's an end segment, check for destination. If it's not there, ignore this case
 			if(mapModel.isJunction(currSegment) == 0){
 				for(list of next segments ){
