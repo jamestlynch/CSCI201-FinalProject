@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import main.map.GeoMapModel;
 import main.map.GeoMapView;
 
-public class FastestPath_ {
+public class FastestPath {
 	/*
 	 * =========================================================================
 	 * MEMBER VARIABLES
@@ -13,11 +13,11 @@ public class FastestPath_ {
 	 */
 	public static String source;
 	public static String destination;
+	public String sourceFreewayName;
+	public String destinationFreewayName;
 	public FreewaySegment sourceFreewaySegment;
 	public FreewaySegment destinationFreewaySegment;
 	public FreewaySegment currFreewaySegment;
-	public String sourceFreewayName = " ";
-	public String destinationFreewayName = " ";
 	public FreewayRamp startRamp;
 	private static ArrayList<FreewaySegment> path1 = new ArrayList<FreewaySegment>();
 	private static ArrayList<FreewaySegment> path2 = new ArrayList<FreewaySegment>();
@@ -28,16 +28,15 @@ public class FastestPath_ {
 	public double path3time = 0;
 	public double fastestPathTime = 0;
 	
-	public ArrayList<FreewaySegment> findFastestPath(String start, String end, GeoMapModel mapModel){
+	public ArrayList<FreewaySegment> findFastestPath(String startRamp, String endRamp, String startFreewayName, String endFreewayName, GeoMapModel mapModel){
 		//Initialize variables
-		this.source = start;
-		this.destination = end;
+		this.source = startRamp;
+		this.destination = endRamp;
+		this.sourceFreewayName = startFreewayName;
+		this.destinationFreewayName = endFreewayName;
 		//find a FreewaySegment that the source & destination belongs to (arbitrarily chosen boolean)
-		sourceFreewaySegment = mapModel.searchByRampName(source, true);	
-		destinationFreewaySegment = mapModel.searchByRampName(destination, true);
-		//read in freeway names
-		sourceFreewayName = sourceFreewaySegment.getFreewayName();
-		destinationFreewayName = destinationFreewaySegment.getFreewayName();
+		sourceFreewaySegment = mapModel.searchByRampName(source, sourceFreewayName, true);	
+		destinationFreewaySegment = mapModel.searchByRampName(destination, destinationFreewaySegment, true);
 		
 		//Path 1
 		currFreewaySegment = sourceFreewaySegment;
@@ -97,6 +96,7 @@ public class FastestPath_ {
 				path.add(currSegment);
 				currSegment = mapModel.getNextFreewaySegment(currSegment);
 				startRamp = currSegment.getStartRamp();
+				//TODO Does the while loop automatically stop when it reaches the end?
 			}
 		}
 	}
@@ -108,8 +108,9 @@ public class FastestPath_ {
 			currSegment = mapModel.getNextFreewaySegment(currSegment);
 			//If it's an end segment, check for destination. If it's not there, ignore this case
 			if(mapModel.isJunction(currSegment) == 0){
-				for(list of next segments ){
-					if(startRamp.getRampName() == destination){
+				while(startRamp.getRampName() != destination){
+					//If the destination is not found
+					if(mapModel.isJunction(currSegment) == 0){
 						
 					}
 				}
