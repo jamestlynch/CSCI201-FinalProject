@@ -75,11 +75,11 @@ public class SetGraphPanel extends JPanel{
 			else
 				y = "" + currentVal;
 			g.drawString(y, -1, bottomCornery - (inc * i+1));
-			g.drawLine(5, bottomCornery - (inc * (i)), 15, bottomCornery - (inc * (i)));
+			g.drawLine(5, bottomCornery - (inc * (i)) - 5, 15,bottomCornery - (inc * (i))-5);
 			if ( i == 0)
-				leftDashfirst = bottomCornery - (inc * (i));
+				leftDashfirst = bottomCornery - (inc * (i)) - 5;
 			if (i == 23)
-				leftDashlast = bottomCornery - (inc * (i));
+				leftDashlast = bottomCornery - (inc * (i)) - 5;
 		}
 		
 		for (int i = 1 ; i < TimeVal.size(); i++)

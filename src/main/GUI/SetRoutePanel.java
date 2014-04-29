@@ -17,11 +17,12 @@ import main.map.GeoMapModel;
 public class SetRoutePanel extends JPanel{
 	int width;
 	int height;
-	
-	JComboBox<String> freewayList;
-	JComboBox<String> rampList;
-	JComboBox<String> endingFreeway;
-	JComboBox<String> endingRampList;
+	JLabel liveTimeLabel = new JLabel();
+	JLabel limitTimeLabel= new JLabel();
+	JComboBox freewayList;
+	JComboBox rampList;
+	JComboBox endingFreeway;
+	JComboBox endingRampList;
 	GeoMapModel geoMapModel;
 	//Pass in the String of freeway names
 	public String getBeginningLocation()
@@ -31,6 +32,14 @@ public class SetRoutePanel extends JPanel{
 	public String getEndingLocation()
 	{
 		return (String)endingRampList.getSelectedItem();
+	}
+	public String getBeginFreeway()
+	{
+		return (String)freewayList.getSelectedItem();
+	}
+	public String getEndFreeway()
+	{
+		return (String)endingFreeway.getSelectedItem();
 	}
 	public boolean isValidEntry()
 	{
@@ -51,7 +60,37 @@ public class SetRoutePanel extends JPanel{
 			return false;
 			
 	}
+	boolean firstTime = true;
 	private String[] FreewayNames = new String[]{"", "10", "101", "105", "405"}; 
+	public void displayTotalTime(double liveTime, double limitTime)
+	{
+		if (firstTime)
+		{
+			firstTime = false;
+		}
+		else
+		{
+			liveTimeLabel.removeAll();
+			limitTimeLabel.removeAll();
+		}
+		String time1 = String.format("%.3g%n", liveTime);
+		time1 = time1 + " minutes";
+		String time2 = String.format("%.3g%n", limitTime);
+		time2 = time2 + " minutes";
+		
+		liveTimeLabel.setText("Live Data Fastest Path's Time: " + time1);
+		limitTimeLabel.setText("Speed Limit Fastest Path's Time: " + time2);
+		liveTimeLabel.setBounds(5,
+		endingRampList.getY()+endingRampList.getPreferredSize().height + 5, 
+		width - 10,
+		liveTimeLabel.getPreferredSize().height);
+		limitTimeLabel.setBounds(5,
+				liveTimeLabel.getY()+liveTimeLabel.getPreferredSize().height + 5, 
+				width - 10,
+				limitTimeLabel.getPreferredSize().height);
+		add(liveTimeLabel);
+		add(limitTimeLabel);
+	}
 	public SetRoutePanel(int width, int height, GeoMapModel geoMapModel)//String[] f1, String[] f2)
 	{
 		this.geoMapModel = geoMapModel;
@@ -61,10 +100,10 @@ public class SetRoutePanel extends JPanel{
 		
 		//Starting Freeway Declaration and Action Listener
 		JLabel startingFreewayLabel = new JLabel("Select Starting Freeway:");
-		freewayList = new JComboBox<String>(FreewayNames);
+		freewayList = new JComboBox (FreewayNames);
 		
 		JLabel startingFreewayRampLabel = new JLabel("Select Starting Freeway Ramp:");
-		rampList = new JComboBox<String>();
+		rampList = new JComboBox ();
 		
 		RampPopulate startPopulate = new RampPopulate(freewayList, rampList);
 		freewayList.addActionListener(startPopulate);
@@ -72,9 +111,9 @@ public class SetRoutePanel extends JPanel{
 		
 		//Ending freeway Declaration and Action Listener
 		JLabel endingFreewayLabel = new JLabel("Select Ending Freeway:");
-		endingFreeway = new JComboBox<String>(FreewayNames);
+		endingFreeway = new JComboBox (FreewayNames);
 		JLabel endingFreewayRampLabel = new JLabel("Select Ending Freeway Ramp:");
-		endingRampList = new JComboBox<String>();
+		endingRampList = new JComboBox ();
 		
 		RampPopulate endPopulate = new RampPopulate(endingFreeway, endingRampList);
 		endingFreeway.addActionListener(endPopulate);
@@ -144,9 +183,9 @@ public class SetRoutePanel extends JPanel{
 	}
 	class RampPopulate implements ActionListener
 	{
-		JComboBox<String> parentComboBox;
-		JComboBox<String> childComboBox;
-		public RampPopulate(JComboBox<String> parentComboBox, JComboBox<String> selfComboBox)
+		JComboBox parentComboBox;
+		JComboBox childComboBox;
+		public RampPopulate(JComboBox parentComboBox, JComboBox selfComboBox)
 		{
 			this.parentComboBox = parentComboBox;
 			this.childComboBox = selfComboBox;

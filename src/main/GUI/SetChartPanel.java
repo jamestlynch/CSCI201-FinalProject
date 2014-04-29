@@ -24,13 +24,24 @@ public class SetChartPanel extends JPanel{
 	final int total_rows = 25;
 	String BeginLocation, EndLocation;
 	JTable tables;
+	JPanel beginAndEnd = new JPanel();
+	JLabel begin = new JLabel();
+	JLabel end = new JLabel();
+	boolean firstTime = true;
 	public void setLocations(String BeginLocation, String EndLocation, ArrayList<Double> TimeValues)//)
 	{
 		this.BeginLocation = BeginLocation;
 		this.EndLocation = EndLocation;
-		JLabel begin = new JLabel ("Starting from "+ BeginLocation + "\n");
-		JLabel end = new JLabel ("Ending at " + EndLocation);
-		JPanel beginAndEnd = new JPanel();
+		begin.setText ("Starting from "+ BeginLocation + "\n");
+		end.setText ("Ending at " + EndLocation);
+		if (firstTime)
+		{
+			firstTime = false;
+		}
+		else
+		{
+			beginAndEnd.removeAll();
+		}
 		beginAndEnd.setLayout(new BorderLayout());
 		beginAndEnd.add(begin, BorderLayout.WEST);
 		beginAndEnd.add(end, BorderLayout.SOUTH);

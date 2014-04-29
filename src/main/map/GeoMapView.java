@@ -92,6 +92,43 @@ public class GeoMapView extends JPanel implements Runnable {
 			System.out.println("[MAP VIEWER LOCK] Lock interrupted.");
 		}
 	}
+	public void drawFastestPath(ArrayList<FreewaySegment> freewaysegments)
+	{
+		ArrayList<Coordinate> pathToDraw = new ArrayList<Coordinate>();
+		for (int i = 0; i < freewaysegments.size(); i++)
+		{
+			for (int j = 0; j < freewaysegments.get(i).getSegmentPath().size(); j++)
+			{
+				pathToDraw.add(new Coordinate(freewaysegments.get(i).getSegmentPath().get(j).getLat(),freewaysegments.get(i).getSegmentPath().get(j).getLon() ));
+			}
+
+		}
+		for (int i = pathToDraw.size()-1; i>=0; i--)
+		{
+			pathToDraw.add(new Coordinate(pathToDraw.get(i).getLat(), pathToDraw.get(i).getLon()));
+		}
+
+		if (debuggingDrawPath) System.out.println("[DRAW PATH] Number freeway segments: " + freewaysegments.size());
+		if (debuggingDrawPath) System.out.println("[DRAW PATH] Number of points on pathToDraw: " + pathToDraw.size());
+		
+		//ArrayList<MapPolygon> polygonsToDraw = new ArrayList<MapPolygon>(); 
+		MapPolygonImpl polygon = new MapPolygonImpl(pathToDraw);
+		polygon.setColor(Color.BLUE);
+		polygonsToDraw.add(polygon);
+	
+		try {
+			mapViewerLock.acquire();
+			synchronized(mapViewer.getMapMarkerList()) {
+				mapViewer.setMapPolygonList(polygonsToDraw);
+				mapViewer.setMapPolygonsVisible(true);
+			}
+			
+			mapViewerLock.release();
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+			System.out.println("[MAP VIEWER LOCK] Lock interrupted.");
+		}
+	}
 	
 	public void setAutomobileMarkers()
 	{

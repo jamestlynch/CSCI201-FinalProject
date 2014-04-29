@@ -250,7 +250,7 @@ public class FastestPathh {
 					//altFastestPathSegments.add(listToCheck.get(i));
 				}
 				//WHAT IF IS JUNCTION (i-10 east san bernardino)
-				if (destRamp.getRampLocation().getLon() >= segments101.get(7).getEndRamp().getRampLocation().getLat()){//destination is east of 10/101 junction
+				if (destRamp.getRampLocation().getLon() >= segments101.get(7).getEndRamp().getRampLocation().getLon()){//destination is east of 10/101 junction
 					listToCheck = gmm.getReverseSegments101();
 					for (int i = 7; i >= 0; i--){
 						if (listToCheck.get(i).getEndRamp().getRampName().equals(destRampName))
@@ -264,7 +264,7 @@ public class FastestPathh {
 				else{//destination is west of 10/101 junction
 					listToCheck = segments101;
 					int i = 7;
-					while (!listToCheck.get(-1).getEndRamp().getRampName().equals(destRampName) && i<listToCheck.size())
+					while (!listToCheck.get(i-1).getEndRamp().getRampName().equals(destRampName) && i<listToCheck.size())
 					{
 						fastestPathSegments.add(listToCheck.get(i));
 						i++;
@@ -282,7 +282,7 @@ public class FastestPathh {
 				for (int i= listToCheck.size()-1; i>=33; i--){
 					fastestPathSegments.add(listToCheck.get(i));
 				}
-				if (destRamp.getRampLocation().getLon() >= segments101.get(7).getEndRamp().getRampLocation().getLat()){//destination is east of 10/101 junction
+				if (destRamp.getRampLocation().getLon() >= segments101.get(7).getEndRamp().getRampLocation().getLon()){//destination is east of 10/101 junction
 					listToCheck = gmm.getReverseSegments101();
 					for (int i = 7; i >= 0; i--){
 						if (listToCheck.get(i).getEndRamp().getRampName().equals(destRampName))
@@ -542,7 +542,7 @@ public class FastestPathh {
 						altFastestPathSegments.add(listToCheck.get(i));//COMPLETE ALT LATER
 					}
 					//should check if junction! add later
-					if (destRamp.getRampLocation().getLon() <= segments101.get(8).getStartRamp().getRampLocation().getLon()){//destination is west of 10/405 junction
+					if (destRamp.getRampLocation().getLon() <= segments10.get(8).getStartRamp().getRampLocation().getLon()){//destination is west of 10/405 junction
 						listToCheck = gmm.getReverseSegments10();
 						for (int i = 0; i < listToCheck.size(); i++){
 							if (listToCheck.get(i).getEndRamp().getRampName().equals(destRampName)){
@@ -568,18 +568,18 @@ public class FastestPathh {
 					}
 					
 				}
-				else{//source ramp is north of 101/405 junction
+				else{//source ramp is north of 10/405 junction
 					listToCheck = gmm.getReverseSegments405();
 					for (int i = 0; i < listToCheck.size(); i++){
 						if (listToCheck.get(i).getStartRamp().getRampName().equals(sourceRamp.getRampName())){
 							startIndex = i;
 						}
 					}
-					for (int i= startIndex; i>=9; i++){
+					for (int i= startIndex; i>=9; i--){
 						fastestPathSegments.add(listToCheck.get(i));
 					}
 					//should check if junction! add later
-					if (destRamp.getRampLocation().getLon() <= segments101.get(8).getStartRamp().getRampLocation().getLon()){//destination is west of 10/405 junction
+					if (destRamp.getRampLocation().getLon() <= segments10.get(8).getStartRamp().getRampLocation().getLon()){//destination is west of 10/405 junction
 						listToCheck = gmm.getReverseSegments10();
 						for (int i = 0; i < listToCheck.size(); i++){
 							if (listToCheck.get(i).getEndRamp().getRampName().equals(destRampName)){

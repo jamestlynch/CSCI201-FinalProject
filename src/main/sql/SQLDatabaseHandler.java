@@ -284,51 +284,14 @@ public class SQLDatabaseHandler {
 		   System.out.println(i + " " + fps.get(i).getStartRamp().getRampName());
 	   }
 	   System.out.println("TIMEE: " + fp.getSpeedLimitTimeToTravel(fps));
-	   fps = fp.calculateFastestPath("montanaavenue","euclidavenue", "405", "101");
+	   fps = fp.calculateFastestPath("nationalboulevard,overlandavenue","fourthstreet", "10", "101");
 	   for (int i=0; i<fps.size(); i++)
 	   {
 		   System.out.println(i + " " + fps.get(i).getStartRamp().getRampName());
 	   }
 	   System.out.println("TIMEE: " + fp.getSpeedLimitTimeToTravel(fps));
-	
 	   
-	   
-	   /*String createtable;
-	   String tablename = "aaa";
-	   createtable = "CREATE TABLE IF NOT EXISTS " + tablename + " (Time INT, DataCount INT, AverageSpeed DOUBLE) Engine=InnoDB";
-	   sqlhandler.stmt.executeUpdate(createtable);
 
-	   //initialize table--make one entry for each hour
-	   for (int i=0; i<2; i++)
-	   {
-		   PreparedStatement pst;
-		   pst = sqlhandler.conn.prepareStatement("INSERT INTO " + tablename +" VALUES(?, ?, ?)");
-		   pst.setInt(1,i);
-		   pst.setInt(2,0);
-		   pst.setDouble(3, 25);
-		   pst.executeUpdate();
-	   }
-	   PreparedStatement statement = sqlhandler.conn.prepareStatement("SELECT * from " + tablename + " WHERE Time = ?");    
-	   statement.setInt(1, 1);    
-	   ResultSet resultSet = statement.executeQuery();
-	   while (resultSet.next())
-	   {   
-		   int dataCount = resultSet.getInt("DataCount");
-		   double oldAverageSpeed = resultSet.getDouble("AverageSpeed");
-		   double newAverageSpeed = 5;
-		   newAverageSpeed = (oldAverageSpeed * dataCount + newAverageSpeed)/(dataCount+1);
-		   String query = "UPDATE " + tablename + " SET AverageSpeed = ?, DataCount = ? where Time = ?";
-		   PreparedStatement preparedStmt = sqlhandler.conn.prepareStatement(query);
-		   preparedStmt.setDouble(1, newAverageSpeed);
-		   preparedStmt.setInt(2, 5);
-		   preparedStmt.setInt(3, 1);
-		   preparedStmt.executeUpdate();
-
-	   }*/
-	   //sqlhandler.insertListOfFreewaySegments(gmm.returnAllSegment());
-	  // sqlhandler.printAllFreewaySegmentsTableData();
-	   //sqlhandler.createFreewaySegmentTables(gmm.getListOf105Segments());
-	  // sqlhandler.printAverageSpeedData(gmm.returnAllSegment().get(0));
 	   /*
 		   rs.close();
 		   stmt.close();
