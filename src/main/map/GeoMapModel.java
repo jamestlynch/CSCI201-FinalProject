@@ -68,6 +68,7 @@ public class GeoMapModel implements Runnable {
 	private boolean debuggingSearchBySegment = false;
 	private boolean debuggingPostJSONGrabbing = false;
 	private boolean debuggingRemoveDeadAutomobile = false;
+	private boolean debuggingInitDestination = false;
 
 	/* =========================================================================
 	 *   CONSTRUCTORS
@@ -425,7 +426,7 @@ public class GeoMapModel implements Runnable {
 				
 //				if (JSONFileGetter.getJustGrabbedFromServer())
 //				{
-					System.out.println("[MAPMODEL RUN] Reininitializing the automobile destinations.");
+					if (debuggingInitDestination) System.out.println("[MAPMODEL RUN] Reininitializing the automobile destinations.");
 					
 					// After structuring the network, initialize all of the car's destinations
 					for (int i = 0; i < automobilesInFreewayNetwork.size(); i++) {

@@ -97,9 +97,7 @@ public class JSONFileGetter implements Runnable
     {
     	if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
     	CSCI201Maps.grabMapUpdateLock();
-    	if (debuggingJSONFileGetter) System.out.println("[JSONFileGetter] Thread woken up.");
 		geoMapView.eraseAutomobiles();
-		System.out.println("[JSONFILEGETTER RUN] After erasing, size of automobiles in freeway network: " + jfp.getGeoMapModel().getAutomobilesInFreewayNetwork().size());
 		for (FreewaySegment fs: jfp.getGeoMapModel().returnAllSegment())
 			fs.clearAutomobilesFromLatestUpdate();
 		cal.add(Calendar.MINUTE, 3);
@@ -114,15 +112,11 @@ public class JSONFileGetter implements Runnable
     	while(true) {
     		jfp.parseAutomobiles(jsonFile);
     		
-    		System.out.println("[JSONFILEGETTER RUN] After parsing, size of automobiles in freeway network: " + jfp.getGeoMapModel().getAutomobilesInFreewayNetwork().size());
-    		
     		if (runningDatabase) 
     		{
     			for (FreewaySegment fs: jfp.getGeoMapModel().returnAllSegment())
     				sqlDatabaseHandler.updateAverageSpeedOfSegment(fs, cal.get(Calendar.HOUR_OF_DAY));
     		}
-    		
-    		System.out.println("Parsed and preparing to set automobile markers");
     		
     		geoMapView.setAutomobileMarkers();
     		
@@ -136,6 +130,8 @@ public class JSONFileGetter implements Runnable
     		} catch (InterruptedException ie) {
     			ie.printStackTrace();
     		}
+    		
+    		if (debuggingJSONFileGetter) System.out.println("[JSONFileGetter] Thread woken up.");
     		
     		// After woken up for the first time, it has been 3 minutes so everything that happens to reinit the parser is done here.
     		this.reInit();
