@@ -48,11 +48,6 @@ public class Automobile
 	private boolean debuggingInitDestination = false;
 	private boolean debuggingAutomobileUpdated = false;
 	
-	// TODO: GET RID OF THIS
-	private boolean gottenOGCoordinatesForSegment = false;
-	private Coordinate ogCoordinateForSegment;
-	
-	
 	private final double milesPerHour_to_milesPerSeconds = 0.000277777778; // (1 / 60 / 60):  Used for converting for distance calculations with current time's milliseconds
 
 	int repaintCount = 0;
@@ -196,21 +191,6 @@ public class Automobile
 	{
 		if (distanceToTravel < totalDistanceOnPath) {
 			
-			if (id == 100) {
-				System.out.println("[SETNEXTDESTINATIONPOINT] Difference from OG Coordinate: " + ogCoordinateForSegment.toString() + 
-						": Lat: " + (ogCoordinateForSegment.getLat() - freewaySegment.getStartRamp().getRampLocation().getLat()) +
-						": Lon: " + (ogCoordinateForSegment.getLon() - freewaySegment.getStartRamp().getRampLocation().getLon()));
-				
-				System.out.println("[SETNEXTDESTINATIONPOINT] (0) " + freewaySegment.getSegmentName() + " " + freewaySegment.getStartRamp().getRampName() + ": " + this.currentLocation.toString() + " " + this.freewaySegment.getStartRamp().getRampLocation().toString());
-				for (FreewaySegment segment  :  geoMapModel.returnAllSegment())
-				{
-					if(segment.getSegmentName().equals(freewaySegment.getSegmentName())) 
-					{
-						System.out.println("[SETNEXTDESTINATIONPOINT] (0) Inside of geoMapModel: " + segment.getSegmentName() + " " +  freewaySegment.getStartRamp().getRampName() + ": " + segment.getStartRamp().getRampLocation().toString());
-					}
-				}
-			}
-			
 			if (debuggingUpdateLocation && id % 100 == 0) System.out.println("Partial Distance for CAR ID #" + id + "...");
 			
 			double portionOfPath = distanceToTravel / totalDistanceOnPath;
@@ -223,17 +203,6 @@ public class Automobile
 			
 			this.currentLocation = new Coordinate(currentLocation.getLat() + dLatitude,
 												  currentLocation.getLon() + dLongitude); 
-			
-			if (id == 100) {
-				System.out.println("[SETNEXTDESTINATIONPOINT] (1) " + freewaySegment.getSegmentName() + " " +  freewaySegment.getStartRamp().getRampName() +  ": " + this.currentLocation.toString() + " " + this.freewaySegment.getStartRamp().getRampLocation().toString());
-				for (FreewaySegment segment  :  geoMapModel.returnAllSegment())
-				{
-					if(segment.getSegmentName().equals(freewaySegment.getSegmentName())) 
-					{
-						System.out.println("[SETNEXTDESTINATIONPOINT] (1) Inside of geoMapModel: " + segment.getSegmentName() + " " + freewaySegment.getStartRamp().getRampName() +  ": " + segment.getStartRamp().getRampLocation().toString());
-					}
-				}
-			}
 			
 			// Keep the destination the same, still on same path
 		} else if (locationPointNumber < numberOfSegmentPointsInThisPath - 2) { // -2 because that's the one right before last point on the segment
@@ -320,19 +289,6 @@ public class Automobile
 	 */
 	public void updateLocation(double timeElapsedInMilliseconds)
 	{		
-		if (!gottenOGCoordinatesForSegment && id == 100) {
-			for (FreewaySegment segment  :  geoMapModel.returnAllSegment())
-			{
-				if(segment.getSegmentName().equals(freewaySegment.getSegmentName())) 
-				{
-					ogCoordinateForSegment = new Coordinate(segment.getStartRamp().getRampLocation().getLat(),
-															segment.getStartRamp().getRampLocation().getLon());
-				}
-			}
-			
-			gottenOGCoordinatesForSegment = true;
-		}
-		
 		double timeRemaining = timeElapsedInMilliseconds / 1000; // milliseconds to seconds
 
 		if (debuggingUpdateLocation && id % 100 == 0) System.out.println("[UPDATE LOCATION] Preparing to update car #" + id + "...");

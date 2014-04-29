@@ -66,7 +66,7 @@ public class GeoMapModel implements Runnable {
 	private boolean debuggingMapModelRun = false;
 	private boolean debuggingNextFreewaySegmentExists = false;
 	private boolean debuggingSearchBySegment = false;
-	private boolean debuggingPostJSONGrabbing = true;
+	private boolean debuggingPostJSONGrabbing = false;
 	private boolean debuggingRemoveDeadAutomobile = false;
 
 	/* =========================================================================

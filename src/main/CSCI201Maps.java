@@ -43,8 +43,8 @@ public class CSCI201Maps {
 	
 	private static Semaphore mapUpdateSemaphore = new Semaphore(1);
 	
-	public static final long automobileUpdateRate = 1000; // 15 milliseconds to wait between updates
-	public static final long automobilePaintDelay = 1000; // 15 milliseconds to fully paint
+	public static final long automobileUpdateRate = 1 * 1000; // 15 milliseconds to wait between updates
+	public static final long automobilePaintDelay = 1 * 1000; // 15 milliseconds to fully paint
 	public static final long jsonFileFetchingDelay = 3 * 60 * 1000; // 3 minutes to wait between grabbing JSON file
 	
 	// Call the user interface
