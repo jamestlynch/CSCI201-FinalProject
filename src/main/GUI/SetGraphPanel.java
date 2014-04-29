@@ -92,8 +92,8 @@ public class SetGraphPanel extends JPanel{
 	public void determineLine(Graphics g, Double p2, Double p1, int numberEntry)
 	{
 		
-		double ProportionUpP1 = p1/(max - min);
-		double ProportionUpP2 = p2/(max - min);
+		double ProportionUpP1 = (p1 - min)/(max - min);
+		double ProportionUpP2 = (p2 - min)/(max - min);
 		
 		double yINC1 = (leftDashfirst - leftDashlast) * (ProportionUpP1); 
 		double yINC2 = (leftDashfirst - leftDashlast) * (ProportionUpP2);

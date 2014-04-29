@@ -33,7 +33,7 @@ public class GeoMapView extends JPanel implements Runnable {
 	private Semaphore mapViewerLock = new Semaphore(1);
 	
 	private boolean debuggingDrawPath = false;
-	private boolean debuggingSetAutomobileMarkers = true;
+	private boolean debuggingSetAutomobileMarkers = false;
 	private boolean debuggingDrawAutomobiles = false;
 	private boolean debuggingMapUpdateLock = true;
 	
