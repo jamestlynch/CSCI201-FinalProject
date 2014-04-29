@@ -43,17 +43,18 @@ public class CSCI201Maps {
 	
 	private static Semaphore mapUpdateSemaphore = new Semaphore(1);
 	
-	public static final long automobileUpdateRate = 5000; // 13 milliseconds to wait between updates
-	public static final long automobilePaintDelay = 5000; // 13 milliseconds to fully paint
-	public static final long jsonFileFetchingDelay = 3 * 60 * 1000; // 3 minutes to wait between grabbing JSON file
+	public static final long automobileUpdateRate = 1000; // 13 milliseconds to wait between updates
+	public static final long automobilePaintDelay = 1000; // 13 milliseconds to fully paint
+	public static final long jsonFileFetchingDelay = 30 * 60 * 1000; // 3 minutes to wait between grabbing JSON file
 	
 	// Call the user interface
 	// Instantiate all objects
 	public CSCI201Maps() {
 		ExecutorService configurationExecutor = Executors.newFixedThreadPool(1);
 		
+		
 		geoMapModel = new GeoMapModel();
-		geoMapView = new GeoMapView(500, 500, geoMapModel);
+		geoMapView = new GeoMapView(800, 800, geoMapModel);
 		geoMap = new GeoMap(geoMapView, geoMapModel);
 		
 		ArrayList<FreewaySegment> segments405 = new ArrayList<FreewaySegment>();
@@ -65,9 +66,8 @@ public class CSCI201Maps {
 		segments105 = geoMapModel.getListOf105Segments();
 		segments10  = geoMapModel.getListOf10Segments();
 		segments101 = geoMapModel.getListOf101Segments();
-		
-		jsonGetterThread = new Thread(
-			(new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json", geoMapModel, geoMapView)));
+		JSONFileGetter JSONfg = new JSONFileGetter("http://www-scf.usc.edu/~csci201/mahdi_project/project_data.json", geoMapModel, geoMapView);
+		jsonGetterThread = new Thread(JSONfg);
 		jsonGetterThread.setPriority(Thread.MAX_PRIORITY);
 		jsonGetterThread.start();
 		
@@ -80,7 +80,7 @@ public class CSCI201Maps {
 		
 		geoMapView.drawPath(segments105);
 		geoMapView.drawPath(segments101);
-		//geoMapView.drawPath(segments10);
+		geoMapView.drawPath(segments10);
 		geoMapView.drawPath(segments405);
 		// Instantiate the GUI
 		//new UICSCI201Maps();
@@ -88,7 +88,7 @@ public class CSCI201Maps {
 		entireFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		entireFrame.setSize(1000,  600);
 		entireFrame.setResizable(false);
-		entireFrame.add(new UISidePanel(geoMapModel), BorderLayout.EAST);
+		entireFrame.add(new UISidePanel(geoMapModel, JSONfg.getSqlDatabaseHandler()), BorderLayout.EAST);
 		entireFrame.add(geoMapView, BorderLayout.CENTER);
 		
 		entireFrame.setVisible(true);

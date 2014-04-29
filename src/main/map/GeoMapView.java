@@ -31,7 +31,7 @@ public class GeoMapView extends JPanel implements Runnable {
 	
 	private boolean debuggingDrawPath = false;
 	private boolean debuggingDrawAutomobiles = false;
-	private boolean debuggingMapUpdateLock = true;
+	private boolean debuggingMapUpdateLock = false;
 	
 	public GeoMapView(int width, int height, GeoMapModel geoMapModel) 
 	{
@@ -96,7 +96,19 @@ public class GeoMapView extends JPanel implements Runnable {
 		{
 			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
 			{
-				mapViewer.addMapMarker(automobilesToDisplay.get(i).getCarMarker());
+				MapMarkerCircle mmc = automobilesToDisplay.get(i).getCarMarker();
+				if (mmc.getLat() < 30)
+				{
+					mmc.setVisible(false);
+				}
+				if (mmc.isVisible())
+				{
+					mapViewer.addMapMarker(mmc);
+					if (mmc.getLat() <= 30)
+					{
+						System.out.println("THIS SHOULD NEVER PRINT:");
+					}
+				}
 			}
 		}
 	}
@@ -121,12 +133,6 @@ public class GeoMapView extends JPanel implements Runnable {
 		}
 		
 		mapViewer.setMapMarkerVisible(true);
-	}
-	
-	public void redrawSingleAutomobile(MapMarkerCircle automobileMarker)
-	{
-		mapViewer.removeMapMarker(automobileMarker);
-		mapViewer.addMapMarker(automobileMarker);
 	}
 	
 	public void eraseAutomobiles()
