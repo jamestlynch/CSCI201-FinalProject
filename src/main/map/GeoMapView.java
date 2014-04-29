@@ -3,6 +3,7 @@ package main.map;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 
 import javax.swing.JPanel;
 
@@ -29,9 +30,12 @@ public class GeoMapView extends JPanel implements Runnable {
 	
 	private GeoMapModel geoMapModel;
 	
+	private Semaphore mapViewerLock = new Semaphore(1);
+	
 	private boolean debuggingDrawPath = false;
+	private boolean debuggingSetAutomobileMarkers = true;
 	private boolean debuggingDrawAutomobiles = false;
-	private boolean debuggingMapUpdateLock = false;
+	private boolean debuggingMapUpdateLock = true;
 	
 	public GeoMapView(int width, int height, GeoMapModel geoMapModel) 
 	{
@@ -39,17 +43,10 @@ public class GeoMapView extends JPanel implements Runnable {
 		this.panelWidth = width;
 		this.panelHeight = height;
 		
-		//setLayout(null);
 		setPreferredSize(new Dimension(panelWidth, panelHeight));
 		
 		mapViewer.setDisplayPositionByLatLon(startLocation.getLat(), startLocation.getLon(), startZoom);
-//		MapMarkerCircle circle = new MapMarkerCircle(34.05, -118.25, .005);
-//		circle.setColor(Color.RED);
-//		circle.setBackColor(Color.GREEN);
-//		
-//		mapViewer.addMapMarker(circle);
-//		mapViewer.setMapMarkerVisible(true);
-		//drawAutomobiles();
+
 		add(mapViewer);
 	}
 
@@ -82,20 +79,30 @@ public class GeoMapView extends JPanel implements Runnable {
 		polygon.setColor(Color.RED);
 		polygonsToDraw.add(polygon);
 	
-		mapViewer.setMapPolygonList(polygonsToDraw);
-		mapViewer.setMapPolygonsVisible(true);
+		try {
+			mapViewerLock.acquire();
+			synchronized(mapViewer.getMapMarkerList()) {
+				mapViewer.setMapPolygonList(polygonsToDraw);
+				mapViewer.setMapPolygonsVisible(true);
+			}
+			
+			mapViewerLock.release();
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+			System.out.println("[MAP VIEWER LOCK] Lock interrupted.");
+		}
 	}
 	
 	public void setAutomobileMarkers()
 	{
-		if (debuggingDrawAutomobiles) System.out.println("[SET AUTOMOBILES] Method called.");
+		if (debuggingSetAutomobileMarkers) System.out.println("[SET AUTOMOBILES] Method called.");
 		ArrayList<Automobile> automobilesToDisplay = geoMapModel.getAutomobilesInFreewayNetwork();
-		if (debuggingDrawAutomobiles) System.out.println("[SET AUTOMOBILES] Amount of automobiles to draw: " + automobilesToDisplay.size());
+		if (debuggingSetAutomobileMarkers) System.out.println("[SET AUTOMOBILES] Amount of automobiles to draw: " + automobilesToDisplay.size());
 		
 		for (int i = 0 ; i < automobilesToDisplay.size(); i++)
 		{
-			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
-			{
+			//synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
+			//{
 				MapMarkerCircle mmc = automobilesToDisplay.get(i).getCarMarker();
 				if (mmc.getLat() < 30)
 				{
@@ -103,13 +110,18 @@ public class GeoMapView extends JPanel implements Runnable {
 				}
 				if (mmc.isVisible())
 				{
-					mapViewer.addMapMarker(mmc);
-					if (mmc.getLat() <= 30)
-					{
-						System.out.println("THIS SHOULD NEVER PRINT:");
+					try {
+						mapViewerLock.acquire();
+						synchronized(mapViewer.getMapMarkerList()) {
+							mapViewer.getMapMarkerList().add(mmc);
+						}
+						mapViewerLock.release();
+					} catch (InterruptedException ie) {
+						ie.printStackTrace();
+						System.out.println("[MAP VIEWER LOCK] Lock interrupted.");
 					}
 				}
-			}
+			//}
 		}
 	}
 	
@@ -122,23 +134,47 @@ public class GeoMapView extends JPanel implements Runnable {
 				
 		if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Size of MapMarkerList: " + mapViewer.getMapMarkerList().size());
 		
-		for (int i = 0 ; i < mapViewer.getMapMarkerList().size(); i++)
-		{
-			if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Drawing Car ID #" + geoMapModel.getAutomobilesInFreewayNetwork().get(i).getId());
+		try {
+			mapViewerLock.acquire();
 			
-			synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
-			{
-				mapViewer.getMapMarkerList().get(i);
+			synchronized(mapViewer.getMapMarkerList()) {
+				for (int i = 0 ; i < mapViewer.getMapMarkerList().size(); i++)
+				{
+					if (debuggingDrawAutomobiles) System.out.println("[DRAW AUTOMOBILES] Drawing Car ID #" + geoMapModel.getAutomobilesInFreewayNetwork().get(i).getId());
+					
+					synchronized(geoMapModel.getAutomobilesInFreewayNetwork())
+					{
+						mapViewer.getMapMarkerList().get(i);
+					}
+				}
+				mapViewer.setMapMarkerVisible(true);
 			}
+			
+			mapViewerLock.release();
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+			System.out.println("[MAP VIEWER LOCK] Lock interrupted.");
 		}
-		
-		mapViewer.setMapMarkerVisible(true);
 	}
 	
 	public void eraseAutomobiles()
 	{
 		geoMapModel.removeAutomobilesInFreewayNetwork();
-		mapViewer.removeAllMapMarkers();
+		
+		try {
+			mapViewerLock.acquire();
+			
+			synchronized(mapViewer.getMapMarkerList()) {
+				mapViewer.getMapMarkerList().clear();
+			}
+			
+			mapViewerLock.release();
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+			System.out.println("[MAP VIEWER LOCK] Lock interrupted.");
+		}
+		
+		System.out.println("[ERASE AUTOMOBILES] MapViewer's map markers: " + mapViewer.getMapMarkerList().toString());
 	}
 
 	public void run() {

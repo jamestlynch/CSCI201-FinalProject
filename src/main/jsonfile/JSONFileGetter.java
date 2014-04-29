@@ -32,10 +32,12 @@ public class JSONFileGetter implements Runnable
 		return sqlDatabaseHandler;
 	}
 
-	private boolean debuggingJSONFileGetter = false;
-	private boolean debuggingMapUpdateLock = false;
 	private boolean runningDatabase = false;
 	private boolean tablesCreated = true;
+	private static boolean justGrabbedFromServer = false;
+	
+	private boolean debuggingJSONFileGetter = false;
+	private boolean debuggingMapUpdateLock = true;
 	
 	private static Calendar cal;
 	
@@ -78,34 +80,54 @@ public class JSONFileGetter implements Runnable
         }
     }
     
+    
+    public static boolean getJustGrabbedFromServer()
+    {
+    	return justGrabbedFromServer;
+    }
+    
+    public static void setJustGrabbedFromServer(boolean justGrabbed)
+    {
+    	justGrabbedFromServer = justGrabbed;
+    }
+    
+    
+    
     public void reInit() 
     {
+    	if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
+    	CSCI201Maps.grabMapUpdateLock();
     	if (debuggingJSONFileGetter) System.out.println("[JSONFileGetter] Thread woken up.");
 		geoMapView.eraseAutomobiles();
+		System.out.println("[JSONFILEGETTER RUN] After erasing, size of automobiles in freeway network: " + jfp.getGeoMapModel().getAutomobilesInFreewayNetwork().size());
 		for (FreewaySegment fs: jfp.getGeoMapModel().returnAllSegment())
 			fs.clearAutomobilesFromLatestUpdate();
 		cal.add(Calendar.MINUTE, 3);
+		
+		justGrabbedFromServer = true;
     }
     
     public void run()
     {
+    	if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
+    	CSCI201Maps.grabMapUpdateLock();
     	while(true) {
-    		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
-    		CSCI201Maps.grabMapUpdateLock();
     		jfp.parseAutomobiles(jsonFile);
-    		geoMapModel.removeDeadAutomobilesInFreewayNetwork();
+    		
+    		System.out.println("[JSONFILEGETTER RUN] After parsing, size of automobiles in freeway network: " + jfp.getGeoMapModel().getAutomobilesInFreewayNetwork().size());
+    		
     		if (runningDatabase) 
     		{
     			for (FreewaySegment fs: jfp.getGeoMapModel().returnAllSegment())
     				sqlDatabaseHandler.updateAverageSpeedOfSegment(fs, cal.get(Calendar.HOUR_OF_DAY));
     		}
-    			
+    		
+    		System.out.println("Parsed and preparing to set automobile markers");
+    		
     		geoMapView.setAutomobileMarkers();
     		
     		java.util.Date date = new java.util.Date();
     		System.out.println("[JSONFileGetter] Last pulled from the server: " + new Timestamp(date.getTime()));
-    		
-    	
     		
     		try {
     			CSCI201Maps.giveUpMapUpdateLock();

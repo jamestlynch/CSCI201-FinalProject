@@ -19,6 +19,7 @@ import main.CSCI201Maps;
 import main.automobile.Automobile;
 import main.freeway.FreewayRamp;
 import main.freeway.FreewaySegment;
+import main.jsonfile.JSONFileGetter;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.w3c.dom.Document;
@@ -61,12 +62,13 @@ public class GeoMapModel implements Runnable {
 	
 	private boolean debuggingSearch = false;
 	private boolean debuggingAutomobileMarkers = false;
-	private boolean debuggingMapUpdateLock = false;
+	private boolean debuggingMapUpdateLock = true;
 	private boolean debuggingGetNextSegment = false;
 	private boolean debuggingMapModelInit = false;
 	private boolean debuggingMapModelRun = false;
 	private boolean debuggingNextFreewaySegmentExists = false;
 	private boolean debuggingSearchBySegment = false;
+	private boolean debuggingPostJSONGrabbing = true;
 	
 	/*
 	 * =========================================================================
@@ -151,39 +153,44 @@ public class GeoMapModel implements Runnable {
 	 * =========================================================================
 	 */
 
-	public FreewaySegment searchForSegment(String rampName,
-			FreewaySegment.Direction direction, String freewayName)
-			throws FreewaySegmentNotFoundException {
-		// Search through the default network, if found return that segment from
-		// the defaultDirectionFreewayNetwork
-		FreewaySegment segmentDefault = searchForSegmentWithNetwork(rampName,
-				direction, freewayName, defaultDirectionFreewayNetwork);
-		if (debuggingSearch) System.out.println("[STARTING THE OPPOSITE DIRECTION NETWORK SEARCH]");
-		FreewaySegment segmentOpposite = searchForSegmentWithNetwork(rampName,
-				direction, freewayName, oppositeDirectionFreewayNetwork);
-
-		if (segmentDefault != null)
-			if (debuggingSearch) System.out.println("DEFAULT [SEGMENT BEFORE SEARCHING OP]\t"
-					+ segmentDefault.getStartRamp().getRampName());
-		else
-			if (debuggingSearch) System.out.println("DEFAULT [SEGMENT BEFORE SEARCHING OP]\t"
-					+ "UNDEFINED");
-
-		// // If not found in the default network, search the opposite direction
-		// segment = (searchForSegment(rampName, direction, freewayName,
-		// oppositeDirectionFreewayNetwork) == null)
-		// ? segment
-		// : searchForSegment(rampName, direction, freewayName,
-		// oppositeDirectionFreewayNetwork);
-
-		if (segmentOpposite != null)
-			if (debuggingSearch) System.out.println("OPPOSITE [SEGMENT AFTER SEARCHING OP]\t"
-					+ segmentOpposite.getStartRamp().getRampName());
-		else
-			if (debuggingSearch) System.out.println("OPPOSITE [SEGMENT AFTER SEARCHING OP]\t"
-					+ "UNDEFINED");
-
-		return (segmentDefault == null) ? segmentOpposite : segmentDefault;
+	public FreewaySegment searchByRampName(String rampName, String freewayName, FreewaySegment.Direction direction) {
+		FreewaySegment segmentToReturn = null;
+		
+		for (FreewayRamp ramp  :  defaultDirectionFreewayNetwork.keySet()) 
+		{
+			if (ramp.getRampName().equals(rampName)) // If the ramp is the same as the next ramp's start (current endRamp)
+			{
+				for (int i = 0; i < defaultDirectionFreewayNetwork.get(ramp).size(); i++) // Loop through all different segments in the ArrayList
+				{	
+					if ((direction.equals(defaultDirectionFreewayNetwork.get(ramp).get(i).getDirectionEW())
+					  || direction.equals(defaultDirectionFreewayNetwork.get(ramp).get(i).getDirectionNS()))
+					 && freewayName.equals(defaultDirectionFreewayNetwork.get(ramp).get(i).getFreewayName())) 
+					{
+						segmentToReturn = defaultDirectionFreewayNetwork.get(ramp).get(i);
+					}
+				}
+			}
+		}
+		
+		if (segmentToReturn == null) { // If it wasn't found inside of the default network
+			for (FreewayRamp ramp  :  oppositeDirectionFreewayNetwork.keySet()) 
+			{
+				if (ramp.getRampName().equals(rampName)) // If the ramp is the same as the next ramp's start (current endRamp)
+				{
+					for (int i = 0; i < oppositeDirectionFreewayNetwork.get(ramp).size(); i++) // Loop through all different segments in the ArrayList
+					{	
+						if ((direction.equals(oppositeDirectionFreewayNetwork.get(ramp).get(i).getDirectionEW())
+						  || direction.equals(oppositeDirectionFreewayNetwork.get(ramp).get(i).getDirectionNS()))
+						 && freewayName.equals(oppositeDirectionFreewayNetwork.get(ramp).get(i).getFreewayName())) 
+						{
+							segmentToReturn = oppositeDirectionFreewayNetwork.get(ramp).get(i);
+						}
+					}
+				}
+			}
+		}
+		
+		return segmentToReturn;
 	}
 
 	public FreewaySegment searchForSegmentWithNetwork(String rampName,
@@ -430,13 +437,6 @@ public class GeoMapModel implements Runnable {
 			automobilesInFreewayNetwork.add(newAutomobile);
 		}
 	}
-	
-	public void eraseAutomobilesInFreewayNetwork() {
-		synchronized(automobilesInFreewayNetwork) 
-		{
-			automobilesInFreewayNetwork.clear();
-		}
-	}
 
 	public ArrayList<Automobile> getAutomobilesInFreewayNetwork() {
 		synchronized(automobilesInFreewayNetwork) 
@@ -450,9 +450,10 @@ public class GeoMapModel implements Runnable {
 	}
 	
 	public void removeAutomobilesInFreewayNetwork() {
-	
-		//automobilesInFreewayNetwork.removeAll(automobilesInFreewayNetwork);
-		automobilesInFreewayNetwork.clear();
+		synchronized(automobilesInFreewayNetwork) 
+		{
+			automobilesInFreewayNetwork.clear();
+		}
 	}
 	
 	public void removeDeadAutomobilesInFreewayNetwork()
@@ -503,6 +504,21 @@ public class GeoMapModel implements Runnable {
 				CSCI201Maps.grabMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model grabbed lock.");
 				
+				if (debuggingPostJSONGrabbing) System.out.println("[MAPMODEL RUN] Size of automobile's list: " + automobilesInFreewayNetwork.size());
+				
+				if (JSONFileGetter.getJustGrabbedFromServer())
+				{
+					System.out.println("[MAPMODEL RUN] Reininitializing the automobile destinations.");
+					
+					// After structuring the network, initialize all of the car's destinations
+					for (int i = 0; i < automobilesInFreewayNetwork.size(); i++) {
+						automobilesInFreewayNetwork.get(i).initDestination();
+					}
+					
+					JSONFileGetter.setJustGrabbedFromServer(false);
+				}
+				
+				
 				timeInSecondsAfter = System.currentTimeMillis();
 				for (int i = 0; i < automobilesInFreewayNetwork.size(); i++)
 				{	
@@ -510,7 +526,6 @@ public class GeoMapModel implements Runnable {
 					automobilesInFreewayNetwork.get(i).updateLocation(timeInSecondsAfter - timeInSecondsBefore);
 				}
 				timeInSecondsBefore = timeInSecondsAfter;
-				removeDeadAutomobilesInFreewayNetwork();
 				CSCI201Maps.giveUpMapUpdateLock();
 				if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] Map Model gave up lock.");
 			} catch (InterruptedException ie) {

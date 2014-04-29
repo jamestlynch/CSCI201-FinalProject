@@ -26,7 +26,7 @@ public class JSONFileParser
 	public void parseAutomobiles(String fileToParse)
 	{
 		// Erase all pre-existing cars; re-parse, re-create, and re-draw
-		geoMapModel.eraseAutomobilesInFreewayNetwork();
+		geoMapModel.removeAutomobilesInFreewayNetwork();
 		
 		for(int i = 0; i < fileToParse.length(); i++)
 		{
@@ -168,14 +168,9 @@ public class JSONFileParser
 		}
 		
 		FreewaySegment FreewaySegmentVal = null;
-		try
-		{
-			FreewaySegmentVal = geoMapModel.searchForSegment(RampVal, CarDirection, FreewayVal);
-		}
-		catch(FreewaySegmentNotFoundException fsnfe)
-		{
-			System.out.println ("INVALID DATA: " + fsnfe.getMessage());
-		}
+
+		FreewaySegmentVal = geoMapModel.searchByRampName(RampVal, FreewayVal, CarDirection);
+		
 		if (FreewaySegmentVal == null)
 		{
 			return null;
