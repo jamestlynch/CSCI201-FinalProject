@@ -95,7 +95,13 @@ public class FastestPath {
 		//Goes until destination or junction is reached
 		while(startRamp.getRampName() != destination){
 			endRamp = currSegment.getEndRamp();
-			if(endRamp == junction.getStartRamp() || endRamp == junction.getEndRamp()){
+			if(endRamp.getRampName() == "I-405 (San Diego Freeway) Sacramento, LAX Airport, Long Beach" || 
+				endRamp.getRampName() == "I-10 (Santa Monica Freeway)   Santa Monica, Los Angeles" ||
+				endRamp.getRampName() == "US 101 north (Santa Ana Freeway via San Bernardino Freeway) Los Angeles, Hollywood" ||
+				endRamp.getRampName() == "I-10 east (San Bernardino Freeway) San Bernardino" ||
+				endRamp.getRampName() == "I-405 (San Diego Freeway) Santa Monica, Sacramento" ||
+				endRamp.getRampName() == "US 101 (Ventura Freeway)   Ventura, Los Angeles")
+			{
 //			if(mapModel.isJunction((mapModel.getNextFreewaySegment(currSegment))) == 2){
 //				break;
 				NavigateJunction(currSegment, pathTime, path, mapModel);
