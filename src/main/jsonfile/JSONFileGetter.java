@@ -31,11 +31,13 @@ public class JSONFileGetter implements Runnable
 	public SQLDatabaseHandler getSqlDatabaseHandler() {
 		return sqlDatabaseHandler;
 	}
+	
+	private boolean runningDatabase = false;
+	private boolean tablesCreated = true;
+	private static boolean justGrabbedFromServer = false;
 
 	private boolean debuggingJSONFileGetter = false;
-	private boolean debuggingMapUpdateLock = false;
-	private boolean runningDatabase = true;
-	private boolean tablesCreated = true;
+	private boolean debuggingMapUpdateLock = true;
 	
 	private static Calendar cal;
 	
@@ -78,34 +80,48 @@ public class JSONFileGetter implements Runnable
         }
     }
     
+    
+    public static boolean getJustGrabbedFromServer()
+    {
+    	return justGrabbedFromServer;
+    }
+    
+    public static void setJustGrabbedFromServer(boolean justGrabbed)
+    {
+    	justGrabbedFromServer = justGrabbed;
+    }
+    
+    
+    
     public void reInit() 
     {
-    	if (debuggingJSONFileGetter) System.out.println("[JSONFileGetter] Thread woken up.");
+    	if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
+    	CSCI201Maps.grabMapUpdateLock();
 		geoMapView.eraseAutomobiles();
 		for (FreewaySegment fs: jfp.getGeoMapModel().returnAllSegment())
 			fs.clearAutomobilesFromLatestUpdate();
 		cal.add(Calendar.MINUTE, 3);
+		
+		justGrabbedFromServer = true;
     }
     
     public void run()
     {
+    	if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
+    	CSCI201Maps.grabMapUpdateLock();
     	while(true) {
-    		if (debuggingMapUpdateLock) System.out.println("[MAP UPDATE LOCK] JSON File Getter grabbed lock.");
-    		CSCI201Maps.grabMapUpdateLock();
     		jfp.parseAutomobiles(jsonFile);
-    		geoMapModel.removeDeadAutomobilesInFreewayNetwork();
+    		
     		if (runningDatabase) 
     		{
     			for (FreewaySegment fs: jfp.getGeoMapModel().returnAllSegment())
     				sqlDatabaseHandler.updateAverageSpeedOfSegment(fs, cal.get(Calendar.HOUR_OF_DAY));
     		}
-    			
+    		
     		geoMapView.setAutomobileMarkers();
     		
     		java.util.Date date = new java.util.Date();
     		System.out.println("[JSONFileGetter] Last pulled from the server: " + new Timestamp(date.getTime()));
-    		
-    	
     		
     		try {
     			CSCI201Maps.giveUpMapUpdateLock();
@@ -114,6 +130,8 @@ public class JSONFileGetter implements Runnable
     		} catch (InterruptedException ie) {
     			ie.printStackTrace();
     		}
+    		
+    		if (debuggingJSONFileGetter) System.out.println("[JSONFileGetter] Thread woken up.");
     		
     		// After woken up for the first time, it has been 3 minutes so everything that happens to reinit the parser is done here.
     		this.reInit();
